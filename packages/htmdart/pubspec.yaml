@@ -7,7 +7,7 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  htmleez: ^0.0.2
+  htmleez: ^0.1.0
   shelf: ^1.4.2
   shelf_router: ^1.1.4
 
