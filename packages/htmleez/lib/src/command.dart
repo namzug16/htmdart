@@ -57,7 +57,7 @@ final class ComplexCommand extends Command {
 				let e = event;
 				$js
 		}""";
-    final element = script([attr.id(_name!), UnsafeRaw(content)]);
+    final element = script([id(_name!), UnsafeRaw(content)]);
     element.render(sb);
   }
 }

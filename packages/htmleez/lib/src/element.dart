@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+typedef HTML = Element;
+
 abstract class Element {
   const Element();
 

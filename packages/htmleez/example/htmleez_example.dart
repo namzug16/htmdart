@@ -3,11 +3,12 @@ import 'package:htmleez/htmleez.dart';
 void main() {
   final el = html([
     body([
+      id("main_body"),
       div([
-        ev.onload([
-          cmd.consoleLog("La ctm"),
-          cmd.consoleLog("La ctm 2"),
-          cmd.toggleClassOnElement("body", "hidden"),
+        onload([
+          consoleLog("La ctm"),
+          consoleLog("La ctm 2"),
+          toggleClassOnElement("body", "hidden"),
         ]),
       ]),
     ]),

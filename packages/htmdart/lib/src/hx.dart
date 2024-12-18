@@ -222,5 +222,5 @@ final class HX {
 }
 
 extension EventAsTrigger on Event {
-  Element get hxTrigger => hx.trigger(name);
+  Element get hxTrigger => hx.trigger(this.name);
 }
