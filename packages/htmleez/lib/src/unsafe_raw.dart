@@ -1,12 +1,7 @@
-import 'element.dart';
+import 'html_component.dart';
 
-final class UnsafeRaw implements Element {
+final class UnsafeRaw extends HtmlComponent {
   const UnsafeRaw(this.content);
 
   final String content;
-
-  @override
-  void render(StringBuffer sb) {
-    sb.write(' $content');
-  }
 }

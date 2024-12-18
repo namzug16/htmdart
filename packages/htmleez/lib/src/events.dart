@@ -1,8 +1,8 @@
 import 'command.dart';
-import 'element.dart';
+import 'html_component.dart';
 import 'event.dart';
 
-Element onEvent(String event, List<Command> commands) => Event(event)(commands);
+HtmlComponent onEvent(String event, List<Command> commands) => Event(event)(commands);
 
 //NOTE: Window events
 

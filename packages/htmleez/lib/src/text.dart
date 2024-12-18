@@ -1,16 +1,11 @@
-import 'element.dart';
+import 'html_component.dart';
 
-final class Text implements Element {
+final class Text extends HtmlComponent {
   const Text(this.text);
 
   final String text;
-
-  @override
-  void render(StringBuffer sb) {
-    sb.write(' ${Element.escapeString(text)}');
-  }
 }
 
 extension HtmlText on String {
-  Element get t => Text(this);
+  HtmlComponent get t => Text(this);
 }

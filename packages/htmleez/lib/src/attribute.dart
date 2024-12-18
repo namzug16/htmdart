@@ -1,33 +1,23 @@
-import 'element.dart';
+import 'html_component.dart';
 
-final class Attribute implements Element {
+final class Attribute extends HtmlComponent {
   Attribute(this.name);
 
-  Attribute._(this.name, this._content);
+  Attribute._(this.name, this.content);
 
   final String name;
-  String? _content;
+  String? content;
 
-  Element call(String content) {
+  HtmlComponent call(String content) {
     return Attribute._(name, content);
   }
 
   @override
-  void render(StringBuffer sb) {
-    if (_content == null) {
+  void ensureInitialized() {
+    if (content == null) {
       throw Exception(
         "Attribute has not been initialised. You need to call the call method for $name",
       );
-    }
-
-    if (name == _content) {
-      sb.write(' $name');
-    } else {
-      if (_content!.contains('"')) {
-        sb.write(" $name='$_content'");
-      } else {
-        sb.write(' $name="$_content"');
-      }
     }
   }
 }

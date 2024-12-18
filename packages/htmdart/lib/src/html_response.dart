@@ -5,7 +5,7 @@ import 'package:shelf/shelf.dart';
 
 class HtmlResponse {
   static Response ok(
-    Element html, {
+    HTML html, {
     Map<String, Object>? headers,
     Map<String, Object>? context,
   }) {
@@ -19,12 +19,10 @@ class HtmlResponse {
 
     hs[HttpHeaders.contentTypeHeader] = defValue;
 
-    final sb = StringBuffer();
-
-    html.render(sb);
+    final htmlRenderer = DefaultHtmlRenderer();
 
     return Response.ok(
-      sb.toString(),
+      htmlRenderer.render(html),
       headers: hs,
       context: context,
     );

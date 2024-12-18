@@ -1,7 +1,8 @@
 import 'package:htmleez/htmleez.dart';
+import 'package:htmleez/src/html_renderer.dart';
 
 void main() {
-  final el = html([
+  final component = html([
     body([
       id("main_body"),
       div([
@@ -14,9 +15,9 @@ void main() {
     ]),
   ]);
 
-  final sb = StringBuffer();
+  final renderer = DefaultHtmlRenderer();
 
-  el.render(sb);
+  final s = renderer.render(component);
 
-  print(sb.toString());
+  print(s);
 }

@@ -9,7 +9,7 @@ final class hx {
   /// Issues a GET request to the specified URL
   static final get = Attribute("hx-get");
 
-  static Element getFragment(
+  static getFragment(
     HxElementHandler handler, {
     Map<String, dynamic>? queryParameters,
   }) =>
@@ -18,7 +18,7 @@ final class hx {
   /// Issues a POST request to the specified URL
   static final post = Attribute("hx-post");
 
-  static Element postFragment(
+  static postFragment(
     HxElementHandler handler, {
     Map<String, dynamic>? queryParameters,
   }) =>
@@ -27,7 +27,7 @@ final class hx {
   /// Issues a PUT request to the specified URL
   static final put = Attribute("hx-put");
 
-  static Element putFragment(
+  static putFragment(
     HxElementHandler handler, {
     Map<String, dynamic>? queryParameters,
   }) =>
@@ -36,7 +36,7 @@ final class hx {
   /// Issues a PATCH request to the specified URL
   static final patch = Attribute("hx-patch");
 
-  static Element patchFragment(
+  static patchFragment(
     HxElementHandler handler, {
     Map<String, dynamic>? queryParameters,
   }) =>
@@ -45,7 +45,7 @@ final class hx {
   /// Issues a DELETE request to the specified URL
   static final delete = Attribute("hx-delete");
 
-  static Element deleteFragment(
+  static deleteFragment(
     HxElementHandler handler, {
     Map<String, dynamic>? queryParameters,
   }) =>
@@ -68,21 +68,21 @@ final class hx {
 
   static final noSwap = swap(swapNone);
 
-  static Element oobSwap(Element content, {String swap = swapTrue}) {
+  static oobSwap(HtmlComponent content, {String swap = swapTrue}) {
     if (content is Tag) {
       content.appendChild(swapOob(swap));
     }
     return content;
   }
 
-  static Element oobSwapMany(List<Element> content) {
+  static oobSwapMany(List<HtmlComponent> content) {
     for (int i = 0; i < content.length; i++) {
       final e = content[i];
       if (e is Tag) {
         e.appendChild(swapOob(swapTrue));
       }
     }
-    return empty(content);
+    return (content);
   }
 
   /// Specifies the target element to be swapped
@@ -222,5 +222,5 @@ final class HX {
 }
 
 extension EventAsTrigger on Event {
-  Element get hxTrigger => hx.trigger(this.name);
+  HtmlComponent get hxTrigger => hx.trigger(this.name);
 }
