@@ -29,7 +29,7 @@ class PathRegistry {
 
     if (mp == null) {
       throw Exception(
-          "Handler has not been registered in the Router. $handler");
+          "Handler has not been registered in the Router or it might have been registered as a standard handler. $handler");
     }
 
     sb.write(mp.$2);

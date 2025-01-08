@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:htmdart/htmdart.dart';
 import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_router/shelf_router.dart';
 
 final router = Router()
@@ -10,26 +7,16 @@ final router = Router()
   ..postHtml("/increase_counter", increaseCounterHandler)
   ..postHtml("/decrease_counter", decreaseCounterHandler);
 
-Future<void> main() async {
-  final server = await io.serve(
-    Pipeline().addMiddleware(logRequests()).addHandler(router.call),
-    'localhost',
-    8080,
-  );
-
-  print('Serving at http://${server.address.host}:${server.port}');
-}
-
 Response homePageHandler(Request request) {
   return HtmlResponse.ok(
     html([
-      link([
-        href("https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"),
-        rel("stylesheet"),
-        type("text/css")
-      ]),
-      script([src("https://unpkg.com/htmx.org@2.0.4")]),
-      script([src("https://cdn.tailwindcss.com")]),
+      lang("en"),
+      meta([charset("UTF-8")]),
+      meta([name("viewport"), content("width=device-width, initial-scale=1.0")]),
+      meta([name("X-UA-Compatible"), content("ie=edge")]),
+      title(["{{name}}".t]),
+      script([src("https://unpkg.com/htmx.org@1.9.2")]),
+      link([rel("stylesheet"), href("index.css")]),
       body([
         className("h-screen place-content-center"),
         div([
