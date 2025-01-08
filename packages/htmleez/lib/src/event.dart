@@ -10,7 +10,7 @@ final class Event {
 
   final String name;
 
-  ElementSet call(List<Command> commands) {
+  HtmlComponentSet call(List<Command> commands) {
     final attribute = Attribute(name);
     final scripts = <HtmlComponent>[];
     var attributeContent = "var self=this;var e=event;";
@@ -19,12 +19,11 @@ final class Event {
       final c = commands[i];
       switch (c) {
         case SimpleCommand():
-          attributeContent += " ${c.js}";
+          attributeContent += "${c.js};";
         case ComplexCommand():
           final cmd = (commands[i] as ComplexCommand)();
           attributeContent += '${cmd.name}(this, event);';
-          final scriptContent = """
-          function ${cmd.name}(self, event) {
+          final scriptContent = """function ${cmd.name}(self, event) {
               let e = event;
               ${cmd.js}
           }""";
@@ -32,6 +31,6 @@ final class Event {
       }
     }
 
-    return ElementSet([attribute(attributeContent), ...scripts]);
+    return HtmlComponentSet([attribute(attributeContent), ...scripts]);
   }
 }

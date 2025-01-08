@@ -1,4 +1,4 @@
-import 'package:htmleez/src/command.dart';
+import 'command.dart';
 
 Command _simple(String js) => SimpleCommand(js);
 Command _complexx(String js) => ComplexCommand(js);

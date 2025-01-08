@@ -1,4 +1,3 @@
-import 'attribute.dart';
 import 'html_component.dart';
 
 final class Tag extends HtmlComponent {
@@ -32,22 +31,6 @@ final class Tag extends HtmlComponent {
       throw Exception(
         "Tag has not been initialised. You need to call the call method for $name",
       );
-    }
-  }
-
-  void appendChild(HtmlComponent e) {
-    ensureInitialized();
-
-    switch (e) {
-      case Attribute():
-        attributes!.add(e);
-      case ElementSet():
-        for (var i = 0; i < e.elements.length; i++) {
-          appendChild(e.elements[i]);
-        }
-        break;
-      default:
-        content!.add(e);
     }
   }
 }

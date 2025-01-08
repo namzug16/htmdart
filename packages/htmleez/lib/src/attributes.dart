@@ -16,7 +16,7 @@ final charset = Attribute("charset");
 final checked = Attribute("checked")("checked");
 final citeAttr = Attribute("cite");
 final className = Attribute("class");
-HtmlComponent classes(List<String> classes) => Attribute("class")(classes.reduce((a, b) => '$a $b'));
+HtmlComponent classes(List<String> classes) => Attribute("class")(classes.isNotEmpty ? classes.reduce((a, b) => '$a $b') : "");
 final cols = Attribute("cols");
 final colSpan = Attribute("colspan");
 final content = Attribute("content");

@@ -3,12 +3,8 @@ import 'dart:io';
 import 'package:htmleez/htmleez.dart';
 import 'package:shelf/shelf.dart';
 
-class HtmlResponse {
-  static Response ok(
-    HTML html, {
-    Map<String, Object>? headers,
-    Map<String, Object>? context,
-  }) {
+class HtmlResponse extends Response {
+  static Map<String, Object> _htmlHeaders(Map<String, Object>? headers) {
     const defValue = "text/html; charset=utf-8";
 
     Map<String, Object> hs = {};
@@ -19,12 +15,16 @@ class HtmlResponse {
 
     hs[HttpHeaders.contentTypeHeader] = defValue;
 
-    final htmlRenderer = DefaultHtmlRenderer();
-
-    return Response.ok(
-      htmlRenderer.render(html),
-      headers: hs,
-      context: context,
-    );
+    return hs;
   }
+
+  HtmlResponse.ok(
+    HTML body, {
+    Map<String, Object>? headers,
+    Map<String, Object>? context,
+  }) : super.ok(
+          DefaultHtmlRenderer().render(body),
+          headers: _htmlHeaders(headers),
+          context: context,
+        );
 }

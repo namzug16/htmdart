@@ -1,30 +1,47 @@
-import 'hx_router.dart';
+import 'package:shelf/shelf.dart';
+
+import 'http_method.dart';
 
 class PathRegistry {
   PathRegistry._internal();
   static final PathRegistry _instance = PathRegistry._internal();
   factory PathRegistry() => _instance;
 
-  final Map<HxElementHandler, String> _handlerPaths = {};
+  final Map<Handler, (HttpMethod, String)> _handlerPaths = {};
 
-  void registerPath(HxElementHandler handler, String path) {
-    _handlerPaths[handler] = path;
+  void registerPath(String path, HttpMethod method, Handler handler) {
+    final p = _handlerPaths[handler];
+    if (p != null) {
+      throw Exception(
+        "HTML handler already registered for path: $path, http mehtod: $method",
+      );
+    }
+    _handlerPaths[handler] = (method, path);
   }
 
-  String getPath(HxElementHandler handler, Map<String, dynamic>? qs) {
-    String? p = _handlerPaths[handler];
+  (HttpMethod, String) getMethodAndPath(
+    Handler handler,
+    Map<String, dynamic>? qs,
+  ) {
+    final mp = _handlerPaths[handler];
 
-    if (p == null) {
+    final sb = StringBuffer();
+
+    if (mp == null) {
       throw Exception(
           "Handler has not been registered in the Router. $handler");
     }
 
+    sb.write(mp.$2);
+
     if (qs != null) {
-      for (final q in qs.keys) {
-        p = p!.replaceAll(q, qs[q]);
+      sb.write("?");
+      for (final (i, param) in qs.entries.indexed) {
+        sb.write(
+            "${param.key}=${param.value}${i == qs.entries.length - 1 ? "" : "&"}");
       }
     }
 
-    return p!;
+    return (mp.$1, sb.toString());
   }
 }

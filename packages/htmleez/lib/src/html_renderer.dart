@@ -16,7 +16,7 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     switch (html) {
       case Tag():
         _renderTag(html, sb);
-      case ElementSet():
+      case HtmlComponentSet():
         _renderComponentSet(html, sb);
     }
     return sb.toString();
@@ -71,9 +71,9 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     }
   }
 
-  void _renderComponentSet(ElementSet set, StringBuffer sb) {
-    for (int i = 0; i < set.elements.length; i++) {
-      final e = set.elements[i];
+  void _renderComponentSet(HtmlComponentSet set, StringBuffer sb) {
+    for (int i = 0; i < set.components.length; i++) {
+      final e = set.components[i];
       if (e is! Tag) {
         throw Exception(
             "Component Set Child is not a valid tag ${e.runtimeType}");

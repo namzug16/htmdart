@@ -1,55 +1,23 @@
 import 'package:htmleez/htmleez.dart';
 
 import 'constants.dart';
-import 'hx_router.dart';
-import 'path_registry.dart';
 
 //ignore: camel_case_types
 final class hx {
   /// Issues a GET request to the specified URL
   static final get = Attribute("hx-get");
 
-  static getFragment(
-    HxElementHandler handler, {
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      get(PathRegistry().getPath(handler, queryParameters));
-
   /// Issues a POST request to the specified URL
   static final post = Attribute("hx-post");
-
-  static postFragment(
-    HxElementHandler handler, {
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      post(PathRegistry().getPath(handler, queryParameters));
 
   /// Issues a PUT request to the specified URL
   static final put = Attribute("hx-put");
 
-  static putFragment(
-    HxElementHandler handler, {
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      put(PathRegistry().getPath(handler, queryParameters));
-
   /// Issues a PATCH request to the specified URL
   static final patch = Attribute("hx-patch");
 
-  static patchFragment(
-    HxElementHandler handler, {
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      patch(PathRegistry().getPath(handler, queryParameters));
-
   /// Issues a DELETE request to the specified URL
   static final delete = Attribute("hx-delete");
-
-  static deleteFragment(
-    HxElementHandler handler, {
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      delete(PathRegistry().getPath(handler, queryParameters));
 
   /// Pushes a URL into the browser location bar to create history
   static final pushUrl = Attribute("hx-push-url");
@@ -68,21 +36,24 @@ final class hx {
 
   static final noSwap = swap(swapNone);
 
-  static oobSwap(HtmlComponent content, {String swap = swapTrue}) {
+  static HtmlComponent oobSwap(
+    HtmlComponent content, {
+    String swap = swapTrue,
+  }) {
     if (content is Tag) {
       content.appendChild(swapOob(swap));
     }
     return content;
   }
 
-  static oobSwapMany(List<HtmlComponent> content) {
+  static HtmlComponent oobSwapMany(List<HtmlComponent> content) {
     for (int i = 0; i < content.length; i++) {
       final e = content[i];
       if (e is Tag) {
         e.appendChild(swapOob(swapTrue));
       }
     }
-    return (content);
+    return HtmlComponentSet(content);
   }
 
   /// Specifies the target element to be swapped

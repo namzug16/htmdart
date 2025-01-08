@@ -1,7 +1,7 @@
 import 'package:htmleez/htmleez.dart';
 
 base class HxElement {
-  final Element root;
+  final HTML root;
 
   const HxElement({
     required this.root,
