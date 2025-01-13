@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: htmdart,htmleez
+dependency_overrides:
+  htmdart:
+    path: ../../packages/htmdart
+  htmleez:
+    path: ../../packages/htmleez
