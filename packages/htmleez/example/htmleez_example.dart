@@ -4,7 +4,7 @@ void main() {
   final component = html([
     body([
       id("main_body"),
-      h1(["Hello HTMDART".t]),
+      h1(["Hello HTMLEEZ".t]),
     ]),
   ]);
 

@@ -1,22 +1,13 @@
 import 'html_component.dart';
 
-final class Tag extends HtmlComponent {
-  Tag(this.name, this.isVoid);
-
-  Tag._(
-    this.name,
-    this.isVoid,
-    this.attributes,
-    this.content,
-  );
+final class Tag {
+  const Tag(this.name, [this.isVoid = false]);
 
   final String name;
   final bool isVoid;
-  List<HtmlComponent>? attributes;
-  List<HtmlComponent>? content;
 
   HtmlComponent call(List<HtmlComponent> content) {
-    final tag = Tag._(name, isVoid, [], []);
+    final tag = TagHtmlComponent(name, isVoid, [], []);
 
     for (var i = 0; i < content.length; i++) {
       tag.appendChild(content[i]);
@@ -24,13 +15,18 @@ final class Tag extends HtmlComponent {
 
     return tag;
   }
+}
 
-  @override
-  void ensureInitialized() {
-    if (attributes == null || content == null) {
-      throw Exception(
-        "Tag has not been initialised. You need to call the call method for $name",
-      );
-    }
-  }
+final class TagHtmlComponent extends HtmlComponent {
+  final String name;
+  final bool isVoid;
+  final List<HtmlComponent> attributes;
+  final List<HtmlComponent> content;
+
+  TagHtmlComponent(
+    this.name,
+    this.isVoid,
+    this.attributes,
+    this.content,
+  );
 }

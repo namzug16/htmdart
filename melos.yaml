@@ -1,5 +1,6 @@
-name: my_project
+name: htmdart
 
 packages:
   - packages/**
+  - apps/**
   - examples/**

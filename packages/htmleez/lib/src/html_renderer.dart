@@ -14,7 +14,7 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     final sb = StringBuffer();
     sb.write('<!DOCTYPE html> ');
     switch (html) {
-      case Tag():
+      case TagHtmlComponent():
         _renderTag(html, sb);
       case HtmlComponentSet():
         _renderComponentSet(html, sb);
@@ -22,15 +22,13 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     return sb.toString();
   }
 
-  void _renderTag(Tag tag, StringBuffer sb) {
-    tag.ensureInitialized();
-
+  void _renderTag(TagHtmlComponent tag, StringBuffer sb) {
     sb.write("<${tag.name}");
 
-    for (int i = 0; i < tag.attributes!.length; i++) {
-      final e = tag.attributes![i];
+    for (int i = 0; i < tag.attributes.length; i++) {
+      final e = tag.attributes[i];
       switch (e) {
-        case Attribute():
+        case AttributeHtmlComponent():
           _renderAttribute(e, sb);
         default:
           throw Exception("Not valid attribute, ${e.runtimeType}");
@@ -40,15 +38,15 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     sb.write(">");
 
     if (!tag.isVoid) {
-      for (int i = 0; i < tag.content!.length; i++) {
-        final e = tag.content![i];
+      for (int i = 0; i < tag.content.length; i++) {
+        final e = tag.content[i];
         switch (e) {
-          case Tag():
+          case TagHtmlComponent():
             _renderTag(e, sb);
           case Text():
-            sb.write(' ${HtmlComponent.escapeString(e.text)}');
+            sb.write(HtmlComponent.escapeString(e.text));
           case UnsafeRaw():
-            sb.write(' ${e.content}');
+            sb.write(e.content);
         }
       }
 
@@ -56,14 +54,13 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     }
   }
 
-  void _renderAttribute(Attribute a, StringBuffer sb) {
-    a.ensureInitialized();
+  void _renderAttribute(AttributeHtmlComponent a, StringBuffer sb) {
     final name = a.name;
     final content = a.content;
     if (name == content) {
       sb.write(' $name');
     } else {
-      if (content!.contains('"')) {
+      if (content.contains('"')) {
         sb.write(" $name='$content'");
       } else {
         sb.write(' $name="$content"');
@@ -74,7 +71,7 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
   void _renderComponentSet(HtmlComponentSet set, StringBuffer sb) {
     for (int i = 0; i < set.components.length; i++) {
       final e = set.components[i];
-      if (e is! Tag) {
+      if (e is! TagHtmlComponent) {
         throw Exception(
             "Component Set Child is not a valid tag ${e.runtimeType}");
       }

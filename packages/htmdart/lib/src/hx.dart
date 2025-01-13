@@ -40,7 +40,7 @@ final class hx {
     HtmlComponent content, {
     String swap = swapTrue,
   }) {
-    if (content is Tag) {
+    if (content is TagHtmlComponent) {
       content.appendChild(swapOob(swap));
     }
     return content;
@@ -49,7 +49,7 @@ final class hx {
   static HtmlComponent oobSwapMany(List<HtmlComponent> content) {
     for (int i = 0; i < content.length; i++) {
       final e = content[i];
-      if (e is Tag) {
+      if (e is TagHtmlComponent) {
         e.appendChild(swapOob(swapTrue));
       }
     }

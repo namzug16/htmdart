@@ -12,3 +12,4 @@ export 'src/event.dart';
 export 'src/events.dart';
 export 'src/command.dart';
 export 'src/commands.dart';
+export 'src/extensions.dart';
