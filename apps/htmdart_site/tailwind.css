@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Inter", serif;
+  }
+}
+
+pre.no-line-numbers {
+  counter-reset: linenumber;
+  position: relative;
+}
+
+pre.no-line-numbers .line-numbers-rows {
+  display: none;
+}
