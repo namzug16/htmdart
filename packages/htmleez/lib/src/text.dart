@@ -1,4 +1,5 @@
-import 'html_component.dart';
+import 'package:htmleez/htmleez.dart';
+
 import 'tags.dart' as tags;
 import 'attributes.dart' as attr;
 
@@ -19,4 +20,5 @@ extension HtmlText on String {
   HtmlComponent get p => tags.p([t]);
   HtmlComponent code([String className = ""]) => tags.pre([tags.code([attr.className(className), t])]);
   HtmlComponent get span => tags.span([t]);
+  Command get js => SimpleCommand(this);
 }
