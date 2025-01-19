@@ -13,3 +13,4 @@ export 'src/events.dart';
 export 'src/command.dart';
 export 'src/commands.dart';
 export 'src/extensions.dart';
+export 'src/identifiable_component.dart' hide IdentifiableComponent;
