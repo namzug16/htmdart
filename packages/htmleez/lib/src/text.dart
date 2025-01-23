@@ -1,7 +1,7 @@
 import 'package:htmleez/htmleez.dart';
 
 import 'tags.dart' as tags;
-import 'attributes.dart' as attr;
+import 'attributes.dart' as attr0;
 
 final class Text extends HtmlComponent {
   const Text(this.text);
@@ -18,7 +18,9 @@ extension HtmlText on String {
   HtmlComponent get h5 => tags.h5([t]);
   HtmlComponent get h6 => tags.h6([t]);
   HtmlComponent get p => tags.p([t]);
-  HtmlComponent code([String className = ""]) => tags.pre([tags.code([attr.className(className), t])]);
+  HtmlComponent code([String className = ""]) => tags.pre([tags.code([attr0.className(className), t])]);
   HtmlComponent get span => tags.span([t]);
   Command get js => SimpleCommand(this);
+  HtmlComponent get c => attr0.className(this);
+  HtmlComponent attr(String value) => Attribute(this)(value);
 }
