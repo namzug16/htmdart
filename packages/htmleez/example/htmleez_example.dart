@@ -8,7 +8,7 @@ void main() {
     ]),
   ]);
 
-  final renderer = DefaultHtmlRenderer();
+  final renderer = HtmlRenderer();
 
   final s = renderer.render(component);
 

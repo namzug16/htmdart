@@ -36,24 +36,20 @@ final class hx {
 
   static final noSwap = swap(swapNone);
 
-  static HtmlComponent oobSwap(
-    HtmlComponent content, {
+  static HTML oobSwap(
+    HTML content, {
     String swap = swapTrue,
   }) {
-    if (content is TagHtmlComponent) {
-      content.appendChild(swapOob(swap));
-    }
+    content.appendChild(swapOob(swap));
     return content;
   }
 
-  static HtmlComponent oobSwapMany(List<HtmlComponent> content) {
+  static HTML oobSwapMany(List<HTML> content) {
     for (int i = 0; i < content.length; i++) {
       final e = content[i];
-      if (e is TagHtmlComponent) {
-        e.appendChild(swapOob(swapTrue));
-      }
+      e.appendChild(swapOob(swapTrue));
     }
-    return HtmlComponentSet(content);
+    return HTMLSet(content);
   }
 
   /// Specifies the target element to be swapped
@@ -193,5 +189,5 @@ final class HX {
 }
 
 extension EventAsTrigger on Event {
-  HtmlComponent get hxTrigger => hx.trigger(this.name);
+  HTML get hxTrigger => hx.trigger(this.name);
 }

@@ -23,7 +23,7 @@ class HtmlResponse extends Response {
     Map<String, Object>? headers,
     Map<String, Object>? context,
   }) : super.ok(
-          DefaultHtmlRenderer().render(body),
+          HtmlRenderer().render(body),
           headers: _htmlHeaders(headers),
           context: context,
         );

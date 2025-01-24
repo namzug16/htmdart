@@ -1,34 +1,32 @@
+import 'package:htmleez/src/markup_renderer.dart';
+
 import 'attribute.dart';
-import 'html_component.dart';
+import 'markup_component.dart';
 import 'tag.dart';
 import 'text.dart';
 import 'unsafe_raw.dart';
 
-abstract class HtmlRenderer {
-  String render(HTML html);
-}
-
-final class DefaultHtmlRenderer implements HtmlRenderer {
+final class HtmlRenderer implements MarkupRenderer {
   @override
-  String render(HTML html) {
+  String render(MarkupComponent markup) {
     final sb = StringBuffer();
     sb.write('<!DOCTYPE html> ');
-    switch (html) {
-      case TagHtmlComponent():
-        _renderTag(html, sb);
-      case HtmlComponentSet():
-        _renderComponentSet(html, sb);
+    switch (markup) {
+      case TagMarkupComponent():
+        _renderTag(markup, sb);
+      case MarkupComponentSet():
+        _renderComponentSet(markup, sb);
     }
     return sb.toString();
   }
 
-  void _renderTag(TagHtmlComponent tag, StringBuffer sb) {
+  void _renderTag(TagMarkupComponent tag, StringBuffer sb) {
     sb.write("<${tag.name}");
 
     for (int i = 0; i < tag.attributes.length; i++) {
       final e = tag.attributes[i];
       switch (e) {
-        case AttributeHtmlComponent():
+        case AttributeMarkupComponent():
           _renderAttribute(e, sb);
         default:
           throw Exception("Not valid attribute, ${e.runtimeType}");
@@ -41,10 +39,10 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
       for (int i = 0; i < tag.content.length; i++) {
         final e = tag.content[i];
         switch (e) {
-          case TagHtmlComponent():
+          case TagMarkupComponent():
             _renderTag(e, sb);
           case Text():
-            sb.write(HtmlComponent.escapeString(e.text));
+            sb.write(MarkupComponent.escapeString(e.text));
           case UnsafeRaw():
             sb.write(e.content);
         }
@@ -54,7 +52,7 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     }
   }
 
-  void _renderAttribute(AttributeHtmlComponent a, StringBuffer sb) {
+  void _renderAttribute(AttributeMarkupComponent a, StringBuffer sb) {
     final name = a.name;
     final content = a.content;
     if (name == content) {
@@ -68,10 +66,10 @@ final class DefaultHtmlRenderer implements HtmlRenderer {
     }
   }
 
-  void _renderComponentSet(HtmlComponentSet set, StringBuffer sb) {
+  void _renderComponentSet(MarkupComponentSet set, StringBuffer sb) {
     for (int i = 0; i < set.components.length; i++) {
       final e = set.components[i];
-      if (e is! TagHtmlComponent) {
+      if (e is! TagMarkupComponent) {
         throw Exception(
             "Component Set Child is not a valid tag ${e.runtimeType}");
       }

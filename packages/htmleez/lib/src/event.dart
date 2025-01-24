@@ -1,7 +1,7 @@
 import 'attribute.dart';
 import "attributes.dart";
 import "command.dart";
-import "html_component.dart";
+import "markup_component.dart";
 import "tags.dart";
 import "unsafe_raw.dart";
 
@@ -10,9 +10,9 @@ final class Event {
 
   final String name;
 
-  HtmlComponentSet call(List<Command> commands) {
+  MarkupComponentSet call(List<Command> commands) {
     final attribute = Attribute(name);
-    final scripts = <HtmlComponent>[];
+    final scripts = <MarkupComponent>[];
     var attributeContent = "var self=this;var e=event;";
 
     for (int i = 0; i < commands.length; i++) {
@@ -31,6 +31,6 @@ final class Event {
       }
     }
 
-    return HtmlComponentSet([attribute(attributeContent), ...scripts]);
+    return MarkupComponentSet([attribute(attributeContent), ...scripts]);
   }
 }

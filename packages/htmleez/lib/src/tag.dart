@@ -1,4 +1,4 @@
-import 'html_component.dart';
+import 'markup_component.dart';
 
 final class Tag {
   const Tag(this.name, [this.isVoid = false]);
@@ -6,8 +6,8 @@ final class Tag {
   final String name;
   final bool isVoid;
 
-  HtmlComponent call(List<HtmlComponent> content) {
-    final tag = TagHtmlComponent(name, isVoid, [], []);
+  TagMarkupComponent call(List<MarkupComponent> content) {
+    final tag = TagMarkupComponent(name, isVoid, [], []);
 
     for (var i = 0; i < content.length; i++) {
       tag.appendChild(content[i]);
@@ -17,13 +17,13 @@ final class Tag {
   }
 }
 
-final class TagHtmlComponent extends HtmlComponent {
+final class TagMarkupComponent extends MarkupComponent {
   final String name;
   final bool isVoid;
-  final List<HtmlComponent> attributes;
-  final List<HtmlComponent> content;
+  final List<MarkupComponent> attributes;
+  final List<MarkupComponent> content;
 
-  TagHtmlComponent(
+  TagMarkupComponent(
     this.name,
     this.isVoid,
     this.attributes,
