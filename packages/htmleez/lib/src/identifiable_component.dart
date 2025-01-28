@@ -2,15 +2,12 @@ import 'package:htmleez/src/markup_component.dart';
 
 import 'attributes.dart' as attr;
 
-final class IdentifiableComponent {
+final class IdentifiableComponent<T> {
   final String id;
-  final MarkupComponent _component;
-  IdentifiableComponent(this.id, MarkupComponent component)
-      : _component = component.appendChild(attr.id(id));
+  final MarkupComponent Function(T params) _component;
+  const IdentifiableComponent(this.id, MarkupComponent Function(T params) component) : _component = component;
 
-  MarkupComponent call() => _component;
+  MarkupComponent call(T params) => _component(params).appendChild(attr.id(id)); 
 }
 
-IdentifiableComponent identifiableComponent(
-        String id, MarkupComponent component) =>
-    IdentifiableComponent(id, component);
+IdentifiableComponent<T> identifiableComponent<T>(String id, MarkupComponent Function(T params) component) => IdentifiableComponent(id, component);
