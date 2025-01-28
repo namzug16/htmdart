@@ -1,11 +1,24 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "htmdart";
+  default: true;
+  primary: "#2b5b97";
+  secondary: "#2b5b97";
+  accent: "#fbbf24";
+  neutral: "#1c1917";
+  base-100: "#111827";
+  info: "#0095eb";
+  success: "#00cba6";
+  warning: "#fef08a";
+  error: "#ff707e";
+}
+
 body {
   margin: 0;
   padding: 0;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   html {

@@ -17,7 +17,7 @@ void main(List<String> args) async {
 
   final cascade = Cascade().add(handler).add(staticHandler);
 
-  final port = int.parse(Platform.environment['PORT'] ?? '8080');
+  final port = int.parse(Platform.environment['PORT'] ?? '8081');
   final server = await serve(cascade.handler, ip, port);
   print('Server listening on port ${server.port}');
 }
