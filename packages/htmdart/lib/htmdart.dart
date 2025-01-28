@@ -1,7 +1,5 @@
 library;
 
-export 'package:htmleez/htmleez.dart';
-
 export 'src/constants.dart';
 export 'src/html_response.dart';
 export 'src/hx.dart';
