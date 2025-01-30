@@ -1,6 +1,7 @@
+
 import 'attribute.dart';
-import "attributes.dart";
 import "command.dart";
+import "identifiable_component.dart";
 import "markup_component.dart";
 import "tags.dart";
 import "unsafe_raw.dart";

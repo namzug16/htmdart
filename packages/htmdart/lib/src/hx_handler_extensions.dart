@@ -19,7 +19,7 @@ extension HxHandlerExtensions on Handler {
       }
     }
 
-    if (path.contains("<") || path.contains("<")) {
+    if (path.contains("<") || path.contains(">")) {
       throw Exception("Missing path parameters for ${mp.$2}. Got $path");
     }
 

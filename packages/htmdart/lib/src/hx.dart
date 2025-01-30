@@ -1,6 +1,7 @@
 import 'package:htmleez/htmleez.dart';
 
 import 'constants.dart';
+import 'hx_swap.dart';
 
 //ignore: camel_case_types
 final class hx {
@@ -29,7 +30,7 @@ final class hx {
   static final selectOob = Attribute("hx-select-oob");
 
   /// Controls how content will swap in (outerHTML, beforeend, afterend, etc.)
-  static final swap = Attribute("hx-swap");
+  static final swap = HxSwap();
 
   /// Marks element to swap in from a response (out of band)
   static final swapOob = Attribute("hx-swap-oob");
