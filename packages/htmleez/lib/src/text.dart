@@ -1,5 +1,3 @@
-import 'package:htmleez/htmleez.dart';
-
 import 'markup_component.dart';
 import 'tags.dart' as tags;
 import 'attributes.dart' as attr0;
@@ -21,7 +19,4 @@ extension MarkupText on String {
   MarkupComponent get p => tags.p([t]);
   MarkupComponent code([String className = ""]) => tags.pre([tags.code([attr0.className(className), t])]);
   MarkupComponent get span => tags.span([t]);
-  Command get js => SimpleCommand(this);
-  MarkupComponent get c => attr0.className(this);
-  MarkupComponent attr(String value) => Attribute(this)(value);
 }

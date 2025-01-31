@@ -188,7 +188,3 @@ final class HX {
   ///allows you to trigger client-side events after the swap step
   static const triggerAfterSwap = 'HX-Trigger-After-Swap';
 }
-
-extension EventAsTrigger on Event {
-  HTML get hxTrigger => hx.trigger(this.name);
-}
