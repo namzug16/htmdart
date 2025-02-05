@@ -10,7 +10,7 @@ final class Tag {
     final tag = TagMarkupComponent(name, isVoid, [], []);
 
     for (var i = 0; i < content.length; i++) {
-      tag.appendChild(content[i]);
+      tag.add(content[i]);
     }
 
     return tag;

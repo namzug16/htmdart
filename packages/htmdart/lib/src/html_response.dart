@@ -19,11 +19,11 @@ class HtmlResponse extends Response {
   }
 
   HtmlResponse.ok(
-    HTML body, {
+    List<HTML> body, {
     Map<String, Object>? headers,
     Map<String, Object>? context,
   }) : super.ok(
-          HtmlRenderer().render(body),
+          HtmlRenderer().renderMultiple(body),
           headers: _htmlHeaders(headers),
           context: context,
         );

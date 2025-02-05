@@ -11,28 +11,18 @@ abstract class MarkupComponent {
 
   static String escapeString(String string) => HtmlEscape().convert(string);
 
-  MarkupComponent appendChild(MarkupComponent e) {
+  MarkupComponent add(MarkupComponent c) {
     if (this is TagMarkupComponent) {
-      switch (e) {
+      switch (c) {
         case AttributeMarkupComponent():
-          (this as TagMarkupComponent).attributes.add(e);
-        case MarkupComponentSet():
-          for (var i = 0; i < e.components.length; i++) {
-            appendChild(e.components[i]);
-          }
-          break;
+          (this as TagMarkupComponent).attributes.add(c);
         default:
-          (this as TagMarkupComponent).content.add(e);
+          (this as TagMarkupComponent).content.add(c);
       }
     } else {
-      throw Exception("Cannot append child to non Tag component");
+      throw Exception("Cannot add child to a non Tag component. Component of type ${c.runtimeType}");
     }
 
     return this;
   }
-}
-
-final class MarkupComponentSet extends MarkupComponent {
-  const MarkupComponentSet(this.components);
-  final List<MarkupComponent> components;
 }

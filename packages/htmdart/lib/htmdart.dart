@@ -1,6 +1,5 @@
 library;
 
-export 'src/constants.dart';
 export 'src/html_response.dart';
 export 'src/hx.dart';
 export 'src/hx_handler_extensions.dart';

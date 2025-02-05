@@ -6,7 +6,7 @@ final class IdentifiableComponent<T> {
   final MarkupComponent Function(T params) _component;
   const IdentifiableComponent(this.id, MarkupComponent Function(T params) component) : _component = component;
 
-  MarkupComponent call(T params) => _component(params).appendChild(Attribute("id")(id)); 
+  MarkupComponent call(T params) => _component(params).add(Attribute("id")(id)); 
 }
 
 class ID {

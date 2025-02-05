@@ -14,8 +14,22 @@ final class HtmlRenderer implements MarkupRenderer {
     switch (markup) {
       case TagMarkupComponent():
         _renderTag(markup, sb);
-      case MarkupComponentSet():
-        _renderComponentSet(markup, sb);
+      default:
+        throw Exception("Cannot render Component of type ${markup.runtimeType} directly on a HTML document");
+    }
+    return sb.toString();
+  }
+
+  String renderMultiple(List<MarkupComponent> content) {
+    final sb = StringBuffer();
+    sb.write('<!DOCTYPE html> ');
+    for (final markup in content) {
+      switch (markup) {
+        case TagMarkupComponent():
+          _renderTag(markup, sb);
+        default:
+          throw Exception("Cannot render Component of type ${markup.runtimeType} directly on a HTML document");
+      }
     }
     return sb.toString();
   }
@@ -57,23 +71,13 @@ final class HtmlRenderer implements MarkupRenderer {
     if (a.content == null) {
       sb.write(' $name');
     } else {
-      String content = switch(a) {
-        EscapedAttributeMarkupComponent(:final content) => MarkupComponent.escapeString(content!),
+      String content = switch (a) {
+        EscapedAttributeMarkupComponent(:final content) =>
+          MarkupComponent.escapeString(content!),
         RawAttributeMarkupComponent(:final content) => content!,
       };
 
       sb.write(' $name="$content"');
-    }
-  }
-
-  void _renderComponentSet(MarkupComponentSet set, StringBuffer sb) {
-    for (int i = 0; i < set.components.length; i++) {
-      final e = set.components[i];
-      if (e is! TagMarkupComponent) {
-        throw Exception(
-            "Component Set Child is not a valid tag ${e.runtimeType}");
-      }
-      _renderTag(e, sb);
     }
   }
 }

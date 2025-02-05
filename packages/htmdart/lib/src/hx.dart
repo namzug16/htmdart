@@ -1,33 +1,37 @@
 import 'package:htmleez/htmleez.dart';
 
-import 'constants.dart';
+import 'hx_events.dart';
 import 'hx_swap.dart';
 
 //ignore: camel_case_types
 final class hx {
+  const hx._();
+
+  static const events = HxEvents();
+
   /// Issues a GET request to the specified URL
-  static final get = Attribute("hx-get");
+  static const get = Attribute("hx-get");
 
   /// Issues a POST request to the specified URL
-  static final post = Attribute("hx-post");
+  static const post = Attribute("hx-post");
 
   /// Issues a PUT request to the specified URL
-  static final put = Attribute("hx-put");
+  static const put = Attribute("hx-put");
 
   /// Issues a PATCH request to the specified URL
-  static final patch = Attribute("hx-patch");
+  static const patch = Attribute("hx-patch");
 
   /// Issues a DELETE request to the specified URL
-  static final delete = Attribute("hx-delete");
+  static const delete = Attribute("hx-delete");
 
   /// Pushes a URL into the browser location bar to create history
-  static final pushUrl = Attribute("hx-push-url");
+  static const pushUrl = Attribute("hx-push-url");
 
   /// Selects content to swap in from a response
-  static final select = Attribute("hx-select");
+  static const select = Attribute("hx-select");
 
   /// Selects content to swap in from a response, somewhere other than the target (out of band)
-  static final selectOob = Attribute("hx-select-oob");
+  static const selectOob = Attribute("hx-select-oob");
 
   /// Controls how content will swap in (outerHTML, beforeend, afterend, etc.)
   static final swap = HxSwap();
@@ -35,93 +39,77 @@ final class hx {
   /// Marks element to swap in from a response (out of band)
   static final swapOob = HxSwap.oob();
 
-  static HTML oobSwap(
-    HTML content, {
-    String swap = swapTrue,
-  }) {
-    content.appendChild(swapOob(swap));
-    return content;
-  }
-
-  static HTML oobSwapMany(List<HTML> content) {
-    for (int i = 0; i < content.length; i++) {
-      final e = content[i];
-      e.appendChild(swapOob(swapTrue));
-    }
-    return HTMLSet(content);
-  }
-
   /// Specifies the target element to be swapped
-  static final target = Attribute("hx-target");
+  static const target = Attribute("hx-target");
 
   /// Specifies the event that triggers the request
-  static final trigger = Attribute("hx-trigger");
+  static const trigger = Attribute("hx-trigger");
 
   /// Adds values to submit with the request (in JSON format)
-  static final vals = Attribute("hx-vals");
+  static const vals = Attribute("hx-vals");
 
   /// Adds progressive enhancement for links and forms
-  static final boost = Attribute("hx-boost");
+  static const boost = Attribute("hx-boost");
 
   /// Shows a confirm() dialog before issuing a request
-  static final confirm = Attribute("hx-confirm");
+  static const confirm = Attribute("hx-confirm");
 
   /// Disables HTMX processing for the given node and any child nodes
-  static final disable = Attribute("hx-disable");
+  static const disable = Attribute("hx-disable");
 
   /// Adds the disabled attribute to specified elements while a request is in flight
-  static final disabledElt = Attribute("hx-disabled-elt");
+  static const disabledElt = Attribute("hx-disabled-elt");
 
   /// Controls and disables automatic attribute inheritance for child nodes
-  static final disinherit = Attribute("hx-disinherit");
+  static const disinherit = Attribute("hx-disinherit");
 
   /// Changes the request encoding type
-  static final encoding = Attribute("hx-encoding");
+  static const encoding = Attribute("hx-encoding");
 
   /// Specifies extensions to use for this element
-  static final ext = Attribute("hx-ext");
+  static const ext = Attribute("hx-ext");
 
   /// Adds custom headers to be submitted with the request
-  static final headers = Attribute("hx-headers");
+  static const headers = Attribute("hx-headers");
 
   /// Prevents sensitive data from being saved to the history cache
-  static final history = Attribute("hx-history");
+  static const history = Attribute("hx-history");
 
   /// Specifies the element to snapshot and restore during history navigation
-  static final historyElt = Attribute("hx-history-elt");
+  static const historyElt = Attribute("hx-history-elt");
 
   /// Includes additional data in requests
-  static final include = Attribute("hx-include");
+  static const include = Attribute("hx-include");
 
   /// Specifies the element to apply the htmx-request class to during a request
-  static final indicator = Attribute("hx-indicator");
+  static const indicator = Attribute("hx-indicator");
 
   /// Controls and enables automatic attribute inheritance for child nodes if it has been disabled by default
-  static final inherit = Attribute("hx-inherit");
+  static const inherit = Attribute("hx-inherit");
 
   /// Filters the parameters that will be submitted with a request
-  static final params = Attribute("hx-params");
+  static const params = Attribute("hx-params");
 
   /// Specifies elements to keep unchanged between requests
-  static final preserve = Attribute("hx-preserve");
+  static const preserve = Attribute("hx-preserve");
 
   /// Shows a prompt() dialog before submitting a request
-  static final prompt = Attribute("hx-prompt");
+  static const prompt = Attribute("hx-prompt");
 
   /// Replaces the URL in the browser location bar
-  static final replaceUrl = Attribute("hx-replace-url");
+  static const replaceUrl = Attribute("hx-replace-url");
 
   /// Configures various aspects of the request
-  static final request = Attribute("hx-request");
+  static const request = Attribute("hx-request");
 
   /// Controls how requests made by different elements are synchronized
-  static final sync = Attribute("hx-sync");
+  static const sync = Attribute("hx-sync");
 
   /// Forces elements to validate themselves before a request
-  static final validate = Attribute("hx-validate");
+  static const validate = Attribute("hx-validate");
 
   /// Adds values dynamically to the parameters to submit with the request (deprecated, use hx-vals)
-  static final vars = Attribute("hx-vars");
+  static const vars = Attribute("hx-vars");
 }
 
 ///HTMX Header reference
