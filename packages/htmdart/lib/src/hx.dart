@@ -35,8 +35,6 @@ final class hx {
   /// Marks element to swap in from a response (out of band)
   static final swapOob = Attribute("hx-swap-oob");
 
-  static final noSwap = swap(swapNone);
-
   static HTML oobSwap(
     HTML content, {
     String swap = swapTrue,

@@ -1,3 +1,3 @@
 import 'package:htmleez/htmleez.dart';
 
-final hyper = Attribute("_");
+final hyper = RawAttribute("_");

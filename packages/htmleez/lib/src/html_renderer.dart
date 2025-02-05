@@ -4,7 +4,7 @@ import 'attribute.dart';
 import 'markup_component.dart';
 import 'tag.dart';
 import 'text.dart';
-import 'unsafe_raw.dart';
+import 'raw.dart';
 
 final class HtmlRenderer implements MarkupRenderer {
   @override
@@ -43,7 +43,7 @@ final class HtmlRenderer implements MarkupRenderer {
             _renderTag(e, sb);
           case Text():
             sb.write(MarkupComponent.escapeString(e.text));
-          case UnsafeRaw():
+          case Raw():
             sb.write(e.content);
         }
       }
@@ -54,15 +54,15 @@ final class HtmlRenderer implements MarkupRenderer {
 
   void _renderAttribute(AttributeMarkupComponent a, StringBuffer sb) {
     final name = a.name;
-    final content = a.content;
-    if (name == content) {
+    if (a.content == null) {
       sb.write(' $name');
     } else {
-      if (content.contains('"')) {
-        sb.write(" $name='$content'");
-      } else {
-        sb.write(' $name="$content"');
-      }
+      String content = switch(a) {
+        EscapedAttributeMarkupComponent(:final content) => MarkupComponent.escapeString(content!),
+        RawAttributeMarkupComponent(:final content) => content!,
+      };
+
+      sb.write(' $name="$content"');
     }
   }
 
