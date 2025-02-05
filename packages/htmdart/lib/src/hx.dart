@@ -33,7 +33,7 @@ final class hx {
   static final swap = HxSwap();
 
   /// Marks element to swap in from a response (out of band)
-  static final swapOob = Attribute("hx-swap-oob");
+  static final swapOob = HxSwap.oob();
 
   static HTML oobSwap(
     HTML content, {

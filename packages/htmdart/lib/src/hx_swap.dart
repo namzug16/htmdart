@@ -2,17 +2,23 @@ import 'package:htmdart/htmdart.dart';
 import 'package:htmleez/htmleez.dart';
 
 class HxSwap {
-  HTML call(String value) => _swap(value);
-  final yes = _swap(swapTrue);
-  final innerHTML = _swap(swapInnerHtml);
-  final outerHTML = _swap(swapOuterHtml);
-  final textContent = _swap(swapTextContent);
-  final beforebegin = _swap(swapBeforeBegin);
-  final afterbegin = _swap(swapAfterBegin);
-  final beforeend = _swap(swapBeforeEnd);
-  final afterend = _swap(swapAfterEnd);
-  final delete = _swap(swapDelete);
-  final none = _swap(swapNone);
+  final String type;
+
+  HxSwap() : type = "hx-swap";
+
+  HxSwap.oob() : type = "hx-swap-oob";
+
+  HTML call(String value) => _swap(type)(value);
+  late final yes = _swap(type)(swapTrue);
+  late final innerHTML = _swap(type)(swapInnerHtml);
+  late final outerHTML = _swap(type)(swapOuterHtml);
+  late final textContent = _swap(type)(swapTextContent);
+  late final beforebegin = _swap(type)(swapBeforeBegin);
+  late final afterbegin = _swap(type)(swapAfterBegin);
+  late final beforeend = _swap(type)(swapBeforeEnd);
+  late final afterend = _swap(type)(swapAfterEnd);
+  late final delete = _swap(type)(swapDelete);
+  late final none = _swap(type)(swapNone);
 }
 
-final _swap = Attribute("hx-swap");
+Attribute _swap(String type) => Attribute(type);
