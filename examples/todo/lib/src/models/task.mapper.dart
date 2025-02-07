@@ -24,22 +24,22 @@ class TaskMapper extends ClassMapperBase<Task> {
   static const Field<Task, String> _f$id = Field('id', _$id);
   static String _$content(Task v) => v.content;
   static const Field<Task, String> _f$content = Field('content', _$content);
-  static bool _$isCompleted(Task v) => v.isCompleted;
-  static const Field<Task, bool> _f$isCompleted =
-      Field('isCompleted', _$isCompleted, key: 'is_completed');
+  static int _$isCompletedInt(Task v) => v.isCompletedInt;
+  static const Field<Task, int> _f$isCompletedInt =
+      Field('isCompletedInt', _$isCompletedInt, key: 'is_completed');
 
   @override
   final MappableFields<Task> fields = const {
     #id: _f$id,
     #content: _f$content,
-    #isCompleted: _f$isCompleted,
+    #isCompletedInt: _f$isCompletedInt,
   };
 
   static Task _instantiate(DecodingData data) {
     return Task(
         id: data.dec(_f$id),
         content: data.dec(_f$content),
-        isCompleted: data.dec(_f$isCompleted));
+        isCompletedInt: data.dec(_f$isCompletedInt));
   }
 
   @override
@@ -88,7 +88,7 @@ extension TaskValueCopy<$R, $Out> on ObjectCopyWith<$R, Task, $Out> {
 
 abstract class TaskCopyWith<$R, $In extends Task, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? id, String? content, bool? isCompleted});
+  $R call({String? id, String? content, int? isCompletedInt});
   TaskCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -99,17 +99,17 @@ class _TaskCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Task, $Out>
   @override
   late final ClassMapperBase<Task> $mapper = TaskMapper.ensureInitialized();
   @override
-  $R call({String? id, String? content, bool? isCompleted}) =>
+  $R call({String? id, String? content, int? isCompletedInt}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (content != null) #content: content,
-        if (isCompleted != null) #isCompleted: isCompleted
+        if (isCompletedInt != null) #isCompletedInt: isCompletedInt
       }));
   @override
   Task $make(CopyWithData data) => Task(
       id: data.get(#id, or: $value.id),
       content: data.get(#content, or: $value.content),
-      isCompleted: data.get(#isCompleted, or: $value.isCompleted));
+      isCompletedInt: data.get(#isCompletedInt, or: $value.isCompletedInt));
 
   @override
   TaskCopyWith<$R2, Task, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>

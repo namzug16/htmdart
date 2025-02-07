@@ -22,9 +22,5 @@ class HtmlResponse extends Response {
     List<HTML> body, {
     Map<String, Object>? headers,
     Map<String, Object>? context,
-  }) : super.ok(
-          HtmlRenderer().renderMultiple(body),
-          headers: _htmlHeaders(headers),
-          context: context,
-        );
+  }) : super.ok(HtmlRenderer().renderMultiple(body), headers: _htmlHeaders(headers), context: context);
 }

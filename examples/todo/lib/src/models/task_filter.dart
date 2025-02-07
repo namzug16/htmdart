@@ -1,7 +1,7 @@
 enum TaskFilter {
   all,
-  completed,
-  pending;
+  pending,
+  completed;
 
   static TaskFilter fromName(String name) {
     switch (name.toLowerCase()) {

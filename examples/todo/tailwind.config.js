@@ -1,11 +1,4 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ['lib/**/*.dart'],
-	theme: {},
-	plugins: [
-		require('daisyui'),
-	],
-	daisyui: {
-		themes: ["retro"],
-	},
+	content: ['lib/**/*.dart']
 }

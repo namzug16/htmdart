@@ -8,11 +8,15 @@ part 'task.mapper.dart';
 class Task with TaskMappable {
   final String id;
   final String content;
-  final bool isCompleted;
+  @MappableField(key: "is_completed")
+  final int isCompletedInt;
 
   const Task({
     required this.id,
     required this.content,
-    required this.isCompleted,
+    required this.isCompletedInt,
   });
+
+
+  bool get isCompleted => isCompletedInt == 1;
 }
