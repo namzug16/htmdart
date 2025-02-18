@@ -1,256 +1,227 @@
-import 'package:htmleez/htmleez.dart';
+import 'attribute.dart';
 
-/// The loading of a media is aborted
-const abort = RawAttribute("abort");
+//NOTE: Window Event Attributes
 
-/// A page has started printing
-const afterprint = RawAttribute("afterprint");
+/// Script to be run after the document is printed
+const onafterprint = RawAttribute("onafterprint");
 
-/// A CSS animation has completed
-const animationend = RawAttribute("animationend");
+/// Script to be run before the document is printed
+const onbeforeprint = RawAttribute("onbeforeprint");
 
-/// A CSS animation is repeated
-const animationiteration = RawAttribute("animationiteration");
+/// Script to be run when the document is about to be unloaded
+const onbeforeunload = RawAttribute("onbeforeunload");
 
-/// A CSS animation has started
-const animationstart = RawAttribute("animationstart");
+/// Script to be run when an error occurs
+const onerror = RawAttribute("onerror");
 
-/// A page is about to be printed
-const beforeprint = RawAttribute("beforeprint");
+/// Script to be run when there has been changes to the anchor part of a URL
+const onhashchange = RawAttribute("onhashchange");
 
-/// Before a document is about to be unloaded
-const beforeunload = RawAttribute("beforeunload");
+/// Fires after the page is finished loading
+const onload = RawAttribute("onload");
 
-/// An element loses focus
-const blur = RawAttribute("blur");
+/// Script to be run when the message is triggered
+const onmessage = RawAttribute("onmessage");
 
-/// The browser can start playing a media (has buffered enough to begin)
-const canplay = RawAttribute("canplay");
+/// Script to be run when the browser starts to work offline
+const onoffline = RawAttribute("onoffline");
 
-/// The browser can play through a media without stopping for buffering
-const canplaythrough = RawAttribute("canplaythrough");
+/// Script to be run when the browser starts to work online
+const ononline = RawAttribute("ononline");
 
-/// The content of a form element has changed
-const change = RawAttribute("change");
+/// Script to be run when a user navigates away from a page
+const onpagehide = RawAttribute("onpagehide");
 
-/// An element is clicked on
-const click = RawAttribute("click");
+/// Script to be run when a user navigates to a page
+const onpageshow = RawAttribute("onpageshow");
 
-/// An element is right-clicked to open a context menu
-const contextmenu = RawAttribute("contextmenu");
+/// Script to be run when the window's history changes
+const onpopstate = RawAttribute("onpopstate");
 
-/// The content of an element is copied
-const copy = RawAttribute("copy");
+/// Fires when the browser window is resized
+const onresize = RawAttribute("onresize");
 
-/// The content of an element is cut
-const cut = RawAttribute("cut");
+/// Script to be run when a Web Storage area is updated
+const onstorage = RawAttribute("onstorage");
 
-/// An element is double-clicked
-const dblclick = RawAttribute("dblclick");
+/// Fires once a page has unloaded (or the browser window has been closed)
+const onunload = RawAttribute("onunload");
 
-/// An element is being dragged
-const drag = RawAttribute("drag");
+//NOTE: Form Events
 
-/// Dragging of an element has ended
-const dragend = RawAttribute("dragend");
+/// Fires the moment that the element loses focus
+const onblur = RawAttribute("onblur");
 
-/// A dragged element enters the drop target
-const dragenter = RawAttribute("dragenter");
+/// Fires the moment when the value of the element is changed
+const onchange = RawAttribute("onchange");
 
-/// A dragged element leaves the drop target
-const dragleave = RawAttribute("dragleave");
+/// Script to be run when a context menu is triggered
+const oncontextmenu = RawAttribute("oncontextmenu");
 
-/// A dragged element is over the drop target
-const dragover = RawAttribute("dragover");
+/// Fires the moment when the element gets focus
+const onfocus = RawAttribute("onfocus");
 
-/// Dragging of an element has started
-const dragstart = RawAttribute("dragstart");
+/// Script to be run when an element gets user input
+const oninput = RawAttribute("oninput");
 
-/// A dragged element is dropped on the target
-const drop = RawAttribute("drop");
+/// Script to be run when an element is invalid
+const oninvalid = RawAttribute("oninvalid");
 
-/// The duration of a media is changed
-const durationchange = RawAttribute("durationchange");
+/// Fires when the Reset button in a form is clicked
+const onreset = RawAttribute("onreset");
 
-/// A media has reach the end ("thanks for listening")
-const ended = RawAttribute("ended");
+/// Fires when the user writes something in a search field (for <input="search">)
+const onsearch = RawAttribute("onsearch");
 
-/// An error has occurred while loading a file
-const error = RawAttribute("error");
+/// Fires after some text has been selected in an element
+const onselect = RawAttribute("onselect");
 
-/// An element gets focus
-const focus = RawAttribute("focus");
+/// Fires when a form is submitted
+const onsubmit = RawAttribute("onsubmit");
 
-/// An element is about to get focus
-const focusin = RawAttribute("focusin");
+//NOTE: Keyboard Events
 
-/// An element is about to lose focus
-const focusout = RawAttribute("focusout");
+/// Fires when a user is pressing a key
+const onkeydown = RawAttribute("onkeydown");
 
-/// An element is displayed in fullscreen mode
-const fullscreenchange = RawAttribute("fullscreenchange");
+/// Fires when a user presses a key
+const onkeypress = RawAttribute("onkeypress");
 
-/// An element can not be displayed in fullscreen mode
-const fullscreenerror = RawAttribute("fullscreenerror");
+/// Fires when a user releases a key
+const onkeyup = RawAttribute("onkeyup");
 
-/// There has been changes to the anchor part of a URL
-const hashchange = RawAttribute("hashchange");
+//NOTE: Mouse Events
 
-/// An element gets user input
-const input = RawAttribute("input");
+/// Fires on a mouse click on the element
+const onclick = RawAttribute("onclick");
 
-/// An element is invalid
-const invalid = RawAttribute("invalid");
+/// Fires on a mouse double-click on the element
+const ondblclick = RawAttribute("ondblclick");
 
-/// A key is down
-const keydown = RawAttribute("keydown");
+/// Fires when a mouse button is pressed down on an element
+const onmousedown = RawAttribute("onmousedown");
 
-/// A key is pressed
-const keypress = RawAttribute("keypress");
+/// Fires when the mouse pointer is moving while it is over an element
+const onmousemove = RawAttribute("onmousemove");
 
-/// A key is released
-const keyup = RawAttribute("keyup");
+/// Fires when the mouse pointer moves out of an element
+const onmouseout = RawAttribute("onmouseout");
 
-/// An object has loaded
-const load = RawAttribute("load");
+/// Fires when the mouse pointer moves over an element
+const onmouseover = RawAttribute("onmouseover");
 
-/// Media data is loaded
-const loadeddata = RawAttribute("loadeddata");
+/// Fires when a mouse button is released over an element
+const onmouseup = RawAttribute("onmouseup");
 
-/// Meta data (like dimensions and duration) are loaded
-const loadedmetadata = RawAttribute("loadedmetadata");
+/// Fires when the mouse wheel rolls up or down over an element
+const onwheel = RawAttribute("onwheel");
 
-/// The browser starts looking for the specified media
-const loadstart = RawAttribute("loadstart");
+//NOTE: Drag Events
 
-/// A message is received through the event source
-const message = RawAttribute("message");
+/// Script to be run when an element is dragged
+const ondrag = RawAttribute("ondrag");
 
-/// The mouse button is pressed over an element
-const mousedown = RawAttribute("mousedown");
+/// Script to be run at the end of a drag operation
+const ondragend = RawAttribute("ondragend");
 
-/// The pointer is moved onto an element
-const mouseenter = RawAttribute("mouseenter");
+/// Script to be run when an element has been dragged to a valid drop target
+const ondragenter = RawAttribute("ondragenter");
 
-/// The pointer is moved out of an element
-const mouseleave = RawAttribute("mouseleave");
+/// Script to be run when an element leaves a valid drop target
+const ondragleave = RawAttribute("ondragleave");
 
-/// The pointer is moved over an element
-const mousemove = RawAttribute("mousemove");
+/// Script to be run when an element is being dragged over a valid drop target
+const ondragover = RawAttribute("ondragover");
 
-/// The pointer is moved onto an element
-const mouseover = RawAttribute("mouseover");
+/// Script to be run at the start of a drag operation
+const ondragstart = RawAttribute("ondragstart");
 
-/// The pointer is moved out of an element
-const mouseout = RawAttribute("mouseout");
+/// Script to be run when dragged element is being dropped
+const ondrop = RawAttribute("ondrop");
 
-/// A user releases a mouse button over an element
-const mouseup = RawAttribute("mouseup");
+/// Script to be run when an element's scrollbar is being scrolled
+const onscroll = RawAttribute("onscroll");
 
-/// Deprecated. Use the wheel event instead
-const mousewheel = RawAttribute("mousewheel");
+//NOTE: Clipboard Events
 
-/// The browser starts working offline
-const offline = RawAttribute("offline");
+/// Fires when the user copies the content of an element
+const oncopy = RawAttribute("oncopy");
 
-/// The browser starts working online
-const online = RawAttribute("online");
+/// Fires when the user cuts the content of an element
+const oncut = RawAttribute("oncut");
 
-/// A connection with the event source is opened
-const open = RawAttribute("open");
+/// Fires when the user pastes some content in an element
+const onpaste = RawAttribute("onpaste");
 
-/// User navigates away from a webpage
-const pagehide = RawAttribute("pagehide");
+//NOTE: Media Events
 
-/// User navigates to a webpage
-const pageshow = RawAttribute("pageshow");
+/// Script to be run on abort
+const onabort = RawAttribute("onabort");
 
-/// Some content is pasted in an element
-const paste = RawAttribute("paste");
+/// Script to be run when a file is ready to start playing (when it has buffered enough to begin)
+const oncanplay = RawAttribute("oncanplay");
 
-/// A media is paused
-const pause = RawAttribute("pause");
+/// Script to be run when a file can be played all the way to the end without pausing for buffering
+const oncanplaythrough = RawAttribute("oncanplaythrough");
 
-/// The media has started or is no longer paused
-const play = RawAttribute("play");
+/// Script to be run when the cue changes in a <track> element
+const oncuechange = RawAttribute("oncuechange");
 
-/// The media is playing after being paused or buffered
-const playing = RawAttribute("playing");
+/// Script to be run when the length of the media changes
+const ondurationchange = RawAttribute("ondurationchange");
 
-/// The window's history changes
-const popstate = RawAttribute("popstate");
+/// Script to be run when something bad happens and the file is suddenly unavailable (like unexpectedly disconnects)
+const onemptied = RawAttribute("onemptied");
 
-/// The browser is downloading media data
-const progress = RawAttribute("progress");
+/// Script to be run when the media has reach the end (a useful event for messages like "thanks for listening")
+const onended = RawAttribute("onended");
 
-/// The playing speed of a media is changed
-const ratechange = RawAttribute("ratechange");
+/// Script to be run when media data is loaded
+const onloadeddata = RawAttribute("onloadeddata");
 
-/// The document view is resized
-const resize = RawAttribute("resize");
+/// Script to be run when meta data (like dimensions and duration) are loaded
+const onloadedmetadata = RawAttribute("onloadedmetadata");
 
-/// A form is reset
-const reset = RawAttribute("reset");
+/// Script to be run just as the file begins to load before anything is actually loaded
+const onloadstart = RawAttribute("onloadstart");
 
-/// A scrollbar is being scrolled
-const scroll = RawAttribute("scroll");
+/// Script to be run when the media is paused either by the user or programmatically
+const onpause = RawAttribute("onpause");
 
-/// Something is written in a search field
-const search = RawAttribute("search");
+/// Script to be run when the media is ready to start playing
+const onplay = RawAttribute("onplay");
 
-/// Skipping to a media position is finished
-const seeked = RawAttribute("seeked");
+/// Script to be run when the media actually has started playing
+const onplaying = RawAttribute("onplaying");
 
-/// Skipping to a media position is started
-const seeking = RawAttribute("seeking");
+/// Script to be run when the browser is in the process of getting the media data
+const onprogress = RawAttribute("onprogress");
 
-/// User selects some text
-const select = RawAttribute("select");
+/// Script to be run each time the playback rate changes (like when a user switches to a slow motion or fast forward mode)
+const onratechange = RawAttribute("onratechange");
 
-/// A <menu> element is shown as a context menu
-const show = RawAttribute("show");
+/// Script to be run when the seeking attribute is set to false indicating that seeking has ended
+const onseeked = RawAttribute("onseeked");
 
-/// The browser is trying to get unavailable media data
-const stalled = RawAttribute("stalled");
+/// Script to be run when the seeking attribute is set to true indicating that seeking is active
+const onseeking = RawAttribute("onseeking");
 
-/// A Web Storage area is updated
-const storage = RawAttribute("storage");
+/// Script to be run when the browser is unable to fetch the media data for whatever reason
+const onstalled = RawAttribute("onstalled");
 
-/// A form is submitted
-const submit = RawAttribute("submit");
+/// Script to be run when fetching the media data is stopped before it is completely loaded for whatever reason
+const onsuspend = RawAttribute("onsuspend");
 
-/// The browser is intentionally not getting media data
-const suspend = RawAttribute("suspend");
+/// Script to be run when the playing position has changed (like when the user fast forwards to a different point in the media)
+const ontimeupdate = RawAttribute("ontimeupdate");
 
-/// The playing position has changed (the user moves to a different point in the media)
-const timeupdate = RawAttribute("timeupdate");
+/// Script to be run each time the volume is changed which (includes setting the volume to "mute")
+const onvolumechange = RawAttribute("onvolumechange");
 
-/// The user opens or closes the <details> element
-const toggle = RawAttribute("toggle");
+/// Script to be run when the media has paused but is expected to resume (like when the media pauses to buffer more data)
+const onwaiting = RawAttribute("onwaiting");
 
-/// The touch is interrupted
-const touchcancel = RawAttribute("touchcancel");
+//NOTE: Misc Events
 
-/// A finger is removed from a touch screen
-const touchend = RawAttribute("touchend");
-
-/// A finger is dragged across the screen
-const touchmove = RawAttribute("touchmove");
-
-/// A finger is placed on a touch screen
-const touchstart = RawAttribute("touchstart");
-
-/// A CSS transition has completed
-const transitionend = RawAttribute("transitionend");
-
-/// A page has unloaded
-const unload = RawAttribute("unload");
-
-/// The volume of a media is changed (includes muting)
-const volumechange = RawAttribute("volumechange");
-
-/// A media is paused but is expected to resume (e.g. buffering)
-const waiting = RawAttribute("waiting");
-
-/// The mouse wheel rolls up or down over an element
-const wheel = RawAttribute("wheel");
+/// Fires when the user opens or closes the <details> element
+const ontoggle = RawAttribute("ontoggle");
