@@ -19,53 +19,50 @@ Future<Response> homePageHandler(Request request) async {
   final res = await repo.getAll(TaskFilter.all);
 
   return switch (res) {
-    Ok(:final ok) => HtmlResponse.ok([
-        basePage(
-          body([
-            id("tasks-body"),
-            className("flex flex-col gap-4 items-center"),
-            header([
-              h1([className("text-8xl text-primary"), "todo".t]),
+    Ok(:final ok) => basePage(
+        body([
+          id("tasks-body"),
+          className("flex flex-col gap-4 items-center"),
+          header([
+            h1([className("text-8xl text-primary"), "todo".t]),
+          ]),
+          div([
+            id("task-card-input"),
+            className("flex flex-col gap-6"),
+            form([
+              id("task-input"),
+              hx.swap("none"),
+              hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
+              createTaskHandler.hxResolve(),
+              hyper("on ${hx.events.afterRequest} reset() me"),
+              input([className("input input-bordered input-primary w-96"), type("text"), required, maxlength("150"), autocomplete("off"), autofocus, name("todo"), placeholder("What needs to be done?")]),
             ]),
+            tasksContainer(ok),
             div([
-              id("task-card-input"),
-              className("flex flex-col gap-6"),
-              form([
-                id("task-input"),
-                hx.swap("none"),
-                hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
-                createTaskHandler.hxResolve(),
-                hyper("on ${hx.events.afterRequest} reset() me"),
-                input([className("input input-bordered input-primary w-96"), type("text"), required, maxlength("150"), autocomplete("off"), autofocus, name("todo"), placeholder("What needs to be done?")]),
-              ]),
-              tasksContainer(ok),
+              className("flex flex-col gap-4 w-96"),
+              taskFilter((TaskFilter.all,)),
               div([
-                className("flex flex-col gap-4 w-96"),
-                taskFilter((TaskFilter.all,)),
-                div([
-                  className("flex justify-around w-96"),
-                  pendingTasksCount(ok.where((e) => !e.isCompleted).length),
-                  button([
-                    completeAllHandler.hxResolve(),
-                    hx.swap.none,
-                    hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
-                    className("btn btn-success btn-xs"),
-                    "Complete All".t,
-                  ]),
-                  button([
-                    deleteAllHandler.hxResolve(),
-                    hx.swap.none,
-                    className("btn btn-error btn-xs"),
-                    "Clear All".t,
-                  ]),
+                className("flex justify-around w-96"),
+                pendingTasksCount(ok.where((e) => !e.isCompleted).length),
+                button([
+                  completeAllHandler.hxResolve(),
+                  hx.swap.none,
+                  hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
+                  className("btn btn-success btn-xs"),
+                  "Complete All".t,
+                ]),
+                button([
+                  deleteAllHandler.hxResolve(),
+                  hx.swap.none,
+                  className("btn btn-error btn-xs"),
+                  "Clear All".t,
                 ]),
               ]),
             ]),
           ]),
-        ),
-      ]),
-    Err(:final err) => HtmlResponse.ok([
-        h1(["Something went wrong. $err".t])
-      ]),
-  };
+        ]),
+      ),
+    Err(:final err) => "Something went wrong. $err".t,
+  }
+      .response;
 }

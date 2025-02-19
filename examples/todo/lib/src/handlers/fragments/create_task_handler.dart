@@ -16,21 +16,19 @@ Future<Response> createTaskHandler(Request request) async {
   final res = await repo.create(content);
   final pendingCount = await repo.countPendingTasks();
 
-  return HtmlResponse.ok(
-    switch (res) {
-      Ok(:final ok) => switch (pendingCount) {
-          Ok(ok: final c) => [
-              if (filter != TaskFilter.completed)
-                tasksContainer(ok).add(hx.swapOob.afterbegin),
-              pendingTasksCount(c).add(hx.swapOob.yes),
-            ],
-          Err(:final err) => [
-              h1(["Something went wrong. $err".t])
-            ],
-        },
-      Err(:final err) => [
-          h1(["Something went wrong. $err".t])
-        ],
-    },
-  );
+  return switch (res) {
+    Ok(:final ok) => switch (pendingCount) {
+        Ok(ok: final c) => [
+            if (filter != TaskFilter.completed) tasksContainer(ok).add(hx.swapOob.afterbegin),
+            pendingTasksCount(c).add(hx.swapOob.yes),
+          ],
+        Err(:final err) => [
+            h1(["Something went wrong. $err".t])
+          ],
+      },
+    Err(:final err) => [
+        h1(["Something went wrong. $err".t])
+      ],
+  }
+      .response;
 }

@@ -19,24 +19,19 @@ Future<Response> toggleCompletedTaskHandler(Request request) async {
 
   final pendingCount = await repo.countPendingTasks();
 
-  return HtmlResponse.ok(
-    switch (res) {
-      Ok(:final ok) => switch (pendingCount) {
-          Ok(ok: final c) => [
-              if (filter == 0)
-                taskComponent(ok).add(hx.swapOob.yes)
-              else if (ok.isCompleted && filter != 2 ||
-                  !ok.isCompleted && filter != 1)
-                div([id("id_${ok.id}"), hx.swapOob.delete]),
-              pendingTasksCount(c).add(hx.swapOob.yes),
-            ],
-          Err(:final err) => [
-              h1(["Something went wrong. $err".t])
-            ],
-        },
-      Err(:final err) => [
-          h1(["Something went wrong. $err".t])
-        ],
-    },
-  );
+  return switch (res) {
+    Ok(:final ok) => switch (pendingCount) {
+        Ok(ok: final c) => [
+            if (filter == 0) taskComponent(ok).add(hx.swapOob.yes) else if (ok.isCompleted && filter != 2 || !ok.isCompleted && filter != 1) div([id("id_${ok.id}"), hx.swapOob.delete]),
+            pendingTasksCount(c).add(hx.swapOob.yes),
+          ],
+        Err(:final err) => [
+            h1(["Something went wrong. $err".t])
+          ],
+      },
+    Err(:final err) => [
+        h1(["Something went wrong. $err".t])
+      ],
+  }
+      .response;
 }

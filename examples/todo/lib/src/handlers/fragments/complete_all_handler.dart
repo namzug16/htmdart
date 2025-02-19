@@ -17,19 +17,19 @@ Future<Response> completeAllHandler(Request request) async {
   final res = await repo.setAllAsCompleted();
 
   if (!res.isOk) {
-    return HtmlResponse.ok(["Something went wrong".t]);
+    return "Something went wrong".t.response;
   }
 
   final tasks = await repo.getAll(TaskFilter.all);
 
   return switch (tasks) {
-    Ok(:final ok) => HtmlResponse.ok([
-        if(filter != 1) tasksContainer(ok).add(hx.swapOob.yes),
-        if(filter == 1) tasksContainer([]).add(hx.swapOob.yes),
+    Ok(:final ok) => [
+        if (filter != 1) tasksContainer(ok).add(hx.swapOob.yes),
+        if (filter == 1) tasksContainer([]).add(hx.swapOob.yes),
         pendingTasksCount(0).add(hx.swapOob.yes),
-      ]),
-    Err(:final err) => HtmlResponse.ok([
+      ].response,
+    Err(:final err) => [
         h1(["Something went wrong. $err".t]),
-      ]),
+      ].response,
   };
 }

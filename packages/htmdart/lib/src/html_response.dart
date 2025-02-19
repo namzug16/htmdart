@@ -18,9 +18,19 @@ class HtmlResponse extends Response {
     return hs;
   }
 
-  HtmlResponse.ok(
+  HtmlResponse(
     List<HTML> body, {
+    int statusCode = 200,
     Map<String, Object>? headers,
     Map<String, Object>? context,
-  }) : super.ok(HtmlRenderer().renderMultiple(body), headers: _htmlHeaders(headers), context: context);
+  }) : super(statusCode, body: HtmlRenderer().renderMultiple(body), headers: _htmlHeaders(headers), context: context);
+}
+
+
+extension HtmlExtensions on HTML {
+  Response get response => HtmlResponse([this]);
+}
+
+extension HtmlListExtensions on List<HTML> {
+  Response get response => HtmlResponse(this);
 }

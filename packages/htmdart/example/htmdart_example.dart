@@ -18,8 +18,7 @@ Future<void> main() async {
 }
 
 Response homePageHandler(Request request) {
-  return HtmlResponse.ok([
-    html([
+  return html([
       link([href("https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"), rel("stylesheet"), type("text/css")]),
       script([src("https://unpkg.com/htmx.org@2.0.4")]),
       script([src("https://cdn.tailwindcss.com")]),
@@ -35,8 +34,7 @@ Response homePageHandler(Request request) {
           "Powered by shelf and htmdart".t,
         ]),
       ]),
-    ]),
-  ]);
+    ]).response;
 }
 
 Future<Response> increaseCounterHandler(Request request) async {
@@ -44,9 +42,7 @@ Future<Response> increaseCounterHandler(Request request) async {
 
   final c = fd["count"] ?? "0";
 
-  return HtmlResponse.ok([
-    counter(int.parse(c) + 1).add(hx.swapOob.yes),
-  ]);
+  return counter(int.parse(c) + 1).add(hx.swapOob.yes).response;
 }
 
 Future<Response> decreaseCounterHandler(Request request) async {
@@ -54,9 +50,7 @@ Future<Response> decreaseCounterHandler(Request request) async {
 
   final c = fd["count"] ?? "0";
 
-  return HtmlResponse.ok([
-    counter(int.parse(c) - 1).add(hx.swapOob.yes),
-  ]);
+  return counter(int.parse(c) - 1).add(hx.swapOob.yes).response;
 }
 
 HTML counter(int count) => h1([id("counter"), className("text-9xl font-bold"), count.toString().t]);

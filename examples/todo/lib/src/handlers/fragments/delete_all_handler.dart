@@ -13,12 +13,12 @@ Future<Response> deleteAllHandler(Request request) async {
   final res = await repo.clearAll();
 
   return switch (res) {
-    Ok() => HtmlResponse.ok([
+    Ok() => [
         tasksContainer([]).add(hx.swapOob.yes),
         pendingTasksCount(0).add(hx.swapOob.yes),
-      ]),
-    Err(:final err) => HtmlResponse.ok([
+      ].response,
+    Err(:final err) => [
         h1(["Something went wrong. $err".t]),
-      ]),
+      ].response,
   };
 }

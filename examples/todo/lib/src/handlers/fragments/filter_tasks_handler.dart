@@ -16,13 +16,12 @@ Future<Response> filterTasksHandler(Request request) async {
 
   final res = await repo.getAll(filter);
 
-  return HtmlResponse.ok(
-    switch (res) {
-      Ok(:final ok) => [
-          tasksContainer(ok).add(hx.swapOob.yes),
-          taskFilter((filter,)).add(hx.swapOob.yes),
-        ],
-      Err(:final err) => [err.toString().t],
-    },
-  );
+  return switch (res) {
+    Ok(:final ok) => [
+        tasksContainer(ok).add(hx.swapOob.yes),
+        taskFilter((filter,)).add(hx.swapOob.yes),
+      ],
+    Err(:final err) => [err.toString().t],
+  }
+      .response;
 }

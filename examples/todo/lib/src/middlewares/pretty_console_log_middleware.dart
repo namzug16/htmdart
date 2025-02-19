@@ -5,14 +5,13 @@ import 'package:stack_trace/stack_trace.dart';
 
 Middleware prettyConsoleLogMiddleware() => (innerHandler) {
       return (request) {
-        var startTime = DateTime.now();
-        var watch = Stopwatch()..start();
+        final startTime = DateTime.now();
+        final watch = Stopwatch()..start();
 
         return Future.sync(() => innerHandler(request)).then((response) {
-          final (method, requestedUri, elapsed) =
-              _formatRequestData(request, watch);
+          final (method, requestedUri, elapsed) = _formatRequestData(request, watch);
 
-          var msg = _message(
+          final msg = _message(
             startTime,
             response.statusCode,
             requestedUri,
@@ -26,10 +25,9 @@ Middleware prettyConsoleLogMiddleware() => (innerHandler) {
         }, onError: (Object error, StackTrace stackTrace) {
           if (error is HijackException) throw error;
 
-          final (method, requestedUri, elapsed) =
-              _formatRequestData(request, watch);
+          final (method, requestedUri, elapsed) = _formatRequestData(request, watch);
 
-          var msg = _errorMessage(
+          final msg = _errorMessage(
             startTime,
             requestedUri,
             method,
@@ -50,8 +48,7 @@ Middleware prettyConsoleLogMiddleware() => (innerHandler) {
   String method = " ${r.method} ";
   method = _bgC(method);
 
-  String requestedUri =
-      _m('${r.requestedUri.path}${_formatQuery(r.requestedUri.query)}');
+  String requestedUri = _m('${r.requestedUri.path}${_formatQuery(r.requestedUri.query)}');
 
   String elapsed = _formatElapsedDuration(w.elapsed);
 
@@ -90,9 +87,7 @@ String _message(
     _ => _bgR(sc0),
   };
 
-  return '${requestTime.toIso8601String()} '
-      '${elapsedTime.padLeft(15)} '
-      ' $method - $sc - $requestedUri';
+  return '${requestTime.toIso8601String()} ${elapsedTime.padLeft(17)}  -  ${method.padRight(25)} -  $sc  -  $requestedUri';
 }
 
 String _errorMessage(
@@ -105,9 +100,7 @@ String _errorMessage(
 ) {
   var chain = Chain.current();
   if (stack != null) {
-    chain = Chain.forTrace(stack)
-        .foldFrames((frame) => frame.isCore || frame.package == 'shelf')
-        .terse;
+    chain = Chain.forTrace(stack).foldFrames((frame) => frame.isCore || frame.package == 'shelf').terse;
   }
 
   var msg = '$requestTime\t$elapsedTime\t$method\t$requestedUri'
@@ -130,8 +123,7 @@ const _ansiEscape = "\x1B[";
 
 const _ansiReset = "${_ansiEscape}0m";
 
-String _ansiSequence(String codes, String text) =>
-    "$_ansiEscape${codes}m$text$_ansiReset";
+String _ansiSequence(String codes, String text) => "$_ansiEscape${codes}m$text$_ansiReset";
 
 String _bgR(String text) => _ansiSequence("1;101;37", text);
 String _bgG(String text) => _ansiSequence("1;102;30", text);

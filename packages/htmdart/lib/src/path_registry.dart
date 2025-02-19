@@ -12,9 +12,7 @@ class PathRegistry {
   void registerPath(String path, HttpMethod method, Handler handler) {
     final p = _handlerPaths[handler];
     if (p != null) {
-      throw Exception(
-        "HTML handler already registered for path: $path, http mehtod: $method",
-      );
+      throw Exception("HTML handler already registered for path: $path, http mehtod: $method");
     }
     _handlerPaths[handler] = (method, path);
   }
@@ -28,8 +26,7 @@ class PathRegistry {
     final sb = StringBuffer();
 
     if (mp == null) {
-      throw Exception(
-          "Handler has not been registered in the Router or it might have been registered as a standard handler. $handler");
+      throw Exception("Handler has not been registered in the Router or it might have been registered as a standard handler. $handler");
     }
 
     sb.write(mp.$2);
@@ -37,8 +34,7 @@ class PathRegistry {
     if (qs != null) {
       sb.write("?");
       for (final (i, param) in qs.entries.indexed) {
-        sb.write(
-            "${param.key}=${param.value}${i == qs.entries.length - 1 ? "" : "&"}");
+        sb.write("${param.key}=${param.value}${i == qs.entries.length - 1 ? "" : "&"}");
       }
     }
 
