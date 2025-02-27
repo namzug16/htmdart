@@ -2,9 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 part 'task.mapper.dart';
 
-@MappableClass(
-  caseStyle: CaseStyle.snakeCase,
-)
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class Task with TaskMappable {
   final String id;
   final String content;
@@ -16,7 +14,6 @@ class Task with TaskMappable {
     required this.content,
     required this.isCompletedInt,
   });
-
 
   bool get isCompleted => isCompletedInt == 1;
 }
