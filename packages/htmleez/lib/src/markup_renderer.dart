@@ -1,5 +1,5 @@
 import 'markup_component.dart';
 
 abstract class MarkupRenderer {
-  String render(MarkupComponent markup);
+  String call(List<MarkupComponent> content);
 }

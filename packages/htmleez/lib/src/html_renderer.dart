@@ -8,19 +8,7 @@ import 'raw.dart';
 
 final class HtmlRenderer implements MarkupRenderer {
   @override
-  String render(MarkupComponent markup) {
-    final sb = StringBuffer();
-    sb.write('<!DOCTYPE html> ');
-    switch (markup) {
-      case TagMarkupComponent():
-        _renderTag(markup, sb);
-      default:
-        throw Exception("Cannot render Component of type ${markup.runtimeType} directly on a HTML document");
-    }
-    return sb.toString();
-  }
-
-  String renderMultiple(List<MarkupComponent> content) {
+  String call(List<MarkupComponent> content) {
     final sb = StringBuffer();
     sb.write('<!DOCTYPE html> ');
     for (final markup in content) {
@@ -72,8 +60,7 @@ final class HtmlRenderer implements MarkupRenderer {
       sb.write(' $name');
     } else {
       String content = switch (a) {
-        EscapedAttributeMarkupComponent(:final content) =>
-          MarkupComponent.escapeString(content!),
+        EscapedAttributeMarkupComponent(:final content) => MarkupComponent.escapeString(content!),
         RawAttributeMarkupComponent(:final content) => content!,
       };
 

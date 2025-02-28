@@ -23,7 +23,7 @@ class HtmlResponse extends Response {
     int statusCode = 200,
     Map<String, Object>? headers,
     Map<String, Object>? context,
-  }) : super(statusCode, body: HtmlRenderer().renderMultiple(body), headers: _htmlHeaders(headers), context: context);
+  }) : super(statusCode, body: HtmlRenderer()(body), headers: _htmlHeaders(headers), context: context);
 }
 
 

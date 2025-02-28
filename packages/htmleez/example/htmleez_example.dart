@@ -10,7 +10,7 @@ void main() {
 
   final renderer = HtmlRenderer();
 
-  final s = renderer.render(component);
+  final s = renderer([component]);
 
   print(s);
 }
