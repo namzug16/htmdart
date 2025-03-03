@@ -11,17 +11,17 @@ final taskFilter = id.component<(TaskFilter,)>(
     hx.trigger("change"),
     filterTasksHandler.hxResolve(),
     option([
-      if (params.$1 == TaskFilter.all) selected,
+      if (params.$1 == TaskFilter.all) selected(),
       value("0"),
       "All".t,
     ]),
     option([
-      if (params.$1 == TaskFilter.pending) selected,
+      if (params.$1 == TaskFilter.pending) selected(),
       value("1"),
       "Pending".t,
     ]),
     option([
-      if (params.$1 == TaskFilter.completed) selected,
+      if (params.$1 == TaskFilter.completed) selected(),
       value("2"),
       "Completed".t,
     ]),

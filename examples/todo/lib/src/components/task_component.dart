@@ -17,7 +17,7 @@ HTML taskComponent(Task t) => div([
             "value": !t.isCompleted,
           },
         ),
-        if (t.isCompleted) checked,
+        if (t.isCompleted) checked(),
         className("checkbox checkbox-ms"),
       ]),
       h1([

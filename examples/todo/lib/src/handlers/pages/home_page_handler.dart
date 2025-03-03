@@ -35,7 +35,7 @@ Future<Response> homePageHandler(Request request) async {
               hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
               createTaskHandler.hxResolve(),
               hyper("on ${hx.events.afterRequest} reset() me"),
-              input([className("input input-bordered input-primary w-96"), type("text"), required, maxlength("150"), autocomplete("off"), autofocus, name("todo"), placeholder("What needs to be done?")]),
+              input([className("input input-bordered input-primary w-96"), type("text"), required(), maxlength("150"), autocomplete("off"), autofocus(), name("todo"), placeholder("What needs to be done?")]),
             ]),
             tasksContainer(ok),
             div([

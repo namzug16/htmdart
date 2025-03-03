@@ -1,364 +1,366 @@
 import 'tag.dart';
 
-//NOTE: Basic HTML
+//NOTE: Main Root
 
-/// Defines an HTML document
-final html = Tag("html");
+/// Represents the root (top-level element) of an HTML document, so it is also referred to as the root element. All other elements must be descendants of this element.
+const html = Tag("html");
 
-/// Defines a title for the document
-final title = Tag("title");
+//NOTE: Document Metadata
 
-/// Defines the document's body
-final body = Tag("body");
+/// Specifies the base URL to use for all relative URLs in a document. There can be only one such element in a document.
+const base = Tag("base", true);
 
-/// Defines HTML heading level 1
-final h1 = Tag("h1");
+/// Contains machine-readable information (metadata) about the document, like its title, scripts, and style sheets.
+const head = Tag("head");
 
-/// Defines HTML heading level 2
-final h2 = Tag("h2");
+/// Specifies relationships between the current document and an external resource. This element is most commonly used to link to CSS but is also used to establish site icons (both "favicon" style icons and icons for the home screen and apps on mobile devices) among other things.
+const link = Tag("link", true);
 
-/// Defines HTML heading level 3
-final h3 = Tag("h3");
+/// Represents metadata that cannot be represented by other HTML meta-related elements, like <base>, <link>, <script>, <style> and <title>.
+const meta = Tag("meta", true);
 
-/// Defines HTML heading level 4
-final h4 = Tag("h4");
+/// Contains style information for a document or part of a document. It contains CSS, which is applied to the contents of the document containing this element.
+const style = Tag("style");
 
-/// Defines HTML heading level 5
-final h5 = Tag("h5");
+/// Defines the document's title that is shown in a browser's title bar or a page's tab. It only contains text; HTML tags within the element, if any, are also treated as plain text.
+const title = Tag("title");
 
-/// Defines HTML heading level 6
-final h6 = Tag("h6");
+//NOTE: Sectioning Root
 
-/// Defines a paragraph
-final p = Tag("p");
+/// Represents the content of an HTML document. There can be only one such element in a document.
+const body = Tag("body");
 
-/// Inserts a single line break
-final br = Tag("br", true)([]);
+//NOTE: Content Sectioning
 
-/// Defines a thematic change in the content
-final hr = Tag("hr", true);
+/// Indicates that the enclosed HTML provides contact information for a person or people, or for an organization.
+const address = Tag("address");
 
-//NOTE: Formatting
+/// Represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include a forum post, a magazine or newspaper article, a blog entry, a product card, a user-submitted comment, an interactive widget or gadget, or any other independent item of content.
+const article = Tag("article");
 
-/// Defines an abbreviation or an acronym
-final abbr = Tag("abbr");
+/// Represents a portion of a document whose content is only indirectly related to the document's main content. Asides are frequently presented as sidebars or call-out boxes.
+const aside = Tag("aside");
 
-/// Defines contact information for the author/owner of a document/article
-final address = Tag("address");
+/// Represents a footer for its nearest ancestor sectioning content or sectioning root element. A <footer> typically contains information about the author of the section, copyright data, or links to related documents.
+const footer = Tag("footer");
 
-/// Defines bold text
-final b = Tag("b");
+/// Represents introductory content, typically a group of introductory or navigational aids. It may contain some heading elements but also a logo, a search form, an author name, and other elements.
+const header = Tag("header");
 
-/// Isolates a part of text that might be formatted in a different direction from other text outside it
-final bdi = Tag("bdi");
+/// Represents six levels of section headings. <h1> is the highest section level and <h6> is the lowest.
+const h1 = Tag("h1");
+const h2 = Tag("h2");
+const h3 = Tag("h3");
+const h4 = Tag("h4");
+const h5 = Tag("h5");
+const h6 = Tag("h6");
 
-/// Overrides the current text direction
-final bdo = Tag("bdo");
+/// Represents a heading grouped with any secondary content, such as subheadings, an alternative title, or a tagline.
+const hgroup = Tag("hgroup");
 
-/// Defines a section that is quoted from another source
-final blockquote = Tag("blockquote");
+/// Represents the dominant content of the body of a document. The main content area consists of content that is directly related to or expands upon the central topic of a document, or the central functionality of an application.
+const mainTag = Tag("main");
 
-/// Defines the title of a work
-final cite = Tag("cite");
+/// Represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents. Common examples of navigation sections are menus, tables of contents, and indexes.
+const nav = Tag("nav");
 
-/// Defines a piece of computer code
-final code = Tag("code");
+/// Represents a generic standalone section of a document, which doesn't have a more specific semantic element to represent it. Sections should always have a heading, with very few exceptions.
+const section = Tag("section");
 
-/// Defines text that has been deleted from a document
-final del = Tag("del");
+/// Represents a part that contains a set of form controls or other content related to performing a search or filtering operation.
+const search = Tag("search");
 
-/// Specifies a term that is going to be defined within the content
-final dfn = Tag("dfn");
+//NOTE: Text Content
 
-/// Defines emphasized text
-final em = Tag("em");
+/// Indicates that the enclosed text is an extended quotation. Usually, this is rendered visually by indentation.
+const blockquote = Tag("blockquote");
 
-/// Defines a part of text in an alternate voice or mood
-final i = Tag("i");
+/// Provides the description, definition, or value for the preceding term (<dt>) in a description list (<dl>).
+const dd = Tag("dd");
 
-/// Defines a text that has been inserted into a document
-final ins = Tag("ins");
+/// The generic container for flow content. It has no effect on the content or layout until styled in some way using CSS.
+const div = Tag("div");
 
-/// Defines keyboard input
-final kbd = Tag("kbd");
+/// Represents a description list. The element encloses a list of groups of terms (specified using the <dt> element) and descriptions (provided by <dd> elements).
+const dl = Tag("dl");
 
-/// Defines marked/highlighted text
-final mark = Tag("mark");
+/// Specifies a term in a description or definition list, and as such must be used inside a <dl> element.
+const dt = Tag("dt");
 
-/// Defines a scalar measurement within a known range (a gauge)
-final meter = Tag("meter");
+/// Represents a caption or legend describing the rest of the contents of its parent <figure> element.
+const figcaption = Tag("figcaption");
 
-/// Defines preformatted text
-final pre = Tag("pre");
+/// Represents self-contained content, potentially with an optional caption, which is specified using the <figcaption> element.
+const figure = Tag("figure");
 
-/// Represents the progress of a task
-final progress = Tag("progress");
+/// Represents a thematic break between paragraph-level elements.
+const hr = Tag("hr", true);
 
-/// Defines a short quotation
-final q = Tag("q");
+/// Represents an item in a list.
+const li = Tag("li");
 
-/// Defines what to show in browsers that do not support ruby annotations
-final rp = Tag("rp");
+/// A semantic alternative to <ul>, but treated by browsers as no different than <ul>.
+const menu = Tag("menu");
 
-/// Defines an explanation/pronunciation of characters (for East Asian typography)
-final rt = Tag("rt");
+/// Represents an ordered list of items.
+const ol = Tag("ol");
 
-/// Defines a ruby annotation (for East Asian typography)
-final ruby = Tag("ruby");
+/// Represents a paragraph.
+const p = Tag("p");
 
-/// Defines text that is no longer correct
-final s = Tag("s");
+/// Represents preformatted text which is to be presented exactly as written in the HTML file.
+const pre = Tag("pre");
 
-/// Defines sample output from a computer program
-final samp = Tag("samp");
+/// Represents an unordered list of items.
+const ul = Tag("ul");
 
-/// Defines smaller text
-final small = Tag("small");
+//NOTE: Inline Text Semantics
 
-/// Defines important text
-final strong = Tag("strong");
+/// Together with its href attribute, creates a hyperlink to web pages, files, email addresses, locations within the current page, or anything else a URL can address.
+const a = Tag("a");
 
-/// Defines subscripted text
-final sub = Tag("sub");
+/// Represents an abbreviation or acronym.
+const abbr = Tag("abbr");
 
-/// Defines superscripted text
-final sup = Tag("sup");
+/// Used to draw the reader's attention to the element's contents, which are not otherwise granted special importance.
+const b = Tag("b");
 
-/// Defines a container for content that should be hidden when the page loads
-final template = Tag("template");
+/// Tells the browser's bidirectional algorithm to treat the text it contains in isolation from its surrounding text.
+const bdi = Tag("bdi");
 
-/// Defines a specific time (or datetime)
-final time = Tag("time");
+/// Overrides the current directionality of text, so that the text within is rendered in a different direction.
+const bdo = Tag("bdo");
 
-/// Defines some text that is unarticulated and styled differently from normal text
-final u = Tag("u");
+/// Produces a line break in text (carriage-return). It is useful for writing a poem or an address, where the division of lines is significant.
+const br = Tag("br", true);
 
-/// Defines a variable
-final varTag = Tag("var");
+/// Used to mark up the title of a cited creative work.
+const cite = Tag("cite");
 
-/// Defines a possible line-break
-final wbr = Tag("wbr", true);
+/// Displays its contents styled in a fashion intended to indicate that the text is a short fragment of computer code.
+const code = Tag("code");
 
-//NOTE: Forms and Input
+/// Links a given piece of content with a machine-readable translation.
+const data = Tag("data");
 
-/// Defines an HTML form for user input
-final form = Tag("form");
+/// Used to indicate the term being defined within the context of a definition phrase or sentence.
+const dfn = Tag("dfn");
 
-/// Defines an input control
-final input = Tag("input", true);
+/// Marks text that has stress emphasis.
+const em = Tag("em");
 
-/// Defines a multiline input control (text area)
-final textarea = Tag("textarea");
+/// Represents a range of text that is set off from the normal text for some reason.
+const i = Tag("i");
 
-/// Defines a clickable button
-final button = Tag("button");
+/// Represents a span of inline text denoting textual user input from a keyboard, voice input, or any other text entry device.
+const kbd = Tag("kbd");
 
-/// Defines a drop-down list
-final select = Tag("select");
+/// Represents text which is marked or highlighted for reference or notation purposes.
+const mark = Tag("mark");
 
-/// Defines a group of related options in a drop-down list
-final optgroup = Tag("optgroup");
+/// Indicates that the enclosed text is a short inline quotation.
+const q = Tag("q");
 
-/// Defines an option in a drop-down list
-final option = Tag("option");
+/// Used to provide fall-back parentheses for browsers that do not support the display of ruby annotations.
+const rp = Tag("rp");
 
-/// Defines a label for an <input> element
-final label = Tag("label");
+/// Specifies the ruby text component of a ruby annotation.
+const rt = Tag("rt");
 
-/// Groups related elements in a form
-final fieldset = Tag("fieldset");
+/// Represents small annotations that are rendered above, below, or next to base text.
+const ruby = Tag("ruby");
 
-/// Defines a caption for a <fieldset> element
-final legend = Tag("legend");
+/// Renders text with a strikethrough, or a line through it.
+const s = Tag("s");
 
-/// Specifies a list of pre-defined options for input controls
-final datalist = Tag("datalist");
+/// Used to enclose inline text which represents sample (or quoted) output from a computer program.
+const samp = Tag("samp");
 
-/// Defines the result of a calculation
-final output = Tag("output");
+/// Represents side-comments and small print, like copyright and legal text.
+const small = Tag("small");
 
-//NOTE: Frames
+/// A generic inline container for phrasing content, which does not inherently represent anything.
+const span = Tag("span");
 
-/// Defines an inline frame
-final iframe = Tag("iframe");
+/// Indicates that its contents have strong importance, seriousness, or urgency.
+const strong = Tag("strong");
 
-//NOTE: Images
+/// Specifies inline text which should be displayed as subscript for solely typographical reasons.
+const sub = Tag("sub");
 
-/// Defines an image
-final img = Tag("img", true);
+/// Specifies inline text which is to be displayed as superscript for solely typographical reasons.
+const sup = Tag("sup");
 
-/// Defines a client-side image map
-final map = Tag("map");
+/// Represents a specific period in time.
+const time = Tag("time");
 
-/// Defines an area inside an image map
-final area = Tag("area", true);
+/// Represents a span of inline text which should be rendered in a way that indicates that it has a non-textual annotation.
+const u = Tag("u");
 
-/// Used to draw graphics, on the fly, via scripting (usually JavaScript)
-final canvas = Tag("canvas");
+/// Represents the name of a variable in a mathematical expression or a programming context.
+const varTag = Tag("var");
 
-/// Defines a caption for a <figure> element
-final figcaption = Tag("figcaption");
+/// Represents a word break opportunity.
+const wbr = Tag("wbr", true);
 
-/// Specifies self-contained content
-final figure = Tag("figure");
+//NOTE: Image and Multimedia
 
-/// Defines a container for multiple image resources
-final picture = Tag("picture");
+/// Defines an area inside an image map that has predefined clickable areas.
+const area = Tag("area", true);
 
-/// Defines a container for SVG graphics
-final svg = Tag("svg");
+/// Used to embed sound content in documents.
+const audio = Tag("audio");
 
-//NOTE: Audio / Video
+/// Embeds an image into the document.
+const img = Tag("img", true);
 
-/// Defines sound content
-final audio = Tag("audio");
+/// Used with <area> elements to define an image map.
+const map = Tag("map");
 
-/// Defines multiple media resources for media elements (<video>, <audio>, and <picture>)
-final source = Tag("source", true);
+/// Used as a child of the media elements, audio and video.
+const track = Tag("track", true);
 
-/// Defines text tracks for media elements (<video> and <audio>)
-final track = Tag("track", true);
+/// Embeds a media player which supports video playback into the document.
+const video = Tag("video");
 
-/// Defines a video or movie
-final video = Tag("video");
+//NOTE: Embedded Content
 
-//NOTE: Links
+/// Embeds external content at the specified point in the document.
+const embed = Tag("embed", true);
 
-/// Defines a hyperlink
-final a = Tag("a");
+/// Represents a nested browsing context, like <iframe> but with more native privacy features built in.
+const fencedframe = Tag("fencedframe");
 
-/// Defines the relationship between a document and an external resource (most used to link to style sheets)
-final link = Tag("link", true);
+/// Represents a nested browsing context, embedding another HTML page into the current one.
+const iframe = Tag("iframe");
 
-/// Defines navigation links
-final nav = Tag("nav");
+/// Represents an external resource, which can be treated as an image, a nested browsing context, or a resource to be handled by a plugin.
+const object = Tag("object");
 
-//NOTE: Lists
+/// Contains zero or more <source> elements and one <img> element to offer alternative versions of an image for different display/device scenarios.
+const picture = Tag("picture");
 
-/// Defines an alternative unordered list
-final menu = Tag("menu");
+/// Specifies multiple media resources for the picture, the audio element, or the video element.
+const source = Tag("source", true);
 
-/// Defines an unordered list
-final ul = Tag("ul");
+//NOTE: SVG and MathML
 
-/// Defines an ordered list
-final ol = Tag("ol");
+/// Container defining a new coordinate system and viewport.
+const svg = Tag("svg");
 
-/// Defines a list item
-final li = Tag("li");
+/// The top-level element in MathML. Every valid MathML instance must be wrapped in it.
+const math = Tag("math");
 
-/// Defines a description list
-final dl = Tag("dl");
+//NOTE: Scripting
 
-/// Defines a term/name in a description list
-final dt = Tag("dt");
+/// Container element to use with either the canvas scripting API or the WebGL API to draw graphics and animations.
+const canvas = Tag("canvas");
 
-/// Defines a description of a term/name in a description list
-final dd = Tag("dd");
+/// Defines a section of HTML to be inserted if a script type on the page is unsupported or if scripting is currently turned off in the browser.
+const noscript = Tag("noscript");
 
-//NOTE: Tables
+/// Used to embed executable code or data; this is typically used to embed or refer to JavaScript code.
+const script = Tag("script");
 
-/// Defines a table
-final table = Tag("table");
+//NOTE: Demarcating Edits
 
-/// Defines a table caption
-final caption = Tag("caption");
+/// Represents a range of text that has been deleted from a document.
+const del = Tag("del");
 
-/// Defines a header cell in a table
-final th = Tag("th");
+/// Represents a range of text that has been added to a document.
+const ins = Tag("ins");
 
-/// Defines a row in a table
-final tr = Tag("tr");
+//NOTE: Table Content
 
-/// Defines a cell in a table
-final td = Tag("td");
+/// Specifies the caption (or title) of a table.
+const caption = Tag("caption");
 
-/// Groups the header content in a table
-final thead = Tag("thead");
+/// Defines one or more columns in a column group represented by its implicit or explicit parent <colgroup> element.
+const col = Tag("col", true);
 
-/// Groups the body content in a table
-final tbody = Tag("tbody");
+/// Defines a group of columns within a table.
+const colgroup = Tag("colgroup");
 
-/// Groups the footer content in a table
-final tfoot = Tag("tfoot");
+/// Represents tabular data—that is, information presented in a two-dimensional table comprised of rows and columns of cells containing data.
+const table = Tag("table");
 
-/// Specifies column properties for each column within a <colgroup> element
-final col = Tag("col", true);
+/// Encapsulates a set of table rows (<tr> elements), indicating that they comprise the body of a table's (main) data.
+const tbody = Tag("tbody");
 
-/// Specifies a group of one or more columns in a table for formatting
-final colgroup = Tag("colgroup");
+/// A child of the <tr> element, it defines a cell of a table that contains data.
+const td = Tag("td");
 
-//NOTE: Styles and Sematics
+/// Encapsulates a set of table rows (<tr> elements), indicating that they comprise the foot of a table with information about the table's columns.
+const tfoot = Tag("tfoot");
 
-/// Defines style information for a document
-final style = Tag("style");
+/// A child of the <tr> element, it defines a cell as the header of a group of table cells.
+const th = Tag("th");
 
-/// Defines a section in a document
-final div = Tag("div");
+/// Encapsulates a set of table rows (<tr> elements), indicating that they comprise the head of a table with information about the table's columns.
+const thead = Tag("thead");
 
-/// Defines a span of text within a document
-final span = Tag("span");
+/// Defines a row of cells in a table.
+const tr = Tag("tr");
 
-/// Defines a header for a document or section
-final header = Tag("header");
+//NOTE: Forms
 
-/// Defines a group of headings (<h1> to <h6>)
-final hgroup = Tag("hgroup");
+/// An interactive element activated by a user with a mouse, keyboard, finger, voice command, or other assistive technology.
+const button = Tag("button");
 
-/// Defines a footer for a document or section
-final footer = Tag("footer");
+/// Contains a set of <option> elements that represent the permissible or recommended options available to choose from within other controls.
+const datalist = Tag("datalist");
 
-/// Specifies the main content of a document
-final mainTag = Tag("main");
+/// Used to group several controls as well as labels (<label>) within a web form.
+const fieldset = Tag("fieldset");
 
-/// Defines a section in a document
-final section = Tag("section");
+/// Represents a document section containing interactive controls for submitting information.
+const form = Tag("form");
 
-/// Defines a search section
-final search = Tag("search");
+/// Used to create interactive controls for web-based forms to accept data from the user.
+const input = Tag("input", true);
 
-/// Defines an article
-final article = Tag("article");
+/// Represents a caption for an item in a user interface.
+const label = Tag("label");
 
-/// Defines content aside from the main page content
-final aside = Tag("aside");
+/// Represents a caption for the content of its parent <fieldset>.
+const legend = Tag("legend");
 
-/// Defines additional details that the user can view or hide
-final details = Tag("details");
+/// Represents either a scalar value within a known range or a fractional value.
+const meter = Tag("meter");
 
-/// Defines a dialog box or window
-final dialog = Tag("dialog");
+/// Creates a grouping of options within a <select> element.
+const optgroup = Tag("optgroup");
 
-/// Defines a visible heading for a <details> element
-final summary = Tag("summary");
+/// Used to define an item contained in a select, an <optgroup>, or a <datalist> element.
+const option = Tag("option");
 
-/// Adds a machine-readable translation of a given content
-final data = Tag("data");
+/// Container element into which a site or app can inject the results of a calculation or the outcome of a user action.
+const output = Tag("output");
 
-//NOTE: Meta info
+/// Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.
+const progress = Tag("progress");
 
-/// Defines information about the document
-final head = Tag("head");
+/// Represents a control that provides a menu of options.
+const select = Tag("select");
 
-/// Defines metadata about an HTML document
-final meta = Tag("meta", true);
+/// Represents a multi-line plain-text editing control.
+const textarea = Tag("textarea");
 
-/// Specifies the base URL/target for all relative URLs in a document
-final base = Tag("base", true);
+//NOTE: Interactive Elements
 
-//NOTE: Programming
+/// Creates a disclosure widget in which information is visible only when the widget is toggled into an "open" state.
+const details = Tag("details");
 
-/// Defines a client-side script
-final script = Tag("script");
+/// Represents a dialog box or other interactive component, such as a dismissible alert, inspector, or subwindow.
+const dialog = Tag("dialog");
 
-/// Defines alternate content for users that do not support client-side scripts
-final noscript = Tag("noscript");
+/// Specifies a summary, caption, or legend for a details element's disclosure box.
+const summary = Tag("summary");
 
-/// Defines a container for an external resource
-final embed = Tag("embed", true);
+//NOTE: Web Components
 
-/// Defines a container for an external resource
-final object = Tag("object");
+/// Part of the Web Components technology suite, this element is a placeholder inside a web component that you can fill with your own markup.
+const slot = Tag("slot");
 
-/// Defines a parameter for an object
-final param = Tag("param", true);
+/// A mechanism for holding HTML that is not to be rendered immediately when a page is loaded but may be instantiated subsequently during runtime using JavaScript.
+const template = Tag("template");
