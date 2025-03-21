@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:shelf/shelf.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-Middleware prettyConsoleLogMiddleware() => (innerHandler) {
+Middleware prettyLogMiddleware() => (innerHandler) {
       return (request) {
         final startTime = DateTime.now();
         final watch = Stopwatch()..start();

@@ -8,8 +8,8 @@ final taskFilter = id.component<(TaskFilter,)>(
   (params) => select([
     className("select select-bordered select-sm w-full"),
     name("index"),
+    hx.handle(filterTasksHandler),
     hx.trigger("change"),
-    filterTasksHandler.hxResolve(),
     option([
       if (params.$1 == TaskFilter.all) selected(),
       value("0"),

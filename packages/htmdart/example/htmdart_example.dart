@@ -4,37 +4,37 @@ import 'package:htmdart/htmdart.dart';
 import 'package:htmleez/htmleez.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
-import 'package:shelf_router/shelf_router.dart';
 
 final router = Router()
-  ..getHtml("/", homePageHandler)
-  ..postHtml("/increase_counter", increaseCounterHandler)
-  ..postHtml("/decrease_counter", decreaseCounterHandler);
+    ..notFoundHandler((req) => "404".h1.response)
+    ..get("/", homePageHandler)
+    ..post("/increase_counter", increaseCounterHandler)
+    ..post("/decrease_counter", decreaseCounterHandler);
 
 Future<void> main() async {
-  final server = await io.serve(Pipeline().addMiddleware(logRequests()).addHandler(router.call), 'localhost', 8080);
+  final server = await io.serve(router.call, 'localhost', 8080);
 
   print('Serving at http://${server.address.host}:${server.port}');
 }
 
 Response homePageHandler(Request request) {
   return html([
-      link([href("https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"), rel("stylesheet"), type("text/css")]),
-      script([src("https://unpkg.com/htmx.org@2.0.4")]),
-      script([src("https://cdn.tailwindcss.com")]),
-      body([
-        className("h-screen place-content-center"),
-        div([
-          className("flex flex-col gap-6 items-center"),
-          counter(0),
-          counterActions,
-        ]),
-        h1([
-          className("text-xs text-center mt-8"),
-          "Powered by shelf and htmdart".t,
-        ]),
+    link([href("https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"), rel("stylesheet"), type("text/css")]),
+    script([src("https://unpkg.com/htmx.org@2.0.4")]),
+    script([src("https://cdn.tailwindcss.com")]),
+    body([
+      className("h-screen place-content-center"),
+      div([
+        className("flex flex-col gap-6 items-center"),
+        counter(0),
+        counterActions,
       ]),
-    ]).response;
+      h1([
+        className("text-xs text-center mt-8"),
+        "Powered by shelf and htmdart".t,
+      ]),
+    ]),
+  ]).response;
 }
 
 Future<Response> increaseCounterHandler(Request request) async {
@@ -61,14 +61,14 @@ final counterActions = div([
     className("btn btn-primary"),
     hx.swap.none,
     hx.vals("js:{ count: document.getElementById('counter').textContent }"),
-    decreaseCounterHandler.hxResolve(),
+    hx.handle(decreaseCounterHandler),
     "-1".t,
   ]),
   button([
     className("btn btn-primary"),
     hx.swap.none,
     hx.vals("js:{ count: document.getElementById('counter').textContent }"),
-    increaseCounterHandler.hxResolve(),
+    hx.handle(increaseCounterHandler),
     "+1".t,
   ]),
 ]);

@@ -260,14 +260,14 @@ packages:
       path: "../../packages/htmdart"
       relative: true
     source: path
-    version: "0.0.10"
+    version: "0.0.12"
   htmleez:
     dependency: "direct main"
     description:
       path: "../../packages/htmleez"
       relative: true
     source: path
-    version: "0.1.8"
+    version: "0.1.11"
   http:
     dependency: "direct dev"
     description:

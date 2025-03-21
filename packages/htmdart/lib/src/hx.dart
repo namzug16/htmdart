@@ -1,13 +1,46 @@
+import 'dart:convert';
+
 import 'package:htmleez/htmleez.dart';
 
 import 'hx_events.dart';
 import 'hx_swap.dart';
+import 'router/path_registry.dart';
 
 //ignore: camel_case_types
 final class hx {
   const hx._();
 
   static const events = HxEvents();
+
+  /// Automatically sets the hx-{Verb} and path for the given handler
+  static HTML handle(Function handler, [List<String>? pathParameters, Map<String, String>? queryParameters]) {
+    final mp = PathRegistry().getMethodAndPath(handler);
+
+    String path = mp.$2;
+
+    if (pathParameters != null) {
+      int index = 0;
+      path = path.replaceAllMapped(RegExp(r'<[^>]+>'), (match) {
+        if (index < pathParameters.length) {
+          return pathParameters[index++];
+        }
+        throw ArgumentError.value(path, "path parameters", "missing parameters. $pathParameters");
+      });
+    }
+
+    if (queryParameters != null) {
+      path = Uri(path: path, queryParameters: queryParameters).toString();
+    }
+
+    return switch (mp.$1) {
+      "GET" => hx.get(path),
+      "POST" => hx.post(path),
+      "PUT" => hx.put(path),
+      "DELETE" => hx.delete(path),
+      "PATCH" => hx.patch(path),
+      _ => throw ArgumentError.value(mp.$1, "verb", "not a valid HTMX verb"),
+    };
+  }
 
   /// Issues a GET request to the specified URL
   static const get = Attribute("hx-get");
@@ -47,6 +80,10 @@ final class hx {
 
   /// Adds values to submit with the request (in JSON format)
   static const vals = Attribute("hx-vals");
+
+  /// Adds values to submit with the request (in JSON format)
+  /// Accepts a Map<String, dynamic> that then will be encoded to json
+  static HTML valsMap(Map<String, dynamic> vals) => Attribute("hx-vals")(jsonEncode(vals));
 
   /// Adds progressive enhancement for links and forms
   static const boost = Attribute("hx-boost");

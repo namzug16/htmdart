@@ -11,12 +11,10 @@ HTML taskComponent(Task t) => div([
         type("checkbox"),
         hx.trigger("change"),
         hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
-        toggleCompletedTaskHandler.hxResolve(
-          queryParameters: {
-            "id": t.id,
-            "value": !t.isCompleted,
-          },
-        ),
+        hx.handle(toggleCompletedTaskHandler, null, {
+          "id": t.id,
+          "value": (!t.isCompleted).toString(),
+        }),
         if (t.isCompleted) checked(),
         className("checkbox checkbox-ms"),
       ]),
