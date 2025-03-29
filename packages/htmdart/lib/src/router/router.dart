@@ -44,6 +44,8 @@ abstract class _Router {
     _rn.insertPath(verb, route, handler, _middleware);
   }
 
+  void redirect(String route, String redirect) => add('GET', route, (req) => Response.movedPermanently(redirect));
+
   void get(String route, Function handler) => add('GET', route, handler);
 
   void head(String route, Function handler) => add('HEAD', route, handler);
