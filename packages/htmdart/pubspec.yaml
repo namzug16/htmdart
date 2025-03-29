@@ -7,8 +7,11 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  htmleez: ^0.1.10
+  htmleez: ^0.1.11
+  http_parser: ^4.1.2
+  mime: ^2.0.0
   shelf: ^1.4.2
+  stack_trace: ^1.12.1
 
 dev_dependencies:
   lints: ^4.0.0
