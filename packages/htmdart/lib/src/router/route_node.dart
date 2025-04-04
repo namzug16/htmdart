@@ -73,15 +73,14 @@ class RouteNode {
 
     final seg = segments.first;
 
-    if (routeParameterName case final rpn?) {
-      params[rpn] = seg;
-    }
-
     if (literalChildren.containsKey(seg)) {
       final result = literalChildren[seg]!._matchSegments(segments.sublist(1), params);
       if (result != null) return result;
     }
     if (routeParameterChild != null) {
+      if (routeParameterChild!.routeParameterName case final rpn?) {
+        params[rpn] = seg;
+      }
       return routeParameterChild!._matchSegments(segments.sublist(1), params);
     }
     return null;
