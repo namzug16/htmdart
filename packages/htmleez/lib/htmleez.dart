@@ -9,5 +9,3 @@ export 'src/tags.dart';
 export 'src/attribute.dart';
 export 'src/attributes.dart';
 export 'src/events.dart';
-export 'src/extensions.dart';
-export 'src/identifiable_component.dart' hide IdentifiableComponent, ID;

@@ -6,7 +6,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 
 final router = Router()
-    ..notFoundHandler((req) => "404".h1.response)
+    ..notFoundHandler((req) => "404".h1().response)
     ..get("/", homePageHandler)
     ..post("/increase_counter", increaseCounterHandler)
     ..post("/decrease_counter", decreaseCounterHandler);

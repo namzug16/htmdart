@@ -170,6 +170,9 @@ const hreflang = Attribute("hreflang");
 /// Defines a pragma directive.
 const httpEquiv = Attribute("http-equiv");
 
+/// Often used with CSS to style a specific element. The value of this attribute must be unique. 
+const id = Attribute("id");
+
 /// Specifies a Subresource Integrity value that allows browsers to verify what they fetch.
 const integrity = Attribute("integrity");
 

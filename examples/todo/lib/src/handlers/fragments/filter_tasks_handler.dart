@@ -19,7 +19,7 @@ Future<Response> filterTasksHandler(Request request) async {
   return switch (res) {
     Ok(:final ok) => [
         tasksContainer(ok).add(hx.swapOob.yes),
-        taskFilter((filter,)).add(hx.swapOob.yes),
+        taskFilter.$2(filter).add(hx.swapOob.yes),
       ],
     Err(:final err) => [err.toString().t],
   }

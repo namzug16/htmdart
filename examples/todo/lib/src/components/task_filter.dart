@@ -3,27 +3,28 @@ import 'package:htmleez/htmleez.dart';
 import 'package:todo/src/handlers/fragments/filter_tasks_handler.dart';
 import 'package:todo/src/models/task_filter.dart';
 
-final taskFilter = id.component<(TaskFilter,)>(
+final taskFilter = (
   "task-filter",
-  (params) => select([
-    className("select select-bordered select-sm w-full"),
-    name("index"),
-    hx.handle(filterTasksHandler),
-    hx.trigger("change"),
-    option([
-      if (params.$1 == TaskFilter.all) selected(),
-      value("0"),
-      "All".t,
-    ]),
-    option([
-      if (params.$1 == TaskFilter.pending) selected(),
-      value("1"),
-      "Pending".t,
-    ]),
-    option([
-      if (params.$1 == TaskFilter.completed) selected(),
-      value("2"),
-      "Completed".t,
-    ]),
-  ]),
+  (TaskFilter tf) => select([
+        className("select select-bordered select-sm w-full"),
+        id("task-filter"),
+        name("index"),
+        hx.handle(filterTasksHandler),
+        hx.trigger("change"),
+        option([
+          if (tf == TaskFilter.all) selected(),
+          value("0"),
+          "All".t,
+        ]),
+        option([
+          if (tf == TaskFilter.pending) selected(),
+          value("1"),
+          "Pending".t,
+        ]),
+        option([
+          if (tf == TaskFilter.completed) selected(),
+          value("2"),
+          "Completed".t,
+        ]),
+      ]),
 );

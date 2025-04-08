@@ -32,7 +32,7 @@ Future<Response> homePageHandler(Request request) async {
             form([
               id("task-input"),
               hx.swap("none"),
-              hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
+              hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
               hx.handle(createTaskHandler),
               hyper("on ${hx.events.afterRequest} reset() me"),
               input([className("input input-bordered input-primary w-96"), type("text"), required(), maxlength("150"), autocomplete("off"), autofocus(), name("todo"), placeholder("What needs to be done?")]),
@@ -40,14 +40,14 @@ Future<Response> homePageHandler(Request request) async {
             tasksContainer(ok),
             div([
               className("flex flex-col gap-4 w-96"),
-              taskFilter((TaskFilter.all,)),
+              taskFilter.$2(TaskFilter.all),
               div([
                 className("flex justify-around w-96"),
                 pendingTasksCount(ok.where((e) => !e.isCompleted).length),
                 button([
                   hx.handle(completeAllHandler),
                   hx.swap.none,
-                  hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
+                  hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
                   className("btn btn-success btn-xs"),
                   "Complete All".t,
                 ]),

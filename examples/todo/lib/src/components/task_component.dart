@@ -10,7 +10,7 @@ HTML taskComponent(Task t) => div([
       input([
         type("checkbox"),
         hx.trigger("change"),
-        hx.vals("js:{filter: document.getElementById('${taskFilter.id}').value}"),
+        hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
         hx.handle(toggleCompletedTaskHandler, null, {
           "id": t.id,
           "value": (!t.isCompleted).toString(),

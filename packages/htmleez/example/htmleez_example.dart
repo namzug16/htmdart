@@ -19,7 +19,7 @@ void main() {
     body([
       id("main_body"),
       header([
-        "Welcome to Htmleez Demo".h1,
+        "Welcome to Htmleez Demo".h1(),
         nav([
           ul([
             for (final link in links)
@@ -36,11 +36,11 @@ void main() {
       ]),
       mainTag([
         section([
-          "About This Demo".h2,
-          "This document is generated using Htmleez. It demonstrates dynamic navigation, a full HTML structure including head, body, header, main content, and footer, as well as inline scripting.".p,
+          "About This Demo".h2(),
+          "This document is generated using Htmleez. It demonstrates dynamic navigation, a full HTML structure including head, body, header, main content, and footer, as well as inline scripting.".p(),
         ]),
       ]),
-      footer(["© 2025 Htmleez Demo. All rights reserved.".p]),
+      footer(["© 2025 Htmleez Demo. All rights reserved.".p()]),
       script([Raw("console.log('Htmleez document loaded successfully');")])
     ])
   ]);

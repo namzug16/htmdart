@@ -50,7 +50,7 @@ void main() {
     body([
       id("main_body"),
       header([
-        "Welcome to Htmleez Demo".h1,
+        "Welcome to Htmleez Demo".h1(),
         nav([
           ul([
             for (final link in links)
@@ -67,11 +67,11 @@ void main() {
       ]),
       mainTag([
         section([
-          "About This Demo".h2,
-          "This document is generated using Htmleez. It demonstrates dynamic navigation, a full HTML structure including head, body, header, main content, and footer, as well as inline scripting.".p,
+          "About This Demo".h2(),
+          "This document is generated using Htmleez. It demonstrates dynamic navigation, a full HTML structure including head, body, header, main content, and footer, as well as inline scripting.".p(),
         ]),
       ]),
-      footer(["© 2025 Htmleez Demo. All rights reserved.".p]),
+      footer(["© 2025 Htmleez Demo. All rights reserved.".p()]),
       script([Raw("console.log('Htmleez document loaded successfully');")])
     ])
   ]);
@@ -200,28 +200,28 @@ print(renderer.render(component));
 # API reference
 ## Text Extensions
 
-Htmleez exposes a small set of extensions to use in string in order to build fast text components
+Htmleez exposes a small set of extensions to use on strings in order to build text components quickly
 
 ```dart
 extension MarkupText on String {
-  MarkupComponent get h1 => tags.h1([t]);
-  MarkupComponent get h2 => tags.h2([t]);
-  MarkupComponent get h3 => tags.h3([t]);
-  MarkupComponent get h4 => tags.h4([t]);
-  MarkupComponent get h5 => tags.h5([t]);
-  MarkupComponent get h6 => tags.h6([t]);
-  MarkupComponent get p => tags.p([t]);
-  MarkupComponent get span => tags.span([t]);
+  MarkupComponent h1([String? c]) => tags.h1([t, className(c)]);
+  MarkupComponent h2([String? c]) => tags.h2([t, className(c)]);
+  MarkupComponent h3([String? c]) => tags.h3([t, className(c)]);
+  MarkupComponent h4([String? c]) => tags.h4([t, className(c)]);
+  MarkupComponent h5([String? c]) => tags.h5([t, className(c)]);
+  MarkupComponent h6([String? c]) => tags.h6([t, className(c)]);
+  MarkupComponent p([String? c]) => tags.p([t, className(c)]);
+  MarkupComponent span([String? c]) => tags.span([t, className(c)]);
 }
 
 final component = div([
-  "h1".h1,
-  "p".p,
-  "span".span,
+  "h1".h1(),
+  "p".p(),
+  "span".span(),
   span([
-    "a".span,
-    "b".span,
-    "c".span,
+    "a".span(),
+    "b".span(),
+    "c".span(),
   ]),
 ]);
 ```
@@ -246,65 +246,3 @@ final component = primaryButton("Click me!").add(onclick("console.log('Button Cl
 ```
 > ! You can only add new elements to a `Tag`, if you try to add an element to an 
 > `Attribute`, you will get an exception.
-
-### Class Extension
-
-When creating text in your components you might need to add styles to them, so instead of writing something like this
-
-```dart
-final component = div([
-  span([
-    "a".span,
-    "b".span.add(className("font-bold text-red")),
-    "c".span,
-  ]),
-]);
-```
-
-You can directly use the `className` extension
-
-```dart
-final component = div([
-  span([
-    "a".span,
-    "b".span.className("font-bold text-red"),
-    "c".span,
-  ]),
-]);
-```
-
-## Special Components
-
-### ID
-
-ID can be used in two ways, as an attribute
-
-```dart
-div([
-  id("my_id"),
-])
-```
-
-And as a component
-
-
-`id.component<T>(String id, HTML Function(T param) builder)`
-
-Giving you access to the ID of a component without having to create a separate variable
-or building the component every time you need the ID
-
-
-```dart
-final myComponent = id.component<(String,)>(
-  "my_component_id",
-  (params) => div([params.$1.t]),
-);
-
-div([
-  myComponent(("Hello World!",)),
-  button([
-    "Goodbye World!".t,
-    onclick("document.getElementById('${myComponent.id}').remove()"),
-  ]),
-])
-```
