@@ -1,8 +1,4 @@
-<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-<span style="font-size: 6rem; font-weight: bold;">html<span style="color: #00FF00">eez</span></span>
-<p>HTML easy</p>
-<p style="display: none">HTML deez nuts</p>
-</div>
+[![htmleez](https://raw.githubusercontent.com/namzug16/htmdart/master/assets/htmleez.png "HTML in pure dart")](https://pub.dev/namzug16/htmleez)
 
 # Overview 
 ## Introduction
