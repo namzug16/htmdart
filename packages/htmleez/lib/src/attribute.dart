@@ -1,4 +1,4 @@
-import 'markup_component.dart';
+import "package:htmleez/src/markup_component.dart";
 
 final class Attribute {
   const Attribute(this.name);
@@ -31,8 +31,8 @@ final class RawAttributeMarkupComponent extends AttributeMarkupComponent {
 }
 
 sealed class AttributeMarkupComponent extends MarkupComponent {
+  const AttributeMarkupComponent(this.name, this.content);
+
   final String name;
   final String? content;
-
-  const AttributeMarkupComponent(this.name, this.content);
 }

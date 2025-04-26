@@ -1,20 +1,22 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:htmdart/htmdart.dart';
-import 'package:htmleez/htmleez.dart';
-import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart' as io;
+import "package:htmdart/htmdart.dart";
+import "package:htmleez/htmleez.dart";
+import "package:shelf/shelf.dart";
+import "package:shelf/shelf_io.dart" as io;
 
 final router = Router()
-    ..notFoundHandler((req) => "404".h1().response)
-    ..get("/", homePageHandler)
-    ..post("/increase_counter", increaseCounterHandler)
-    ..post("/decrease_counter", decreaseCounterHandler);
+  ..notFoundHandler((req) => "404".h1().response)
+  ..get("/", homePageHandler)
+  ..post("/increase_counter", increaseCounterHandler)
+  ..post("/decrease_counter", decreaseCounterHandler);
 
 Future<void> main() async {
-  final server = await io.serve(router.call, 'localhost', 8080);
+  final server = await io.serve(router.call, "localhost", 8080);
 
-  print('Serving at http://${server.address.host}:${server.port}');
+  //
+  // ignore: avoid_print
+  print("Serving at http://${server.address.host}:${server.port}");
 }
 
 Response homePageHandler(Request request) {

@@ -1,46 +1,53 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:shelf/shelf.dart';
-import 'package:stack_trace/stack_trace.dart';
+import "package:shelf/shelf.dart";
+import "package:stack_trace/stack_trace.dart";
+
+//
+//ignore_for_file: avoid_print
 
 Middleware prettyLogMiddleware() => (innerHandler) {
       return (request) {
         final startTime = DateTime.now();
         final watch = Stopwatch()..start();
 
-        return Future.sync(() => innerHandler(request)).then((response) {
-          final (method, requestedUri, elapsed) = _formatRequestData(request, watch);
+        return Future.sync(() => innerHandler(request)).then(
+          (response) {
+            final (method, requestedUri, elapsed) = _formatRequestData(request, watch);
 
-          final msg = _message(
-            startTime,
-            response.statusCode,
-            requestedUri,
-            method,
-            elapsed,
-          );
+            final msg = _message(
+              startTime,
+              response.statusCode,
+              requestedUri,
+              method,
+              elapsed,
+            );
 
-          _defaultLogger(msg, false);
+            _defaultLogger(msg, false);
 
-          return response;
-        }, onError: (Object error, StackTrace stackTrace) {
-          if (error is HijackException) throw error;
+            return response;
+          },
+          onError: (Object error, StackTrace stackTrace) {
+            if (error is HijackException) throw error;
 
-          final (method, requestedUri, elapsed) = _formatRequestData(request, watch);
+            final (method, requestedUri, elapsed) = _formatRequestData(request, watch);
 
-          final msg = _errorMessage(
-            startTime,
-            requestedUri,
-            method,
-            elapsed,
-            error,
-            stackTrace,
-          );
+            final msg = _errorMessage(
+              startTime,
+              requestedUri,
+              method,
+              elapsed,
+              error,
+              stackTrace,
+            );
 
-          _defaultLogger(msg, true);
+            _defaultLogger(msg, true);
 
-          // ignore: only_throw_errors
-          throw error;
-        });
+            //
+            // ignore: only_throw_errors
+            throw error;
+          },
+        );
       };
     };
 
@@ -48,18 +55,18 @@ Middleware prettyLogMiddleware() => (innerHandler) {
   String method = " ${r.method} ";
   method = _bgC(method);
 
-  String requestedUri = _m('${r.requestedUri.path}${_formatQuery(r.requestedUri.query)}');
+  final requestedUri = _m("${r.requestedUri.path}${_formatQuery(r.requestedUri.query)}");
 
-  String elapsed = _formatElapsedDuration(w.elapsed);
+  final elapsed = _formatElapsedDuration(w.elapsed);
 
   return (method, requestedUri, elapsed);
 }
 
 String _formatElapsedDuration(Duration d) {
   late String res;
-  if (d.inSeconds.floor() > 0) {
+  if (d.inSeconds > 0) {
     res = "${d.inSeconds} s";
-  } else if (d.inMilliseconds.floor() > 0) {
+  } else if (d.inMilliseconds > 0) {
     res = "${d.inMilliseconds} ms";
   } else {
     res = "${d.inMicroseconds} μs";
@@ -69,7 +76,7 @@ String _formatElapsedDuration(Duration d) {
 }
 
 String _formatQuery(String query) {
-  return query == '' ? '' : '?$query';
+  return query == "" ? "" : "?$query";
 }
 
 String _message(
@@ -87,7 +94,7 @@ String _message(
     _ => _bgR(sc0),
   };
 
-  return '${requestTime.toIso8601String()} ${elapsedTime.padLeft(17)}  -  ${method.padRight(25)} -  $sc  -  $requestedUri';
+  return "${requestTime.toIso8601String()} ${elapsedTime.padLeft(17)}  -  ${method.padRight(25)} -  $sc  -  $requestedUri";
 }
 
 String _errorMessage(
@@ -100,15 +107,15 @@ String _errorMessage(
 ) {
   var chain = Chain.current();
   if (stack != null) {
-    chain = Chain.forTrace(stack).foldFrames((frame) => frame.isCore || frame.package == 'shelf').terse;
+    chain = Chain.forTrace(stack).foldFrames((frame) => frame.isCore || frame.package == "shelf").terse;
   }
 
-  var msg = '$requestTime\t$elapsedTime\t$method\t$requestedUri'
+  final msg = "$requestTime\t$elapsedTime\t$method\t$requestedUri"
       '\n\n${_r("===================================")}\n'
-      '${_r(error.toString())}'
+      "${_r(error.toString())}"
       '\n${_r("===================================")}\n';
 
-  return '$msg\n${_r(chain.toString())}';
+  return "$msg\n${_r(chain.toString())}";
 }
 
 void _defaultLogger(String msg, bool isError) {

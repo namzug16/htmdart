@@ -1,6 +1,7 @@
+//
 //ignore: camel_case_types
 final class HxEvents {
-  const HxEvents();
+  HxEvents();
 
   /// Triggered after an AJAX request has completed processing a successful response
   final afterOnLoad = "htmx:afterOnLoad";

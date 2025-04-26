@@ -1,4 +1,7 @@
-import 'attribute.dart';
+//
+// ignore_for_file: unintended_html_in_doc_comment
+
+import "package:htmleez/src/attribute.dart";
 
 //NOTE: Window Event Attributes
 

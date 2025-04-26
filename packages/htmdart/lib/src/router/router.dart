@@ -1,21 +1,21 @@
-import 'dart:convert';
-import 'dart:async';
-import 'dart:io';
-import 'package:htmdart/src/middlewares/pretty_log_middleware.dart';
-import 'package:htmdart/src/router/utils.dart';
-import 'package:mime/mime.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:shelf/shelf.dart';
+import "dart:async";
+import "dart:convert";
+import "dart:io";
 
-import 'path_registry.dart';
-import 'route_node.dart';
+import "package:htmdart/src/middlewares/pretty_log_middleware.dart";
+import "package:htmdart/src/router/path_registry.dart";
+import "package:htmdart/src/router/route_node.dart";
+import "package:htmdart/src/router/utils.dart";
+import "package:http_parser/http_parser.dart";
+import "package:mime/mime.dart";
+import "package:shelf/shelf.dart";
 
 abstract class _Router {
+  _Router(this._rn, this._middleware);
+
   final RouteNode _rn;
 
   Middleware? _middleware;
-
-  _Router(this._rn, this._middleware);
 
   GroupRouter group(String group) => GroupRouter(_rn, _middleware, group);
 
@@ -32,37 +32,37 @@ abstract class _Router {
     // if (!isHttpMethod(verb)) {
     //   throw ArgumentError.value(verb, 'verb', 'expected a valid HTTP method');
     // }
-    verb = verb.toUpperCase();
+    final v = verb.toUpperCase();
 
-    PathRegistry().registerPath(route, verb, handler);
+    PathRegistry().registerPath(route, v, handler);
 
-    if (verb == 'GET') {
+    if (v == "GET") {
       // Handling in a 'GET' request without handling a 'HEAD' request is always
       // wrong, thus, we add a default implementation that discards the body.
-      _rn.insertPath('HEAD', route, handler, _removeBodyMiddleware.addMiddleware(_middleware ?? (Handler h) => h));
+      _rn.insertPath("HEAD", route, handler, _removeBodyMiddleware.addMiddleware(_middleware ?? (Handler h) => h));
     }
-    _rn.insertPath(verb, route, handler, _middleware);
+    _rn.insertPath(v, route, handler, _middleware);
   }
 
-  void redirect(String route, String redirect) => add('GET', route, (req) => Response.movedPermanently(redirect));
+  void redirect(String route, String redirect) => add("GET", route, (req) => Response.movedPermanently(redirect));
 
-  void get(String route, Function handler) => add('GET', route, handler);
+  void get(String route, Function handler) => add("GET", route, handler);
 
-  void head(String route, Function handler) => add('HEAD', route, handler);
+  void head(String route, Function handler) => add("HEAD", route, handler);
 
-  void post(String route, Function handler) => add('POST', route, handler);
+  void post(String route, Function handler) => add("POST", route, handler);
 
-  void put(String route, Function handler) => add('PUT', route, handler);
+  void put(String route, Function handler) => add("PUT", route, handler);
 
-  void delete(String route, Function handler) => add('DELETE', route, handler);
+  void delete(String route, Function handler) => add("DELETE", route, handler);
 
-  void connect(String route, Function handler) => add('CONNECT', route, handler);
+  void connect(String route, Function handler) => add("CONNECT", route, handler);
 
-  void options(String route, Function handler) => add('OPTIONS', route, handler);
+  void options(String route, Function handler) => add("OPTIONS", route, handler);
 
-  void trace(String route, Function handler) => add('TRACE', route, handler);
+  void trace(String route, Function handler) => add("TRACE", route, handler);
 
-  void patch(String route, Function handler) => add('PATCH', route, handler);
+  void patch(String route, Function handler) => add("PATCH", route, handler);
 
   void static(String prefix, String root) {
     checkPath(prefix);
@@ -73,7 +73,7 @@ abstract class _Router {
       throw ArgumentError('A directory corresponding to fileSystemPath "$root" could not be found');
     }
 
-    root = rootDir.resolveSymbolicLinksSync();
+    final r = rootDir.resolveSymbolicLinksSync();
 
     final entities = rootDir.listSync(recursive: true);
 
@@ -83,9 +83,9 @@ abstract class _Router {
         final fp = e.resolveSymbolicLinksSync();
         String p = fp;
         if (prefix == "/") {
-          p = fp.replaceFirst(root, "");
+          p = fp.replaceFirst(r, "");
         } else {
-          p = fp.replaceFirst("$root/", prefix);
+          p = fp.replaceFirst("$r/", prefix);
         }
         file(p, fp);
       }
@@ -99,66 +99,74 @@ abstract class _Router {
       final file = File(filePath);
       get(
         path,
-        (req) => _handleFile(req, file, () async {
+        (Request req) => _handleFile(req, file, () async {
           final mimeResolver = MimeTypeResolver();
           return mimeResolver.lookup(file.path);
         }),
       );
     } else {
-      throw ArgumentError.value(filePath, 'file', 'The provided file path "$filePath" does not refer to an existing file. Please verify that the file exists and the path is correct.');
+      throw ArgumentError.value(filePath, "file", 'The provided file path "$filePath" does not refer to an existing file. Please verify that the file exists and the path is correct.');
     }
   }
 }
 
 class Router extends _Router {
-  Router() : _loggerMiddleware = prettyLogMiddleware(), super(RouteNode(segment: ''), null);
+  Router()
+      : _loggerMiddleware = prettyLogMiddleware(),
+        super(RouteNode(segment: ""), null);
 
   Middleware _loggerMiddleware;
 
+  //
+  // ignore: use_setters_to_change_properties
   void loggerMiddleware(Middleware middleware) {
     _loggerMiddleware = middleware;
   }
 
   Handler? _notFoundHandler;
 
+  //
+  // ignore: use_setters_to_change_properties
   void notFoundHandler(Handler handler) {
     _notFoundHandler = handler;
   }
 
   Future<Response> call(Request request) async => await _loggerMiddleware((request) async {
-    final match = _rn.matchPath(request.method.toUpperCase(), request.url.path);
+        final match = _rn.matchPath(request.method.toUpperCase(), request.url.path);
 
-    if (match == null) {
-      return (_notFoundHandler ?? _defaultNotFound)(request);
-    }
+        if (match == null) {
+          return (_notFoundHandler ?? _defaultNotFound)(request);
+        }
 
-    //TODO: find a way to centrally manage errors
-    final response = await match.$1.invoke(request, match.$2);
+        // TODO(me): find a way to centrally manage errors
+        final response = await match.$1.invoke(request, match.$2);
 
-    return response;
-  })(request);
+        return response;
+      })(request);
 
   Response _defaultNotFound(Request request) => _RouteNotFoundResponse();
 }
 
 class GroupRouter extends _Router {
-  final String path;
-
   GroupRouter(super.rn, super.middleware, this.path) : super() {
     checkPath(path);
   }
 
+  final String path;
+
   @override
   void add(String verb, String route, Function handler) {
+    //
+    // ignore: prefer_double_quotes
     super.add(verb, '$path$route', handler);
   }
 }
 
 class _RouteNotFoundResponse extends Response {
-  static const _message = 'Route not found';
-  static final _messageBytes = utf8.encode(_message);
-
   _RouteNotFoundResponse() : super.notFound(_message);
+
+  static const _message = "Route not found";
+  static final _messageBytes = utf8.encode(_message);
 
   @override
   Stream<List<int>> read() => Stream<List<int>>.value(_messageBytes);
@@ -191,14 +199,14 @@ Future<Response> _handleFile(Request request, File file, FutureOr<String?> Funct
   final contentType = await getContentType();
   final headers = {
     HttpHeaders.lastModifiedHeader: formatHttpDate(stat.modified),
-    HttpHeaders.acceptRangesHeader: 'bytes',
+    HttpHeaders.acceptRangesHeader: "bytes",
     if (contentType != null) HttpHeaders.contentTypeHeader: contentType,
   };
 
   return _fileRangeResponse(request, file, headers) ??
       Response.ok(
-        request.method == 'HEAD' ? null : file.openRead(),
-        headers: headers..[HttpHeaders.contentLengthHeader] = '${stat.size}',
+        request.method == "HEAD" ? null : file.openRead(),
+        headers: headers..[HttpHeaders.contentLengthHeader] = "${stat.size}",
       );
 }
 
@@ -207,7 +215,7 @@ DateTime _toSecondResolution(DateTime dt) {
   return dt.subtract(Duration(milliseconds: dt.millisecond));
 }
 
-final _bytesMatcher = RegExp(r'^bytes=(\d*)-(\d*)$');
+final _bytesMatcher = RegExp(r"^bytes=(\d*)-(\d*)$");
 
 Response? _fileRangeResponse(Request request, File file, Map<String, Object> headers) {
   final range = request.headers[HttpHeaders.rangeHeader];
@@ -247,16 +255,18 @@ Response? _fileRangeResponse(Request request, File file, Map<String, Object> hea
   }
   return Response(
     HttpStatus.partialContent,
-    body: request.method == 'HEAD' ? null : file.openRead(start, end + 1),
+    body: request.method == "HEAD" ? null : file.openRead(start, end + 1),
     headers: headers
       ..[HttpHeaders.contentLengthHeader] = (end - start + 1).toString()
-      ..[HttpHeaders.contentRangeHeader] = 'bytes $start-$end/$actualLength',
+      ..[HttpHeaders.contentRangeHeader] = "bytes $start-$end/$actualLength",
   );
 }
 
-final _removeBodyMiddleware = createMiddleware(responseHandler: (r) {
-  if (r.headers.containsKey('content-length')) {
-    r = r.change(headers: {'content-length': '0'});
-  }
-  return r.change(body: <int>[]);
-});
+final _removeBodyMiddleware = createMiddleware(
+  responseHandler: (r) {
+    if (r.headers.containsKey("content-length")) {
+      r = r.change(headers: {"content-length": "0"});
+    }
+    return r.change(body: <int>[]);
+  },
+);

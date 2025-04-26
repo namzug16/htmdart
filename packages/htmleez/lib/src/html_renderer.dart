@@ -1,16 +1,14 @@
-import 'package:htmleez/src/markup_renderer.dart';
-
-import 'attribute.dart';
-import 'markup_component.dart';
-import 'tag.dart';
-import 'text.dart';
-import 'raw.dart';
+import "package:htmleez/src/attribute.dart";
+import "package:htmleez/src/markup_component.dart";
+import "package:htmleez/src/markup_renderer.dart";
+import "package:htmleez/src/raw.dart";
+import "package:htmleez/src/tag.dart";
+import "package:htmleez/src/text.dart";
 
 final class HtmlRenderer implements MarkupRenderer {
   @override
   String call(List<MarkupComponent> content) {
-    final sb = StringBuffer();
-    sb.write('<!DOCTYPE html> ');
+    final sb = StringBuffer()..write("<!DOCTYPE html> ");
     for (final markup in content) {
       switch (markup) {
         case TagMarkupComponent():
@@ -35,9 +33,9 @@ final class HtmlRenderer implements MarkupRenderer {
       }
     }
 
-    sb.write(">");
-
     if (!tag.isVoid) {
+      sb.write(">");
+
       for (int i = 0; i < tag.content.length; i++) {
         final e = tag.content[i];
         switch (e) {
@@ -51,15 +49,17 @@ final class HtmlRenderer implements MarkupRenderer {
       }
 
       sb.write("</${tag.name}>");
+    } else {
+      sb.write("/>");
     }
   }
 
   void _renderAttribute(AttributeMarkupComponent a, StringBuffer sb) {
     final name = a.name;
     if (a.content == null) {
-      sb.write(' $name');
+      sb.write(" $name");
     } else {
-      String content = switch (a) {
+      final content = switch (a) {
         EscapedAttributeMarkupComponent(:final content) => MarkupComponent.escapeString(content!),
         RawAttributeMarkupComponent(:final content) => content!,
       };

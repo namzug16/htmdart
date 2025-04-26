@@ -1,4 +1,4 @@
-import 'tag.dart';
+import "package:htmleez/src/tag.dart";
 
 //NOTE: Main Root
 
@@ -16,6 +16,8 @@ const head = Tag("head");
 /// Specifies relationships between the current document and an external resource. This element is most commonly used to link to CSS but is also used to establish site icons (both "favicon" style icons and icons for the home screen and apps on mobile devices) among other things.
 const link = Tag("link", true);
 
+//
+// ignore: unintended_html_in_doc_comment
 /// Represents metadata that cannot be represented by other HTML meta-related elements, like <base>, <link>, <script>, <style> and <title>.
 const meta = Tag("meta", true);
 

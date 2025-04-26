@@ -1,7 +1,9 @@
 class PathRegistry {
-  PathRegistry._internal();
-  static final PathRegistry _instance = PathRegistry._internal();
   factory PathRegistry() => _instance;
+
+  PathRegistry._internal();
+
+  static final PathRegistry _instance = PathRegistry._internal();
 
   final Map<Function, (String, String)> _handlerPaths = {};
 

@@ -1,9 +1,8 @@
-import 'package:shelf/shelf.dart';
-
-import '../htmdart.dart';
+import "package:htmdart/htmdart.dart" hide headers;
+import "package:shelf/shelf.dart";
 
 extension HxRequestExtensions on Request {
-  bool get isHx => headers[HX.request] == "true" ? true : false;
+  bool get isHx => headers[HX.request] == "true";
 
   String? get hxTarget => headers[HX.target];
 

@@ -1,16 +1,19 @@
-import 'dart:convert';
+//
+// ignore_for_file: unintended_html_in_doc_comment
 
-import 'package:htmleez/htmleez.dart';
+import "dart:convert";
 
-import 'hx_events.dart';
-import 'hx_swap.dart';
-import 'router/path_registry.dart';
+import "package:htmdart/src/hx_events.dart";
+import "package:htmdart/src/hx_swap.dart";
+import "package:htmdart/src/router/path_registry.dart";
+import "package:htmleez/htmleez.dart";
 
+//
 //ignore: camel_case_types
 final class hx {
   const hx._();
 
-  static const events = HxEvents();
+  static final events = HxEvents();
 
   /// Automatically sets the hx-{Verb} and path for the given handler
   static HTML handle(Function handler, [List<String>? pathParameters, Map<String, String>? queryParameters]) {
@@ -20,7 +23,7 @@ final class hx {
 
     if (pathParameters != null) {
       int index = 0;
-      path = path.replaceAllMapped(RegExp(r'<[^>]+>'), (match) {
+      path = path.replaceAllMapped(RegExp("<[^>]+>"), (match) {
         if (index < pathParameters.length) {
           return pathParameters[index++];
         }
@@ -83,7 +86,7 @@ final class hx {
 
   /// Adds values to submit with the request (in JSON format)
   /// Accepts a Map<String, dynamic> that then will be encoded to json
-  static HTML valsMap(Map<String, dynamic> vals) => Attribute("hx-vals")(jsonEncode(vals));
+  static HTML valsMap(Map<String, dynamic> vals) => const Attribute("hx-vals")(jsonEncode(vals));
 
   /// Adds progressive enhancement for links and forms
   static const boost = Attribute("hx-boost");
@@ -155,59 +158,59 @@ final class HX {
   //NOTE: Request reference
 
   ///indicates that the request is via an element using hx-boost
-  static const boosted = 'HX-Boosted';
+  static const boosted = "HX-Boosted";
 
   ///the current URL of the browser
-  static const currentURL = 'HX-Current-URL';
+  static const currentURL = "HX-Current-URL";
 
   ///“true” if the request is for history restoration after a miss in the local history cache
-  static const historyRestoreRequest = 'HX-History-Restore-Request';
+  static const historyRestoreRequest = "HX-History-Restore-Request";
 
   ///the user response to an hx-prompt
-  static const prompt = 'HX-Prompt';
+  static const prompt = "HX-Prompt";
 
   ///always “true”
-  static const request = 'HX-Request';
+  static const request = "HX-Request";
 
   ///the id of the target element if it exists
-  static const target = 'HX-Target';
+  static const target = "HX-Target";
 
   ///the name of the triggered element if it exists
-  static const triggerName = 'HX-Trigger-Name';
+  static const triggerName = "HX-Trigger-Name";
 
   ///On Request: the id of the triggered element if it exists
   ///On Response: allows you to trigger client-side events
-  static const trigger = 'HX-Trigger';
+  static const trigger = "HX-Trigger";
 
   //NOTE: Response reference
 
   ///allows you to do a client-side redirect that does not do a full page reload
-  static const location = 'HX-Location';
+  static const location = "HX-Location";
 
   ///pushes a new url into the history stack
-  static const pushUrl = 'HX-Push-Url';
+  static const pushUrl = "HX-Push-Url";
 
   ///can be used to do a client-side redirect to a new location
-  static const redirect = 'HX-Redirect';
+  static const redirect = "HX-Redirect";
 
   ///if set to “true” the client-side will do a full refresh of the page
-  static const refresh = 'HX-Refresh';
+  static const refresh = "HX-Refresh";
 
   ///replaces the current URL in the location bar
-  static const replaceUrl = 'HX-Replace-Url';
+  static const replaceUrl = "HX-Replace-Url";
 
   ///allows you to specify how the response will be swapped. See hx-swap for possible values
-  static const reswap = 'HX-Reswap';
+  static const reswap = "HX-Reswap";
 
   ///a CSS selector that updates the target of the content update to a different element on the page
-  static const retarget = 'HX-Retarget';
+  static const retarget = "HX-Retarget";
 
   ///a CSS selector that allows you to choose which part of the response is used to be swapped in. Overrides an existing hx-select on the triggering element
-  static const reselect = 'HX-Reselect';
+  static const reselect = "HX-Reselect";
 
   ///allows you to trigger client-side events after the settle step
-  static const triggerAfterSettle = 'HX-Trigger-After-Settle';
+  static const triggerAfterSettle = "HX-Trigger-After-Settle";
 
   ///allows you to trigger client-side events after the swap step
-  static const triggerAfterSwap = 'HX-Trigger-After-Swap';
+  static const triggerAfterSwap = "HX-Trigger-After-Swap";
 }

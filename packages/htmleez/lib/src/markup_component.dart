@@ -1,7 +1,10 @@
-import 'dart:convert';
+//
+// ignore_for_file: avoid_returning_this
 
-import 'attribute.dart';
-import 'tag.dart';
+import "dart:convert";
+
+import "package:htmleez/src/attribute.dart";
+import "package:htmleez/src/tag.dart";
 
 /// Defines components for the "SGML family"
 /// SGML: Standard Generalized Markup Language
@@ -9,7 +12,7 @@ import 'tag.dart';
 abstract class MarkupComponent {
   const MarkupComponent();
 
-  static String escapeString(String string) => HtmlEscape().convert(string);
+  static String escapeString(String string) => const HtmlEscape().convert(string);
 
   MarkupComponent add(MarkupComponent c) {
     if (this is TagMarkupComponent) {

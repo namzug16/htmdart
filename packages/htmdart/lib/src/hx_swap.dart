@@ -1,11 +1,11 @@
-import 'package:htmleez/htmleez.dart';
+import "package:htmleez/htmleez.dart";
 
 class HxSwap {
-  final String type;
-
   HxSwap() : type = "hx-swap";
 
   HxSwap.oob() : type = "hx-swap-oob";
+
+  final String type;
 
   HTML call(String value) => _swap(type)(value);
   late final yes = _swap(type)("true");

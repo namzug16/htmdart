@@ -1,6 +1,6 @@
-import 'markup_component.dart';
-import 'attributes.dart';
-import 'tags.dart' as tags;
+import "package:htmleez/src/attributes.dart";
+import "package:htmleez/src/markup_component.dart";
+import "package:htmleez/src/tags.dart" as tags;
 
 final class Text extends MarkupComponent {
   const Text(this.text);

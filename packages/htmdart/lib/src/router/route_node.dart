@@ -1,9 +1,11 @@
-import 'package:htmdart/src/router/utils.dart';
-import 'package:shelf/shelf.dart';
+import "package:htmdart/src/router/utils.dart";
+import "package:shelf/shelf.dart";
 
-final _pathParamMatcher = RegExp(r'<([^>]+)>');
+final _pathParamMatcher = RegExp("<([^>]+)>");
 
 class RouteNode {
+  RouteNode({required this.segment});
+
   final String segment;
   Function? handler;
   Middleware? middleware;
@@ -12,13 +14,11 @@ class RouteNode {
 
   RouteNode? routeParameterChild;
 
-  RouteNode({required this.segment});
-
   String? get routeParameterName => _pathParamMatcher.firstMatch(segment)?.group(1);
 
   static List<String> parsePath(String path) {
     checkPath(path);
-    return path.split('/').where((s) => s.isNotEmpty).toList();
+    return path.split("/").where((s) => s.isNotEmpty).toList();
   }
 
   void insertPath(String verb, String path, Function handler, Middleware? middleware) {
@@ -40,7 +40,7 @@ class RouteNode {
       final ppn = _pathParamMatcher.firstMatch(seg)!.group(1);
       if (routeParameterChild != null) {
         if (routeParameterChild!.routeParameterName != ppn) {
-          throw Exception('Conflicting route parameter: existing parameter <${routeParameterChild!.routeParameterName}> does not match specified parameter $seg');
+          throw Exception("Conflicting route parameter: existing parameter <${routeParameterChild!.routeParameterName}> does not match specified parameter $seg");
         }
         routeParameterChild!._insertSegments(segments.sublist(1), handler, middleware);
       } else {
@@ -87,10 +87,12 @@ class RouteNode {
   }
 
   Future<Response> invoke(Request request, Map<String, String> params) async {
-    request = request.change(context: {'shelf_router/params': params});
+    // TODO(me): should I expose them?
+    final r = request.change(context: {"shelf_router/params": params});
 
     Future<Response> h(Request request) async {
       if (handler is Handler || params.isEmpty) {
+        //
         // ignore: avoid_dynamic_calls
         return await handler!(request) as Response;
       }
@@ -101,10 +103,10 @@ class RouteNode {
     }
 
     if (middleware != null) {
-      return middleware!(h)(request);
+      return middleware!(h)(r);
     }
 
-    return h(request);
+    return h(r);
   }
 }
 

@@ -1,3 +1,3 @@
-import 'package:htmleez/htmleez.dart';
+import "package:htmleez/htmleez.dart";
 
-final hyper = RawAttribute("_");
+const hyper = RawAttribute("_");

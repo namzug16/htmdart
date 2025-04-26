@@ -1,5 +1,8 @@
-import 'attribute.dart';
-import 'markup_component.dart';
+//
+// ignore_for_file: unintended_html_in_doc_comment
+
+import "package:htmleez/src/attribute.dart";
+import "package:htmleez/src/markup_component.dart";
 
 /// List of types the server accepts, typically a file type.
 const accept = Attribute("accept");
@@ -61,7 +64,7 @@ const citeAttr = Attribute("cite");
 /// Often used with CSS to style elements with common properties.
 const className = Attribute("class");
 
-MarkupComponent classes(List<String> classes) => Attribute("class")(classes.isNotEmpty ? classes.reduce((a, b) => '$a $b') : "");
+MarkupComponent classes(List<String> classes) => const Attribute("class")(classes.isNotEmpty ? classes.reduce((a, b) => "$a $b") : "");
 
 /// This attribute sets the text color using either a named color or a color specified in the hexadecimal #RRGGBB format. Note: This is a legacy attribute. Please use the CSS color property instead.
 const color = Attribute("color");
@@ -408,4 +411,4 @@ const writingsuggestions = Attribute("writingsuggestions");
 
 const acceptcharset = Attribute("accept-charset");
 
-final property = Attribute("property");
+const property = Attribute("property");

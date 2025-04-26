@@ -1,6 +1,6 @@
 name: htmleez
 description: HTML easy. A lightweight library for creating HTML programmatically in Dart.
-version: 0.1.12
+version: 0.9.0
 repository: https://github.com/namzug16/htmdart/tree/master/packages/htmleez
 
 environment:
@@ -12,6 +12,7 @@ dependencies:
 dev_dependencies:
   lints: ^4.0.0
   test: ^1.24.0
+  very_good_analysis: ^7.0.0
 
 topics:
   - html

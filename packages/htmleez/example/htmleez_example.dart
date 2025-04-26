@@ -1,4 +1,4 @@
-import 'package:htmleez/htmleez.dart';
+import "package:htmleez/htmleez.dart";
 
 typedef Link = ({String label, String url, bool active});
 
@@ -29,8 +29,8 @@ void main() {
                   if (!link.active) className("btn"),
                   href(link.url),
                   link.label.t,
-                ])
-              ])
+                ]),
+              ]),
           ]),
         ]),
       ]),
@@ -41,13 +41,15 @@ void main() {
         ]),
       ]),
       footer(["© 2025 Htmleez Demo. All rights reserved.".p()]),
-      script([Raw("console.log('Htmleez document loaded successfully');")])
-    ])
+      script([const Raw("console.log('Htmleez document loaded successfully');")]),
+    ]),
   ]);
 
   final renderer = HtmlRenderer();
 
   final renderedHtml = renderer([document]);
 
+  //
+  // ignore: avoid_print
   print(renderedHtml);
 }
