@@ -46,6 +46,8 @@ abstract class _Router {
 
   void redirect(String route, String redirect) => add("GET", route, (req) => Response.movedPermanently(redirect));
 
+  void any(String route, Function handler) => add("ANY", route, handler);
+
   void get(String route, Function handler) => add("GET", route, handler);
 
   void head(String route, Function handler) => add("HEAD", route, handler);

@@ -1,6 +1,7 @@
 name: todo
 description: A server app using the shelf package and Docker.
 version: 1.0.0
+publish_to: none
 # repository: https://github.com/my_org/my_repo
 
 environment:

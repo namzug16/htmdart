@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:htmdart/htmdart.dart";
-import "package:htmleez/htmleez.dart";
 import "package:shelf/shelf.dart";
 import "package:shelf/shelf_io.dart" as io;
 

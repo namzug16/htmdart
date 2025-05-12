@@ -179,26 +179,37 @@ void main() async {
 }
 ```
 
-- **Path parameters**  
+- **Path parameters**
   ```dart
   Response handler(Request req, String param) {...}
 
   final router = Router()..get("/handler/<param>", handler);
   ```
-- **Grouping**  
+- **Any Method**
+  ```dart
+  Response handler(Request req, String param) {
+    switch(req.method) {
+      case "GET": ...
+      case "POST": ...
+    }
+  }
+
+  final router = Router()..any("/any", handler);
+  ```
+- **Grouping**
   ```dart
   final apiGroup = router.group("/api");
   apiGroup.get("/items", listItems);
   apiGroup.post("/items", createItem);
   ```
-- **Static files**  
+- **Static files**
   ```dart
   router.static("/public", "web/public");
   ```
-- **Middleware**  
+- **Middleware**
   - Built-in support for middlewares with `router.use(myMiddleware)`
   - Built-in pretty-logging: `prettyLogMiddleware()`
-- **Redirects**  
+- **Redirects**
   Redirect not defined routes with
   ```dart
   router.redirect("/", "/login"),

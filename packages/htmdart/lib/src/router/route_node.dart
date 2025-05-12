@@ -59,7 +59,9 @@ class RouteNode {
 
   (RouteNode, Map<String, String>)? matchPath(String verb, String path) {
     final segments = parsePath("/$path");
-    return _matchSegments([verb, ...segments], {});
+    final match = _matchSegments([verb, ...segments], {});
+    if (match == null) return _matchSegments(["ANY", ...segments], {});
+    return match;
   }
 
   (RouteNode, Map<String, String>)? _matchSegments(List<String> segments, Map<String, String> params) {
