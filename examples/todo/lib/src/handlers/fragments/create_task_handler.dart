@@ -1,5 +1,4 @@
 import 'package:htmdart/htmdart.dart';
-import 'package:htmleez/htmleez.dart';
 import 'package:shelf/shelf.dart';
 import 'package:todo/src/components/pending_tasks_count.dart';
 import 'package:todo/src/components/tasks_container.dart';
@@ -19,8 +18,8 @@ Future<Response> createTaskHandler(Request request) async {
   return switch (res) {
     Ok(:final ok) => switch (pendingCount) {
         Ok(ok: final c) => [
-            if (filter != TaskFilter.completed) tasksContainer(ok).add(hx.swapOob.afterbegin),
-            pendingTasksCount(c).add(hx.swapOob.yes),
+            if (filter != TaskFilter.completed) tasksContainer(ok).add($hx.swapOob.afterbegin),
+            pendingTasksCount(c).add($hx.swapOob.yes),
           ],
         Err(:final err) => [
             h1(["Something went wrong. $err".t])

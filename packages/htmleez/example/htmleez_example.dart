@@ -12,12 +12,12 @@ void main() {
 
   final document = html([
     head([
-      meta([charset("UTF-8")]),
+      meta([$charset("UTF-8")]),
       title(["Htmleez Demo".t]),
-      link([rel("stylesheet"), href("https://cdn.jsdelivr.net/npm/daisyui/dist/full.css")]),
+      link([$rel("stylesheet"), $href("https://cdn.jsdelivr.net/npm/daisyui/dist/full.css")]),
     ]),
     body([
-      id("main_body"),
+      $id("main_body"),
       header([
         "Welcome to Htmleez Demo".h1(),
         nav([
@@ -25,9 +25,9 @@ void main() {
             for (final link in links)
               li([
                 a([
-                  if (link.active) className("btn btn-active"),
-                  if (!link.active) className("btn"),
-                  href(link.url),
+                  if (link.active) $class("btn btn-active"),
+                  if (!link.active) $class("btn"),
+                  $href(link.url),
                   link.label.t,
                 ]),
               ]),

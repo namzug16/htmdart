@@ -10,8 +10,8 @@ import "package:htmleez/htmleez.dart";
 
 //
 //ignore: camel_case_types
-final class hx {
-  const hx._();
+final class $hx {
+  const $hx._();
 
   static final events = HxEvents();
 
@@ -36,11 +36,11 @@ final class hx {
     }
 
     return switch (mp.$1) {
-      "GET" => hx.get(path),
-      "POST" => hx.post(path),
-      "PUT" => hx.put(path),
-      "DELETE" => hx.delete(path),
-      "PATCH" => hx.patch(path),
+      "GET" => $hx.get(path),
+      "POST" => $hx.post(path),
+      "PUT" => $hx.put(path),
+      "DELETE" => $hx.delete(path),
+      "PATCH" => $hx.patch(path),
       _ => throw ArgumentError.value(mp.$1, "verb", "not a valid HTMX verb"),
     };
   }

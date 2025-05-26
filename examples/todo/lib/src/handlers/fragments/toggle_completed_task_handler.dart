@@ -1,5 +1,4 @@
 import 'package:htmdart/htmdart.dart';
-import 'package:htmleez/htmleez.dart';
 import 'package:shelf/shelf.dart';
 import 'package:todo/src/components/pending_tasks_count.dart';
 import 'package:todo/src/components/task_component.dart';
@@ -22,8 +21,8 @@ Future<Response> toggleCompletedTaskHandler(Request request) async {
   return switch (res) {
     Ok(:final ok) => switch (pendingCount) {
         Ok(ok: final c) => [
-            if (filter == 0) taskComponent(ok).add(hx.swapOob.yes) else if (ok.isCompleted && filter != 2 || !ok.isCompleted && filter != 1) div([id("id_${ok.id}"), hx.swapOob.delete]),
-            pendingTasksCount(c).add(hx.swapOob.yes),
+            if (filter == 0) taskComponent(ok).add($hx.swapOob.yes) else if (ok.isCompleted && filter != 2 || !ok.isCompleted && filter != 1) div([$id("id_${ok.id}"), $hx.swapOob.delete]),
+            pendingTasksCount(c).add($hx.swapOob.yes),
           ],
         Err(:final err) => [
             h1(["Something went wrong. $err".t])

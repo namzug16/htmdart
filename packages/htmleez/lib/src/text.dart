@@ -10,12 +10,12 @@ final class Text extends MarkupComponent {
 
 extension MarkupText on String {
   MarkupComponent get t => Text(this);
-  MarkupComponent h1([String? c]) => tags.h1([t, className(c)]);
-  MarkupComponent h2([String? c]) => tags.h2([t, className(c)]);
-  MarkupComponent h3([String? c]) => tags.h3([t, className(c)]);
-  MarkupComponent h4([String? c]) => tags.h4([t, className(c)]);
-  MarkupComponent h5([String? c]) => tags.h5([t, className(c)]);
-  MarkupComponent h6([String? c]) => tags.h6([t, className(c)]);
-  MarkupComponent p([String? c]) => tags.p([t, className(c)]);
-  MarkupComponent span([String? c]) => tags.span([t, className(c)]);
+  MarkupComponent h1([String? c]) => tags.h1([t, $class(c)]);
+  MarkupComponent h2([String? c]) => tags.h2([t, $class(c)]);
+  MarkupComponent h3([String? c]) => tags.h3([t, $class(c)]);
+  MarkupComponent h4([String? c]) => tags.h4([t, $class(c)]);
+  MarkupComponent h5([String? c]) => tags.h5([t, $class(c)]);
+  MarkupComponent h6([String? c]) => tags.h6([t, $class(c)]);
+  MarkupComponent p([String? c]) => tags.p([t, $class(c)]);
+  MarkupComponent span([String? c]) => tags.span([t, $class(c)]);
 }

@@ -1,5 +1,4 @@
 import 'package:htmdart/htmdart.dart';
-import 'package:htmleez/htmleez.dart';
 import 'package:shelf/shelf.dart';
 import 'package:todo/src/components/base_page.dart';
 import 'package:todo/src/components/pending_tasks_count.dart';
@@ -21,40 +20,40 @@ Future<Response> homePageHandler(Request request) async {
   return switch (res) {
     Ok(:final ok) => basePage(
         body([
-          id("tasks-body"),
-          className("flex flex-col gap-4 items-center"),
+          $id("tasks-body"),
+          $class("flex flex-col gap-4 items-center"),
           header([
-            h1([className("text-8xl text-primary"), "todo".t]),
+            h1([$class("text-8xl text-primary"), "todo".t]),
           ]),
           div([
-            id("task-card-input"),
-            className("flex flex-col gap-6"),
+            $id("task-card-input"),
+            $class("flex flex-col gap-6"),
             form([
-              id("task-input"),
-              hx.swap("none"),
-              hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
-              hx.handle(createTaskHandler),
-              hyper("on ${hx.events.afterRequest} reset() me"),
-              input([className("input input-bordered input-primary w-96"), type("text"), required(), maxlength("150"), autocomplete("off"), autofocus(), name("todo"), placeholder("What needs to be done?")]),
+              $id("task-input"),
+              $hx.swap("none"),
+              $hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
+              $hx.handle(createTaskHandler),
+              $_("on ${$hx.events.afterRequest} reset() me"),
+              input([$class("input input-bordered input-primary w-96"), $type("text"), $required(), $maxlength("150"), $autocomplete("off"), $autofocus(), $name("todo"), $placeholder("What needs to be done?")]),
             ]),
             tasksContainer(ok),
             div([
-              className("flex flex-col gap-4 w-96"),
+              $class("flex flex-col gap-4 w-96"),
               taskFilter.$2(TaskFilter.all),
               div([
-                className("flex justify-around w-96"),
+                $class("flex justify-around w-96"),
                 pendingTasksCount(ok.where((e) => !e.isCompleted).length),
                 button([
-                  hx.handle(completeAllHandler),
-                  hx.swap.none,
-                  hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
-                  className("btn btn-success btn-xs"),
+                  $hx.handle(completeAllHandler),
+                  $hx.swap.none,
+                  $hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
+                  $class("btn btn-success btn-xs"),
                   "Complete All".t,
                 ]),
                 button([
-                  hx.handle(deleteAllHandler),
-                  hx.swap.none,
-                  className("btn btn-error btn-xs"),
+                  $hx.handle(deleteAllHandler),
+                  $hx.swap.none,
+                  $class("btn btn-error btn-xs"),
                   "Clear All".t,
                 ]),
               ]),

@@ -1,3 +1,3 @@
 import "package:htmleez/htmleez.dart";
 
-const hyper = RawAttribute("_");
+const $_ = RawAttribute("_");

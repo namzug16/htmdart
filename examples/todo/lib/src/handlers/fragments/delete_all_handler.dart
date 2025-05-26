@@ -1,5 +1,4 @@
 import 'package:htmdart/htmdart.dart';
-import 'package:htmleez/htmleez.dart';
 import 'package:shelf/shelf.dart';
 import 'package:todo/src/components/pending_tasks_count.dart';
 import 'package:todo/src/components/tasks_container.dart';
@@ -14,8 +13,8 @@ Future<Response> deleteAllHandler(Request request) async {
 
   return switch (res) {
     Ok() => [
-        tasksContainer([]).add(hx.swapOob.yes),
-        pendingTasksCount(0).add(hx.swapOob.yes),
+        tasksContainer([]).add($hx.swapOob.yes),
+        pendingTasksCount(0).add($hx.swapOob.yes),
       ].response,
     Err(:final err) => [
         h1(["Something went wrong. $err".t]),

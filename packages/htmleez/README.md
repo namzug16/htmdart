@@ -18,9 +18,9 @@ void main() {
 }
 
 HTML btn() => button([
-    type("button"),
-    className("btn btn-primary"),
-    onclick("console.log('Clicked')"),
+    $type("button"),
+    $class("btn btn-primary"),
+    $onclick("console.log('Clicked')"),
     "Click me!".t
   ]);
 
@@ -31,8 +31,9 @@ HTML btn() => button([
 ```dart
 const div = Tag("div");
 const img = Tag("img", true); // renders a void tag <img />
-const id = Attribute("id");
-const onclick = RawAttribute("onclick"); // `RawAttribute` does not escape the value
+/// Attributes always start with a "$" in order to differentiate them from Tags
+const $id = Attribute("id");
+const $onclick = RawAttribute("onclick"); // `RawAttribute` does not escape the value
 ```
 
 - **Text & Raw**: 
