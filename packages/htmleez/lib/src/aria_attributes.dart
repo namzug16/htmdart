@@ -1,0 +1,52 @@
+import "package:htmleez/src/attribute.dart";
+
+final class $aria {
+  const $aria._();
+
+  static const activedescendant = Attribute("aria-activedescendant");
+  static const atomic = Attribute("aria-atomic");
+  static const autocomplete = Attribute("aria-autocomplete");
+  static const busy = Attribute("aria-busy");
+  static const checked = Attribute("aria-checked");
+  static const colcount = Attribute("aria-colcount");
+  static const colindex = Attribute("aria-colindex");
+  static const colspan = Attribute("aria-colspan");
+  static const controls = Attribute("aria-controls");
+  static const current = Attribute("aria-current");
+  static const describedby = Attribute("aria-describedby");
+  static const details = Attribute("aria-details");
+  static const disabled = Attribute("aria-disabled");
+  static const errormessage = Attribute("aria-errormessage");
+  static const expanded = Attribute("aria-expanded");
+  static const flowto = Attribute("aria-flowto");
+  static const haspopup = Attribute("aria-haspopup");
+  static const hidden = Attribute("aria-hidden");
+  static const invalid = Attribute("aria-invalid");
+  static const keyshortcuts = Attribute("aria-keyshortcuts");
+  static const label = Attribute("aria-label");
+  static const labelledby = Attribute("aria-labelledby");
+  static const level = Attribute("aria-level");
+  static const live = Attribute("aria-live");
+  static const modal = Attribute("aria-modal");
+  static const multiline = Attribute("aria-multiline");
+  static const multiselectable = Attribute("aria-multiselectable");
+  static const orientation = Attribute("aria-orientation");
+  static const owns = Attribute("aria-owns");
+  static const placeholder = Attribute("aria-placeholder");
+  static const posinset = Attribute("aria-posinset");
+  static const pressed = Attribute("aria-pressed");
+  static const readonly = Attribute("aria-readonly");
+  static const relevant = Attribute("aria-relevant");
+  static const required = Attribute("aria-required");
+  static const roledescription = Attribute("aria-roledescription");
+  static const rowcount = Attribute("aria-rowcount");
+  static const rowindex = Attribute("aria-rowindex");
+  static const rowspan = Attribute("aria-rowspan");
+  static const selected = Attribute("aria-selected");
+  static const setsize = Attribute("aria-setsize");
+  static const sort = Attribute("aria-sort");
+  static const valuemax = Attribute("aria-valuemax");
+  static const valuemin = Attribute("aria-valuemin");
+  static const valuenow = Attribute("aria-valuenow");
+  static const valuetext = Attribute("aria-valuetext");
+}

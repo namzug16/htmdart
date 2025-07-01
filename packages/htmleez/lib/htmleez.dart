@@ -1,6 +1,7 @@
 /// HTML easy
 library;
 
+export "src/aria_attributes.dart";
 export "src/attribute.dart";
 export "src/attributes.dart";
 export "src/events.dart";

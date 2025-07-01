@@ -93,8 +93,8 @@ const $csp = Attribute("csp");
 /// Specifies the URL of the resource.
 const $data = Attribute("data");
 
-/// Lets you attach custom attributes to an HTML element.
-const $dataStar = Attribute("data-*");
+/// Lets you attach custom data attributes to an HTML element.
+Attribute $data_(String attr) => Attribute("data-$attr");
 
 /// Indicates the date and time associated with the element.
 const $datetime = Attribute("datetime");
