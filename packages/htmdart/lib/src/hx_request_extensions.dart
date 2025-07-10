@@ -1,4 +1,4 @@
-import "package:htmdart/htmdart.dart" hide headers;
+import "package:htmdart/htmdart.dart";
 import "package:shelf/shelf.dart";
 
 extension HxRequestExtensions on Request {

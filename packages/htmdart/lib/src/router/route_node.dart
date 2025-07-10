@@ -1,4 +1,3 @@
-import "package:htmdart/src/router/utils.dart";
 import "package:shelf/shelf.dart";
 
 final _pathParamMatcher = RegExp("<([^>]+)>");
@@ -17,7 +16,7 @@ class RouteNode {
   String? get routeParameterName => _pathParamMatcher.firstMatch(segment)?.group(1);
 
   static List<String> parsePath(String path) {
-    checkPath(path);
+    if (!path.startsWith("/")) throw ArgumentError.value(path, "path", "expected path to start with a slash");
     return path.split("/").where((s) => s.isNotEmpty).toList();
   }
 

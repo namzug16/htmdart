@@ -1,3 +1,8 @@
+## 0.6.1
+
+- FIX: path trailing slash normalization
+- FEAT: router tests
+
 ## 0.6.0
 
 - FIX: update to Htmleez attributes' naming convention

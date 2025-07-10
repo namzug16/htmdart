@@ -1,13 +1,13 @@
 name: htmdart
 description: Build simple systems with Dart + HTMX
-version: 0.6.0
+version: 0.6.1
 repository: https://github.com/namzug16/htmdart
 
 environment:
   sdk: ^3.5.0
 
 dependencies:
-  htmleez: ^0.10.0
+  htmleez: ^0.10.1
   http_parser: ^4.1.2
   mime: ^2.0.0
   shelf: ^1.4.2
