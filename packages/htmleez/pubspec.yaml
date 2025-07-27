@@ -15,4 +15,5 @@ dev_dependencies:
   very_good_analysis: ^7.0.0
 
 topics:
+  -server
   - html

@@ -1,0 +1,23 @@
+name: routeez
+description: Simple Routing.
+version: 1.0.0
+repository: https://github.com/namzug16/htmdart/tree/master/packages/routeez
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  http: ^1.4.0
+  http_parser: ^4.1.2
+  mime: ^2.0.0
+  shelf: ^1.4.2
+  stack_trace: ^1.12.1
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.24.0
+  very_good_analysis: ^7.0.0
+  test_descriptor: ^2.0.0
+
+topics:
+  - server
