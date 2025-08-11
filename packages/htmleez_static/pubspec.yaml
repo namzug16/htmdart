@@ -1,0 +1,14 @@
+name: htmleez_static
+description: Static sites, made easy. Build and export static websites in Dart with the power of htmleez. 
+version: 0.1.0
+repository: https://github.com/namzug16/htmdart/tree/master/packages/htmleez_static
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  htmleez: ^0.11.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.24.0
