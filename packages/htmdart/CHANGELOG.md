@@ -1,3 +1,8 @@
+## 0.7.0
+
+- FEAT: Improve Router
+- FIX: update htmleez to 0.12.0
+
 ## 0.6.1
 
 - FIX: path trailing slash normalization

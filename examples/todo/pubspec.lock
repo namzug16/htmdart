@@ -268,14 +268,14 @@ packages:
       path: "../../packages/htmdart"
       relative: true
     source: path
-    version: "0.6.1"
+    version: "0.7.0"
   htmleez:
     dependency: "direct overridden"
     description:
       path: "../../packages/htmleez"
       relative: true
     source: path
-    version: "0.11.0"
+    version: "0.12.0"
   http:
     dependency: "direct dev"
     description:

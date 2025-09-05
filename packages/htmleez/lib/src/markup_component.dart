@@ -28,4 +28,11 @@ abstract class MarkupComponent {
 
     return this;
   }
+
+  MarkupComponent addAll(List<MarkupComponent> cs) {
+    for (final c in cs) {
+      add(c);
+    }
+    return this;
+  }
 }

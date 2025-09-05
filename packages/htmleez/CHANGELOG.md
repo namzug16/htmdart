@@ -1,3 +1,7 @@
+## 0.12.0
+
+- FEAT: `addAll` method in `MarkupComponent`
+
 ## 0.11.0
 
 - FEAT: Aria Attributes
