@@ -77,8 +77,8 @@ HTML page404() => basePage([
 - Pure Dart: Write HTML directly in Dart using type-safe [htmleez](https://pub.dev/packages/htmleez) elements.
 
 ## Why htmleez_static?
-- No templating engines — HTML is just Dart.
-- No runtime dependencies — output is plain static files.
+- No templating engines - HTML is just Dart.
+- No runtime dependencies - output is plain static files.
 - Full control over HTML, attributes, and events thanks to [htmleez](https://pub.dev/packages/htmleez).
 
 For the full list of features in the HTML layer, see the [htmleez](https://pub.dev/packages/htmleez) API Reference.

@@ -1,97 +1,73 @@
 ![htmdart](https://raw.githubusercontent.com/namzug16/htmdart/master/assets/htmdart.png)
 
-Htmdart combines the power of [shelf](https://pub.dev/packages/shelf), [htmx](https://htmx.org/), sometimes [hyperscript](https://hyperscript.org/) and [htmleez](https://pub.dev/packages/htmleez)
-to give you the simplest and fastest way to build web applications in *pure* Dart (with a great DX too).
+Build fast, hypermedia-driven web apps with Dart + htmx
 
-## Before Starting
+## Index
 
-- Make sure you're familiar with [shelf](https://pub.dev/packages/shelf) as Htmdart is built on top of it
-  > shelf_router is not necessary, htmdart has its own [router](#routing)
-- Make sure you're familiar with hypermedia and [htmx](https://htmx.org/)
-- Check out [htmleez](https://pub.dev/packages/htmleez) in order to understand how you can compose and render your HTML directly in dart
-- And make sure to read [this essay](https://htmx.org/essays/when-to-use-hypermedia/) in order to have a better idea of when to use htmx 
+- [Introduction](#introduction)
+- [Hello World Example](#hello-world-example)
+- [Core Concepts](#core-concepts)
+  - [HTMX Utilities](#1-htmx-utilities)
+  - [Hyperscript Attribute](#2-hyperscript-attribute)
+  - [Router](#3-router)
 
-P.S. Check out all the very informative memes about htmx and hypermedia in [here](https://htmx.org/essays/)
+## Introduction
 
-In case you'd like to add interactivity to your app you can check out:
-- [hyperscript](https://hyperscript.org/) which is our [*preferred option*](#3.-hyperscript-attribute)
-- [alpinejs](https://alpinejs.dev/)
-- and many other tools
+Htmdart was born out of a simple need: **to move fast when building hypermedia-driven web applications in Dart**. While frameworks like `shelf` (or newer ones like `relic`) provide excellent foundations, they often lack certain conveniences that make everyday development smooth.  
 
-## Install
+That’s why Htmdart gives you:  
 
-Add to your `pubspec.yaml`:
+- **Direct HTML rendering in Dart** - powered by the separate [htmleez](https://pub.dev/packages/htmleez) package, so you can compose markup anywhere.  
+- **Attributes for htmx & hyperscript** - all the `hx-*` and `_` attributes available as htmleez attributes.
+- **A router built for speed & DX** - radix-tree based, with grouping, middlewares, static file serving, and redirects included out of the box.  
+- **A custom `serve` function** - wrapping `shelf_io.serve`, with extras like hot-reload and opinionated defaults.  
 
-```bash
-dart pub add htmdart
-```
+These tools are not meant to reinvent the Dart web ecosystem. They exist because, today, **the existing solutions aren’t yet at the level where building a complete hypermedia app feels frictionless**. Htmdart fills that gap.  
+
+### Looking Ahead  
+
+The long-term vision of Htmdart is actually to become **smaller**, not bigger.  
+- The essential piece is **attribute helpers** (htmx, hyperscript, etc.) - those are stable and unlikely to change.  
+- Routers, serve utilities, or other abstractions may be deprecated in the future, once Dart’s web frameworks mature enough to cover these features well.  
+
+In short: **Htmdart is a bridge** - giving you the speed and ergonomics you need right now, while leaving room for you to adopt other frameworks as they evolve.  
 
 ## Hello World Example
 
 ```dart
-import 'dart:math';
-import 'package:htmdart/htmdart.dart'; /// htmleez is automatically imported with htmdart
-import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart' as io;
+import "dart:io";
+import "dart:math";
+import 'package:htmdart/htmdart.dart';
 
 final router = Router()
   ..get("/", homePage)
   ..get("/random", randomNumber);
 
-Future<void> main() async {
-  final server = await io.serve(router.call, 'localhost', 8080);
-  print('Listening on http://${server.address.host}:${server.port}');
-}
+void main() => serve(router, InternetAddress.anyIPv4, 8080, withHotreload: false);
 
-Response homePage(Request _) {
-  return html([
+Response homePage(Request _) => respondWithHtml([
+  html([
     body([
       div([$id("number"), "0".t]),
       button([
         $hx.get("/random"),
         "Get Random Number".t,
       ]),
-    ])
-  ]).response;
-}
+    ]),
+  ]),
+]);
 
-Response randomNumber(Request _) {
-  final n = Random().nextInt(100);
-  return div([
+Response randomNumber(Request _) => respondWithHtmlOob([
+  div([
     $id("number"),
-    $hx.swapOob.yes,
-    n.toString().t,
-  ]).response;
-}
+    Random().nextInt(100).toString().t,
+  ]),
+]);
 ```
 
 ## Core Concepts
 
-### 1. HTML Responses
-
-- **`HtmlResponse`**  
-  Wraps a list of `HTML` components into a `shelf.Response` with `Content-Type: text/html; charset=utf-8`.  
-  ```dart
-  Response myPage(Request req) {
-    return HtmlResponse([
-      html([
-        h1(["Hello, world!".t]),
-      ]),
-    ]);
-  }
-
-  //You can also use the extensions
-  Response myPage(Request req) {
-    return html([
-      h1(["Hello, world!".t])
-    ]).response;
-  }
-  ```
-- **Extensions**  
-  - On a single `HTML`: `myElement.response`  
-  - On a `List<HTML>`: `myListOfElements.response`
-
-### 2. HTMX utilities
+### 1 HTMX utilities
 
 The `hx` class provides all the standard HTMX attributes
 
@@ -135,7 +111,7 @@ The `hx` class provides all the standard HTMX attributes
   ```
   All the available hx attributes from [htmx](https://htmx.org/) have been added, you can see them [here](https://github.com/namzug16/htmdart/blob/master/packages/htmdart/lib/src/hx.dart)
 
-### 3. Hyperscript attribute
+### 2 Hyperscript attribute
 
 Built-in support for [hyperscript](https://hyperscript.org/)'s attribute
 
@@ -147,25 +123,7 @@ div([
 ])
 ```
 
-Renders ->
-
-```html
-<div class="btn" _="on click add .active to me then wait 500ms then remove .active">Click me</div>
-```
-
-### 4. Request Extensions
-
-On any `shelf.Request` you can check HTMX metadata:
-
-```dart
-if (request.isHx)         // true if HX-Request header == "true"
-if (request.hxTarget != null)
-print(request.hxTriggerName);
-```
-
-## Routing
-
-Use the built-in `Router` (from `htmdart/src/router/router.dart`) to declare routes:
+### 3 Router
 
 ```dart
 final router = Router()
@@ -208,10 +166,21 @@ void main() async {
   ```
 - **Middleware**
   - Built-in support for middlewares with `router.use(myMiddleware)`
-  - Built-in pretty-logging: `prettyLogMiddleware()`
 - **Redirects**
   Redirect not defined routes with
   ```dart
   router.redirect("/", "/login"),
   ```
 
+### 4. Helpers
+
+- **Response shortcuts**  
+  - `respondWithHtml([...])`: wraps a list of `HTML` fragments into a full `Response` with the correct `Content-Type`.
+  - `respondWithHtmlOob([...])`: same as above, but optimized for *out-of-band* swaps in htmx (adds `$hx.swapOob.yes` to all the fragments).
+
+- **Request extensions**  
+  On any `Request` you can check htmx metadata:  
+  ```dart
+  if (request.isHx) { ... }          // true if HX-Request == "true"
+  print(request.hxTarget);           // target element
+  print(request.hxTriggerName);      // trigger name
