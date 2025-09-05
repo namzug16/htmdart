@@ -1,4 +1,4 @@
-import 'package:htmleez/htmleez.dart';
+import 'package:htmdart/htmdart.dart';
 
 HTML basePage(HTML child) => html([
       Attribute("data-theme")("retro"),

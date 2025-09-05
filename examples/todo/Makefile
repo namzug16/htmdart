@@ -6,4 +6,7 @@ tailwind:
 run: 
 	dart run bin/server.dart
 
+dev:
+	dart run --enable-vm-service bin/server.dart
+
 .DEFAULT_GOAL := _

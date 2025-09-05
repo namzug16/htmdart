@@ -1,5 +1,4 @@
 import 'package:htmdart/htmdart.dart';
-import 'package:shelf/shelf.dart';
 import 'package:todo/src/components/pending_tasks_count.dart';
 import 'package:todo/src/components/tasks_container.dart';
 import 'package:todo/src/helpers/request_extensions.dart';
@@ -16,19 +15,19 @@ Future<Response> completeAllHandler(Request request) async {
   final res = await repo.setAllAsCompleted();
 
   if (!res.isOk) {
-    return "Something went wrong".t.response;
+    return respondWithHtml(["Something went wrong".t]);
   }
 
   final tasks = await repo.getAll(TaskFilter.all);
 
   return switch (tasks) {
-    Ok(:final ok) => [
-        if (filter != 1) tasksContainer(ok).add($hx.swapOob.yes),
-        if (filter == 1) tasksContainer([]).add($hx.swapOob.yes),
-        pendingTasksCount(0).add($hx.swapOob.yes),
-      ].response,
-    Err(:final err) => [
+    Ok(:final ok) => respondWithHtmlOob([
+        if (filter != 1) tasksContainer(ok),
+        if (filter == 1) tasksContainer([]),
+        pendingTasksCount(0),
+      ]),
+    Err(:final err) => respondWithHtml([
         h1(["Something went wrong. $err".t]),
-      ].response,
+      ]),
   };
 }

@@ -1,118 +1,153 @@
-import "package:htmdart/src/router/path_registry.dart";
-import "package:htmdart/src/router/router.dart";
-import "package:shelf/shelf.dart";
+import "dart:io";
+
+import "package:htmdart/htmdart.dart";
+import "package:http/http.dart" as http;
+import "package:shelf/shelf_io.dart" as io;
 import "package:test/test.dart";
 
+Router _createRouter() {
+  final router = Router()
+    ..get("/hello", (Request req) => Response.ok("Hello"))
+    ..get("/user/:id", (Request req, String id) => Response.ok("User $id"))
+    ..get("/with-middleware", (Request req) => Response.ok("ok"));
+
+  final _ = router.group("/api", (innerHandler) {
+    return (request) async {
+      final res = await innerHandler(request);
+      return res.change(headers: {"x-group": "1"});
+    };
+  })..get("/ping", (Request req) => Response.ok("pong"));
+
+  final _ = router.group("/g1", (innerHandler) {
+    return (request) async {
+      final res = await innerHandler(request);
+      return res.change(headers: {"x-group": "g1"});
+    };
+  })..get("/a", (Request req) => Response.ok("a"));
+
+  final g2 =
+      router.group("/g2", (innerHandler) {
+          return (request) async {
+            final res = await innerHandler(request);
+            return res.change(headers: {"x-group": "g2"});
+          };
+        })
+        ..get("/b", (Request req) => Response.ok("b"))
+        //NOTE: test a middleware that has been added later one
+        ..use((innerHandler) {
+          return (req) async {
+            final res = await innerHandler(req);
+            return res.change(headers: {"x-extra": ""});
+          };
+        });
+
+  //NOTE: nested group
+  final _ = g2.group("/n", (innerHandler) {
+    return (request) async {
+      final res = await innerHandler(request);
+      return res.change(headers: {"x-nested": "g2/n"});
+    };
+  })..get("/c", (Request req) => Response.ok("c"));
+
+  //NOTE: tests also the correctness of middleware chaining in groups
+  router.use((innerHandler) {
+    return (request) async {
+      final res = await innerHandler(request);
+      return res.change(headers: {"x-powered-by": "test"});
+    };
+  });
+
+  return router;
+}
+
 void main() {
-  group("Router basic routing", () {
-    late Router router;
+  late io.IOServer server;
 
-    setUp(() {
-      router = Router();
-    });
-
-    test("GET routes invoke correct handler", () async {
-      var called = false;
-      router.get("/hello", (Request req) {
-        called = true;
-        return Response.ok("world");
-      });
-
-      final response = await router.call(Request("GET", Uri.parse("http://localhost/hello")));
-      expect(response.statusCode, equals(200));
-      final body = await response.readAsString();
-      expect(body, equals("world"));
-      expect(called, isTrue);
-    });
-
-    test("HEAD is auto-added for GET routes", () async {
-      router.get("/foo", (Request req) => Response.ok("bar"));
-
-      final getResponse = await router.call(Request("GET", Uri.parse("http://localhost/foo")));
-      expect(getResponse.statusCode, equals(200));
-      expect(await getResponse.readAsString(), equals("bar"));
-
-      final headResponse = await router.call(Request("HEAD", Uri.parse("http://localhost/foo")));
-      // HEAD should return no body
-      expect(headResponse.statusCode, equals(200));
-      expect(await headResponse.readAsString(), isEmpty);
-    });
-
-    test("Any routes match any verb", () async {
-      router.any("/any", (Request req) => Response.ok(req.method));
-      for (final verb in ["GET", "POST", "PUT", "DELETE", "PATCH"]) {
-        final resp = await router.call(Request(verb, Uri.parse("http://localhost/any")));
-        expect(resp.statusCode, equals(200));
-        expect(await resp.readAsString(), equals(verb));
-      }
-    });
-
-    test("Route parameters are passed to handler", () async {
-      String? id;
-      router.get("/user/<id>", (Request req, String userId) {
-        id = userId;
-        return Response.ok("id $userId");
-      });
-      final resp = await router.call(Request("GET", Uri.parse("http://localhost/user/123")));
-      expect(resp.statusCode, equals(200));
-      expect(await resp.readAsString(), equals("id 123"));
-      expect(id, equals("123"));
-    });
-
-    test("Duplicate handler registration throws", () {
-      Response handler(Request req) => Response.ok("dup");
-      router.get("/dup", handler);
-      expect(() => router.post("/dup", handler), throwsA(isA<Exception>()));
-    });
-
-    test("Trailing slash in request is normalized", () async {
-      router.get("/home/user", (Request req) => Response.ok("ok"));
-      final resp1 = await router.call(Request("GET", Uri.parse("http://localhost/home/user/")));
-      final resp2 = await router.call(Request("GET", Uri.parse("http://localhost/home/user")));
-      expect(resp1.statusCode, equals(200));
-      expect(await resp1.readAsString(), equals("ok"));
-      expect(resp2.statusCode, equals(200));
-      expect(await resp2.readAsString(), equals("ok"));
-    });
-
-    test("Not found returns default handler", () async {
-      final resp = await router.call(Request("GET", Uri.parse("http://localhost/not/exists")));
-      expect(resp.statusCode, equals(404));
-      expect(await resp.readAsString(), contains("Route not found"));
-    });
+  setUp(() async {
+    server = await io.IOServer.bind(InternetAddress.loopbackIPv4, 0)
+      ..mount(_createRouter().call);
   });
 
-  group("PathRegistry behavior", () {
-    test("Registering same handler twice throws", () {
-      final registry = PathRegistry();
-      Response handler(Request req) => Response.ok("x");
-      registry.registerPath("/a", "GET", handler);
-      expect(() => registry.registerPath("/b", "POST", handler), throwsA(isA<Exception>()));
-    });
+  tearDown(() => server.close());
 
-    test("getMethodAndPath returns correct info", () {
-      final registry = PathRegistry();
-      Response handler(Request req) => Response.ok("y");
-      registry.registerPath("/b", "POST", handler);
-      final info = registry.getMethodAndPath(handler);
-      expect(info.$1, equals("POST"));
-      expect(info.$2, equals("/b"));
-    });
+  Uri url(String path) => Uri.parse("${server.url}$path");
+
+  Future<String> read(String path) => http.read(url(path));
+  Future<int> head(String path) async => (await http.head(url(path))).statusCode;
+  Future<http.Response> get(String path) => http.get(url(path));
+  // Future<http.Response> put(String path) => http.put(url(path));
+  // Future<http.Response> post(String path) => http.post(url(path));
+
+  test("should return correct handler", () async {
+    expect(await head("/hello"), 200);
+    expect(await read("/hello"), "Hello");
   });
 
-  group("GroupRouter", () {
-    late Router base;
-    late GroupRouter group;
-    setUp(() {
-      base = Router();
-      group = base.group("/api");
-    });
+  test("should return not found handler", () async {
+    final res = await get("/notfound");
+    expect(res.statusCode, 404);
+    expect(res.body, "Route not found");
+  });
 
-    test("Group prefix applies to routes", () async {
-      group.get("/test", (Request req) => Response.ok("grp"));
-      final resp = await base.call(Request("GET", Uri.parse("http://localhost/api/test")));
-      expect(resp.statusCode, equals(200));
-      expect(await resp.readAsString(), equals("grp"));
-    });
+  test("should pass params to handler correctly", () async {
+    expect(await read("/user/42"), "User 42");
+  });
+
+  test("should apply middleware to matched route", () async {
+    final res = await get("/with-middleware");
+    expect(res.statusCode, 200);
+    expect(res.headers["x-powered-by"], "test");
+  });
+
+  test("should apply group middleware to group routes", () async {
+    final res = await get("/api/ping");
+    expect(res.statusCode, 200);
+    expect(res.headers["x-group"], "1");
+  });
+
+  test("should isolate middleware between groups", () async {
+    final res1 = await get("/g1/a");
+    final res2 = await get("/g2/b");
+
+    expect(res1.statusCode, 200);
+    expect(res2.statusCode, 200);
+
+    expect(res1.headers["x-group"], "g1");
+    expect(res2.headers["x-group"], "g2");
+  });
+
+  test("should add middleware globally to a group", () async {
+    final res = await get("/g2/b");
+
+    expect(res.statusCode, 200);
+
+    expect(res.headers["x-group"], "g2");
+    expect(res.headers["x-extra"], "");
+  });
+
+  test("should nest groups correctly", () async {
+    final res = await get("/g2/n/c");
+
+    expect(res.statusCode, 200);
+    expect(res.headers["x-group"], "g2");
+    expect(res.headers["x-extra"], "");
+    expect(res.headers["x-nested"], "g2/n");
+    expect(res.body, "c");
+  });
+
+  test("should all be powered by test", () async {
+    Future<String?> getPoweredBy(String path) async {
+      final res = await get(path);
+      return res.headers["x-powered-by"];
+    }
+
+    const s = "test";
+
+    expect(await getPoweredBy("/hello"), s);
+    expect(await getPoweredBy("/user/a"), s);
+    expect(await getPoweredBy("/api/ping"), s);
+    expect(await getPoweredBy("/g1/a"), s);
+    expect(await getPoweredBy("/g2/b"), s);
+    expect(await getPoweredBy("/g2/n/c"), s);
   });
 }

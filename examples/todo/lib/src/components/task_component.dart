@@ -10,10 +10,13 @@ HTML taskComponent(Task t) => div([
         $type("checkbox"),
         $hx.trigger("change"),
         $hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
-        $hx.handle(toggleCompletedTaskHandler, null, {
-          "id": t.id,
-          "value": (!t.isCompleted).toString(),
-        }),
+        $hx.handle(
+          toggleCompletedTaskHandler,
+          queryParameters: {
+            "id": t.id,
+            "value": (!t.isCompleted).toString(),
+          },
+        ),
         if (t.isCompleted) $checked(),
         $class("checkbox checkbox-ms"),
       ]),

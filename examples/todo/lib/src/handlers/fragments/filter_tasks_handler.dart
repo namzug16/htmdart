@@ -1,5 +1,4 @@
 import 'package:htmdart/htmdart.dart';
-import 'package:shelf/shelf.dart';
 import 'package:todo/src/components/task_filter.dart';
 import 'package:todo/src/components/tasks_container.dart';
 import 'package:todo/src/helpers/request_extensions.dart';
@@ -16,11 +15,12 @@ Future<Response> filterTasksHandler(Request request) async {
   final res = await repo.getAll(filter);
 
   return switch (res) {
-    Ok(:final ok) => [
-        tasksContainer(ok).add($hx.swapOob.yes),
-        taskFilter.$2(filter).add($hx.swapOob.yes),
-      ],
-    Err(:final err) => [err.toString().t],
-  }
-      .response;
+    Ok(:final ok) => respondWithHtmlOob([
+        tasksContainer(ok),
+        taskFilter.$2(filter),
+      ]),
+    Err(:final err) => respondWithHtml([
+        h1(["Something went wrong. $err".t])
+      ]),
+  };
 }

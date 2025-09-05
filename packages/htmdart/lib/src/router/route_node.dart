@@ -1,95 +1,16 @@
+import "package:htmdart/src/router/builder.dart";
 import "package:shelf/shelf.dart";
 
-final _pathParamMatcher = RegExp("<([^>]+)>");
-
 class RouteNode {
-  RouteNode({required this.segment});
-
-  final String segment;
+  RouteNode(this.handler, this.builder);
   Function? handler;
-  Middleware? middleware;
-
-  final Map<String, RouteNode> literalChildren = {};
-
-  RouteNode? routeParameterChild;
-
-  String? get routeParameterName => _pathParamMatcher.firstMatch(segment)?.group(1);
-
-  static List<String> parsePath(String path) {
-    if (!path.startsWith("/")) throw ArgumentError.value(path, "path", "expected path to start with a slash");
-    return path.split("/").where((s) => s.isNotEmpty).toList();
-  }
-
-  void insertPath(String verb, String path, Function handler, Middleware? middleware) {
-    _checkPathParameters(path);
-    final segments = parsePath(path);
-    _insertSegments([verb, ...segments], handler, middleware);
-  }
-
-  void _insertSegments(List<String> segments, Function handler, Middleware? middleware) {
-    if (segments.isEmpty) {
-      this.handler = handler;
-      this.middleware = middleware;
-      return;
-    }
-
-    final seg = segments.first;
-
-    if (_pathParamMatcher.hasMatch(seg)) {
-      final ppn = _pathParamMatcher.firstMatch(seg)!.group(1);
-      if (routeParameterChild != null) {
-        if (routeParameterChild!.routeParameterName != ppn) {
-          throw Exception("Conflicting route parameter: existing parameter <${routeParameterChild!.routeParameterName}> does not match specified parameter $seg");
-        }
-        routeParameterChild!._insertSegments(segments.sublist(1), handler, middleware);
-      } else {
-        routeParameterChild = RouteNode(segment: seg);
-        routeParameterChild!._insertSegments(segments.sublist(1), handler, middleware);
-      }
-    } else {
-      if (literalChildren.containsKey(seg)) {
-        literalChildren[seg]!._insertSegments(segments.sublist(1), handler, middleware);
-      } else {
-        literalChildren[seg] = RouteNode(segment: seg);
-        literalChildren[seg]!._insertSegments(segments.sublist(1), handler, middleware);
-      }
-    }
-  }
-
-  (RouteNode, Map<String, String>)? matchPath(String verb, String path) {
-    final segments = parsePath("/$path");
-    final match = _matchSegments([verb, ...segments], {});
-    if (match == null) return _matchSegments(["ANY", ...segments], {});
-    return match;
-  }
-
-  (RouteNode, Map<String, String>)? _matchSegments(List<String> segments, Map<String, String> params) {
-    if (segments.isEmpty) {
-      if (handler != null) {
-        return (this, params);
-      } else {
-        return null;
-      }
-    }
-
-    final seg = segments.first;
-
-    if (literalChildren.containsKey(seg)) {
-      final result = literalChildren[seg]!._matchSegments(segments.sublist(1), params);
-      if (result != null) return result;
-    }
-    if (routeParameterChild != null) {
-      if (routeParameterChild!.routeParameterName case final rpn?) {
-        params[rpn] = seg;
-      }
-      return routeParameterChild!._matchSegments(segments.sublist(1), params);
-    }
-    return null;
-  }
+  //NOTE: we store a reference to the builder in order to extract the
+  // most updated middleware
+  Builder builder;
 
   Future<Response> invoke(Request request, Map<String, String> params) async {
     // TODO(me): should I expose them?
-    final r = request.change(context: {"shelf_router/params": params});
+    final r = request.change(context: {"htmdart/params": params});
 
     Future<Response> h(Request request) async {
       if (handler is Handler || params.isEmpty) {
@@ -103,26 +24,25 @@ class RouteNode {
       ]) as Response;
     }
 
-    if (middleware != null) {
-      return middleware!(h)(r);
+    if (builder.middleware != null) {
+      if (request.method.toUpperCase() == "HEAD") {
+        //FIX: _removeBodyMiddleware is being added every time
+        final middleware = _removeBodyMiddleware.addMiddleware(builder.middleware ?? (Handler h) => h);
+        return middleware(h)(r);
+      } else {
+        return builder.middleware!(h)(r);
+      }
     }
 
     return h(r);
   }
 }
 
-/// Throws an error if multiple path parameters have the same name
-void _checkPathParameters(String path) {
-  final matches = _pathParamMatcher.allMatches(path);
-  final seenParams = <String>{};
-
-  for (final match in matches) {
-    final paramName = match.group(1);
-    if (paramName != null) {
-      if (seenParams.contains(paramName)) {
-        throw ArgumentError('Multiple path parameters with the name "$paramName" found in "$path".');
-      }
-      seenParams.add(paramName);
+final _removeBodyMiddleware = createMiddleware(
+  responseHandler: (r) {
+    if (r.headers.containsKey("content-length")) {
+      r = r.change(headers: {"content-length": "0"});
     }
-  }
-}
+    return r.change(body: <int>[]);
+  },
+);

@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: htmleez
+dependency_overrides:
+  htmleez:
+    path: ../htmleez

@@ -1,4 +1,4 @@
-import 'package:htmleez/htmleez.dart';
+import 'package:htmdart/htmdart.dart';
 
 HTML pendingTasksCount(int count) => div([
       $id("pending-tasks"),

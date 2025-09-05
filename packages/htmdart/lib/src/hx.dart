@@ -16,7 +16,7 @@ final class $hx {
   static final events = HxEvents();
 
   /// Automatically sets the hx-{Verb} and path for the given handler
-  static HTML handle(Function handler, [List<String>? pathParameters, Map<String, String>? queryParameters]) {
+  static HTML handle(Function handler, {List<String>? pathParameters, Map<String, String>? queryParameters}) {
     final mp = PathRegistry().getMethodAndPath(handler);
 
     String path = mp.$2;
