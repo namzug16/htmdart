@@ -30,7 +30,7 @@ abstract class Builder {
 
   Middleware? _middleware;
 
-  Group group(String prefix, [Middleware? middleware]) {
+  Group group(String? prefix, [Middleware? middleware]) {
     return Group(this, rTree, prefix, middleware);
   }
 

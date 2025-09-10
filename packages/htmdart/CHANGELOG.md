@@ -1,7 +1,14 @@
+## 0.7.1
+
+- FEAT: allow creation on anonymous groups
+
+
 ## 0.7.0
 
+- FEAT: `serve` function
 - FEAT: Improve Router
 - FIX: update htmleez to 0.12.0
+- BREAKING: extension `.response` on `HTML` has been replaced by `respondWithHtml` and `respondWithHtmlOob`
 
 ## 0.6.1
 

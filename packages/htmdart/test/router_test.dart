@@ -41,6 +41,14 @@ Router _createRouter() {
           };
         });
 
+  //NOTE: anonymous group
+  final _ = router.group(null, (innerHandler) {
+    return (request) async {
+      final res = await innerHandler(request);
+      return res.change(headers: {"x-group": "anon"});
+    };
+  })..get("/anon", (Request req) => Response.ok(""));
+
   //NOTE: nested group
   final _ = g2.group("/n", (innerHandler) {
     return (request) async {
@@ -133,6 +141,14 @@ void main() {
     expect(res.headers["x-extra"], "");
     expect(res.headers["x-nested"], "g2/n");
     expect(res.body, "c");
+  });
+
+  test("should create anonymous groups correctly", () async {
+    final res = await get("/anon");
+
+    expect(res.statusCode, 200);
+    expect(res.headers["x-group"], "anon");
+    expect(res.body, "");
   });
 
   test("should all be powered by test", () async {

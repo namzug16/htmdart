@@ -1,5 +1,8 @@
 ![htmleez](https://raw.githubusercontent.com/namzug16/htmdart/master/assets/htmleez.png)
 
+Because it's pure Scala, you get syntax highlighting, autocomplete, 
+error spotting, and the full power of Scala—variables, loops, conditionals—right within your code
+
 # Htmleez
 **Template-less. Type safe. Simple. Familiar. Pure Dart.**
 
