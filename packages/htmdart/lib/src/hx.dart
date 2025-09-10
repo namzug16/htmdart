@@ -23,7 +23,7 @@ final class $hx {
 
     if (pathParameters != null) {
       int index = 0;
-      path = path.replaceAllMapped(RegExp("<[^>]+>"), (match) {
+      path = path.replaceAllMapped(RegExp(r":\w+"), (match) {
         if (index < pathParameters.length) {
           return pathParameters[index++];
         }

@@ -1,7 +1,10 @@
+## 0.7.2
+
+- FIX: `$hx.handle` doesn't replace path parameters
+
 ## 0.7.1
 
 - FEAT: allow creation on anonymous groups
-
 
 ## 0.7.0
 

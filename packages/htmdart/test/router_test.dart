@@ -148,6 +148,7 @@ void main() {
 
     expect(res.statusCode, 200);
     expect(res.headers["x-group"], "anon");
+    expect(res.headers["x-powered-by"], "test");
     expect(res.body, "");
   });
 
