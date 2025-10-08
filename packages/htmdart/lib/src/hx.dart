@@ -5,7 +5,6 @@ import "dart:convert";
 
 import "package:htmdart/src/hx_events.dart";
 import "package:htmdart/src/hx_swap.dart";
-import "package:htmdart/src/router/path_registry.dart";
 import "package:htmleez/htmleez.dart";
 
 //
@@ -16,34 +15,34 @@ final class $hx {
   static final events = HxEvents();
 
   /// Automatically sets the hx-{Verb} and path for the given handler
-  static HTML handle(Function handler, {List<String>? pathParameters, Map<String, String>? queryParameters}) {
-    final mp = PathRegistry().getMethodAndPath(handler);
-
-    String path = mp.$2;
-
-    if (pathParameters != null) {
-      int index = 0;
-      path = path.replaceAllMapped(RegExp(r":\w+"), (match) {
-        if (index < pathParameters.length) {
-          return pathParameters[index++];
-        }
-        throw ArgumentError.value(path, "path parameters", "missing parameters. $pathParameters");
-      });
-    }
-
-    if (queryParameters != null) {
-      path = Uri(path: path, queryParameters: queryParameters).toString();
-    }
-
-    return switch (mp.$1) {
-      "GET" => $hx.get(path),
-      "POST" => $hx.post(path),
-      "PUT" => $hx.put(path),
-      "DELETE" => $hx.delete(path),
-      "PATCH" => $hx.patch(path),
-      _ => throw ArgumentError.value(mp.$1, "verb", "not a valid HTMX verb"),
-    };
-  }
+  // static HTML handle(Function handler, {List<String>? pathParameters, Map<String, String>? queryParameters}) {
+  //   final mp = PathRegistry().getMethodAndPath(handler);
+  //
+  //   String path = mp.$2;
+  //
+  //   if (pathParameters != null) {
+  //     int index = 0;
+  //     path = path.replaceAllMapped(RegExp(r":\w+"), (match) {
+  //       if (index < pathParameters.length) {
+  //         return pathParameters[index++];
+  //       }
+  //       throw ArgumentError.value(path, "path parameters", "missing parameters. $pathParameters");
+  //     });
+  //   }
+  //
+  //   if (queryParameters != null) {
+  //     path = Uri(path: path, queryParameters: queryParameters).toString();
+  //   }
+  //
+  //   return switch (mp.$1) {
+  //     "GET" => $hx.get(path),
+  //     "POST" => $hx.post(path),
+  //     "PUT" => $hx.put(path),
+  //     "DELETE" => $hx.delete(path),
+  //     "PATCH" => $hx.patch(path),
+  //     _ => throw ArgumentError.value(mp.$1, "verb", "not a valid HTMX verb"),
+  //   };
+  // }
 
   /// Issues a GET request to the specified URL
   static const get = Attribute("hx-get");

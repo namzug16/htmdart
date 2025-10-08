@@ -1,19 +1,20 @@
-import "package:htmdart/htmdart.dart";
+import "package:htmdart/src/hx.dart";
+import "package:netto/netto.dart";
 
-extension HxRequestExtensions on Request {
-  bool get isHx => headers[HX.request] == "true";
+extension HxRequestExtensions on Ctx {
+  bool get isHx => request.headers[HX.request]?.firstOrNull == "true";
 
-  String? get hxBoosted => headers[HX.boosted];
+  String? get hxBoosted => request.headers[HX.boosted]?.firstOrNull;
 
-  String? get hxCurrentURL => headers[HX.currentURL];
+  String? get hxCurrentURL => request.headers[HX.currentURL]?.firstOrNull;
 
-  String? get hxHistoryRestoreRequest => headers[HX.historyRestoreRequest];
+  String? get hxHistoryRestoreRequest => request.headers[HX.historyRestoreRequest]?.firstOrNull;
 
-  String? get hxPrompt => headers[HX.prompt];
+  String? get hxPrompt => request.headers[HX.prompt]?.firstOrNull;
 
-  String? get hxTarget => headers[HX.target];
+  String? get hxTarget => request.headers[HX.target]?.firstOrNull;
 
-  String? get hxTriggerName => headers[HX.triggerName];
+  String? get hxTriggerName => request.headers[HX.triggerName]?.firstOrNull;
 
-  String? get hxTrigger => headers[HX.trigger];
+  String? get hxTrigger => request.headers[HX.trigger]?.firstOrNull;
 }
