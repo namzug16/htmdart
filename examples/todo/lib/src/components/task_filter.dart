@@ -1,5 +1,4 @@
 import 'package:htmdart/htmdart.dart';
-import 'package:todo/src/handlers/fragments/filter_tasks_handler.dart';
 import 'package:todo/src/models/task_filter.dart';
 
 final taskFilter = (
@@ -8,7 +7,7 @@ final taskFilter = (
         $class("select select-bordered select-sm w-full"),
         $id("task-filter"),
         $name("index"),
-        $hx.handle(filterTasksHandler),
+        $hx.get("/filter"),
         $hx.trigger("change"),
         option([
           if (tf == TaskFilter.all) $selected(),

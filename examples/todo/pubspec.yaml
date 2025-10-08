@@ -8,9 +8,9 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
+  netto: ^0.1.0
   args: ^2.4.0
   htmdart: ^0.7.0
-  supabase: ^2.6.1
   dart_mappable: ^4.3.0
   sqlite3: ^2.7.2
 
