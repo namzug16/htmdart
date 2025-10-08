@@ -1,12 +1,12 @@
-import "package:htmleez/src/markup_component.dart";
+import "package:htmleez/src/html_component.dart";
 
 final class Attribute {
   const Attribute(this.name);
 
   final String name;
 
-  MarkupComponent call([String? content]) {
-    return EscapedAttributeMarkupComponent(name, content);
+  HtmlComponent call([String? content]) {
+    return EscapedAttributeComponent(name, content);
   }
 }
 
@@ -17,21 +17,21 @@ final class RawAttribute {
 
   final String name;
 
-  MarkupComponent call([String? content]) {
-    return EscapedAttributeMarkupComponent(name, content);
+  HtmlComponent call([String? content]) {
+    return EscapedAttributeComponent(name, content);
   }
 }
 
-final class EscapedAttributeMarkupComponent extends AttributeMarkupComponent {
-  const EscapedAttributeMarkupComponent(super.name, super.content);
+final class EscapedAttributeComponent extends AttributeComponent {
+  const EscapedAttributeComponent(super.name, super.content);
 }
 
-final class RawAttributeMarkupComponent extends AttributeMarkupComponent {
-  const RawAttributeMarkupComponent(super.name, super.content);
+final class RawAttributeComponent extends AttributeComponent {
+  const RawAttributeComponent(super.name, super.content);
 }
 
-sealed class AttributeMarkupComponent extends MarkupComponent {
-  const AttributeMarkupComponent(this.name, this.content);
+sealed class AttributeComponent extends HtmlComponent {
+  const AttributeComponent(this.name, this.content);
 
   final String name;
   final String? content;

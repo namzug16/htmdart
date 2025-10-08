@@ -45,11 +45,7 @@ void main() {
     ]),
   ]);
 
-  final renderer = HtmlRenderer();
-
-  final renderedHtml = renderer([document]);
-
   //
   // ignore: avoid_print
-  print(renderedHtml);
+  print(document.toHtml());
 }

@@ -1,14 +1,19 @@
+## 0.13.0
+
+- refactor: rename `MarkupComponent` to `HtmlComponent`
+- feat!: remove `HtmlRenderer` and add `toHtml` methods to `HtmlComponent`s
+
 ## 0.12.0
 
-- FEAT: `addAll` method in `MarkupComponent`
+- feat: `addAll` method in `MarkupComponent`
 
 ## 0.11.0
 
-- FEAT: Aria Attributes
+- feat: Aria Attributes
 
 ## 0.10.0
 
-- FEAT: Attributes' name convention
+- feat: Attributes' name convention
 
 ## 0.9.0
 

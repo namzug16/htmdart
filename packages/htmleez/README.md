@@ -14,7 +14,7 @@ dart pub add htmleez
 import "package:htmleez/htmleez.dart";
 
 void main() {
-  print(HtmlRenderer().render(btn()));
+  print(btn().toHtml());
 }
 
 HTML btn() => button([
