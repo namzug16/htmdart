@@ -1,6 +1,5 @@
 import 'package:htmdart/htmdart.dart';
 import 'package:todo/src/components/task_filter.dart';
-import 'package:todo/src/handlers/fragments/toggle_completed_task_handler.dart';
 import 'package:todo/src/models/task.dart';
 
 HTML taskComponent(Task t) => div([
@@ -10,12 +9,11 @@ HTML taskComponent(Task t) => div([
         $type("checkbox"),
         $hx.trigger("change"),
         $hx.vals("js:{filter: document.getElementById('${taskFilter.$1}').value}"),
-        $hx.handle(
-          toggleCompletedTaskHandler,
-          queryParameters: {
+        $hx.post(
+          Uri(path: "/toggle_completed", queryParameters: {
             "id": t.id,
             "value": (!t.isCompleted).toString(),
-          },
+          }).toString(),
         ),
         if (t.isCompleted) $checked(),
         $class("checkbox checkbox-ms"),

@@ -1,11 +1,12 @@
-import 'dart:io';
+import 'package:htmdart/htmdart.dart' hide html;
+import 'package:netto/netto.dart';
 
-import 'package:htmdart/htmdart.dart';
 
-extension RequestExtensions on Request {
+extension CtxExtensions on Ctx {
   String get ipAddress {
-    final forwardedFor = headers['X-Forwarded-For'];
-    final res = forwardedFor ?? (context['shelf.io.connection_info'] as HttpConnectionInfo?)?.remoteAddress.address;
+    final forwardedFor = request.headers['X-Forwarded-For'];
+    final connInfo = request.raw.connectionInfo;
+    final res = forwardedFor?.firstOrNull ?? connInfo?.remoteAddress.address;
 
     if (res == null) {
       throw Exception("Could not determine client IP");
@@ -14,3 +15,8 @@ extension RequestExtensions on Request {
     return res;
   }
 }
+
+extension CtxResponseExtension on CtxResponse {
+  void htmleez(List<HTML> components) => html(components.map((e) => e.add($hx.swapOob.yes)).toList().toHtml());
+}
+
