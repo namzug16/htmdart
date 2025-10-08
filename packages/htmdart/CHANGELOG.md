@@ -1,3 +1,7 @@
+## 0.8.0
+
+- BREAKING: remove `shelf` and any helper method for it
+
 ## 0.7.2
 
 - FIX: `$hx.handle` doesn't replace path parameters
