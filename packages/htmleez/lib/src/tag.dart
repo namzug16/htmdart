@@ -1,4 +1,4 @@
-import "package:htmleez/src/markup_component.dart";
+import "package:htmleez/src/html_component.dart";
 
 final class Tag {
   //
@@ -8,8 +8,8 @@ final class Tag {
   final String name;
   final bool isVoid;
 
-  TagMarkupComponent call(List<MarkupComponent> content) {
-    final tag = TagMarkupComponent(name, isVoid, [], []);
+  TagComponent call(List<HtmlComponent> content) {
+    final tag = TagComponent(name, isVoid, [], []);
 
     for (var i = 0; i < content.length; i++) {
       tag.add(content[i]);
@@ -19,8 +19,8 @@ final class Tag {
   }
 }
 
-final class TagMarkupComponent extends MarkupComponent {
-  TagMarkupComponent(
+final class TagComponent extends HtmlComponent {
+  TagComponent(
     this.name,
     //
     // ignore: avoid_positional_boolean_parameters
@@ -31,6 +31,6 @@ final class TagMarkupComponent extends MarkupComponent {
 
   final String name;
   final bool isVoid;
-  final List<MarkupComponent> attributes;
-  final List<MarkupComponent> content;
+  final List<HtmlComponent> attributes;
+  final List<HtmlComponent> content;
 }

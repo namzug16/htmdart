@@ -1,6 +1,6 @@
-import "package:htmleez/src/markup_component.dart";
+import "package:htmleez/src/html_component.dart";
 
-final class Raw extends MarkupComponent {
+final class Raw extends HtmlComponent {
   const Raw(this.content);
 
   final String content;
