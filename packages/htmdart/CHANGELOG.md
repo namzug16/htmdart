@@ -1,34 +1,39 @@
 ## 0.8.0
 
-- BREAKING: remove `shelf` and any helper method for it
+Allow htmdart to be used with any Dart web framework
+
+- feat!: remove `shelf` and any helper method for `Response`
+- feat!: remove `Router`
+- feat!: remove custom `serve` function
+- fix: update htmleez to 0.13.0
 
 ## 0.7.2
 
-- FIX: `$hx.handle` doesn't replace path parameters
+- fix: `$hx.handle` doesn't replace path parameters
 
 ## 0.7.1
 
-- FEAT: allow creation on anonymous groups
+- feat: allow creation on anonymous groups
 
 ## 0.7.0
 
-- FEAT: `serve` function
-- FEAT: Improve Router
-- FIX: update htmleez to 0.12.0
-- BREAKING: extension `.response` on `HTML` has been replaced by `respondWithHtml` and `respondWithHtmlOob`
+- feat: `serve` function
+- feat: Improve Router
+- fix: update htmleez to 0.12.0
+- feat!: extension `.response` on `HTML` has been replaced by `respondWithHtml` and `respondWithHtmlOob`
 
 ## 0.6.1
 
-- FIX: path trailing slash normalization
-- FEAT: router tests
+- fix: path trailing slash normalization
+- feat: router tests
 
 ## 0.6.0
 
-- FIX: update to Htmleez attributes' naming convention
+- fix: update to Htmleez attributes' naming convention
 
 ## 0.5.1
 
-- FEAT: Router's "any" method
+- feat: Router's "any" method
 
 ## 0.5.0
 

@@ -6,7 +6,7 @@ Build fast, hypermedia-driven web apps with Dart + htmx
 
 Htmdart is a small ecosystem of packages (or tool-kit if we want to sound fancy) that make it easy to build **hypermedia-driven applications in Dart**.  
 
-It offers tools that let you:  
+It offers tools that let you:
 
 - Write and render **HTML directly in Dart** (no template engines needed)  
 - Use **htmx & hyperscript attributes** as native Dart functions  
