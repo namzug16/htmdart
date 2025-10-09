@@ -4,14 +4,12 @@ Build fast, hypermedia-driven web apps with Dart + htmx
 
 ---
 
-Htmdart is a small ecosystem of packages (or tool-kit if we want to sound fancy) that make it easy to build **hypermedia-driven applications in Dart**.  
+Htmdart is a small ecosystem of packages (or toolkit if we want to sound fancy) that makes it easy to build **hypermedia-driven applications in Dart**.  
 
 It offers tools that let you:
 
 - Write and render **HTML directly in Dart** (no template engines needed)  
-- Use **htmx & hyperscript attributes** as native Dart functions  
-- Build apps with a **radix-tree router** (groups, middlewares, static files, redirects and more)  
-- Serve with **hot reload & helpful defaults**  
+- Use **htmx & hyperscript attributes** as native Dart functions (callable classes)
 - Generate **static HTML sites** with Dart  
 
 ### Packages
@@ -24,9 +22,9 @@ It offers tools that let you:
 
 ### Overview
 
-- **htmdart** → The main library: router, serve, and attribute helpers for htmx/hyperscript.  
-- **htmleez** → Pure HTML composition library for Dart, used under the hood by htmdart.  
-- **htmleez_static** → Static site generator powered by htmleez.  
+- **htmleez** → Pure HTML composition library for Dart.
+- **htmdart** → Htmleez attributes to work with htmx and hyperscript.
+- **htmleez_static** → Static site generator powered by htmleez.
 
 ---
 
