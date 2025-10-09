@@ -3,13 +3,14 @@ description: Todo app built with HTMDART
 version: 1.0.0
 publish_to: none
 # repository: https://github.com/my_org/my_repo
+resolution: workspace
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.8.0
 
 dependencies:
   args: ^2.4.0
-  htmdart: ^0.7.0
+  htmdart: ^0.8.0
   supabase: ^2.6.1
   dart_mappable: ^4.3.0
   sqlite3: ^2.7.2
@@ -18,5 +19,5 @@ dev_dependencies:
   build_runner: ^2.4.13
   dart_mappable_builder: ^4.3.0
   http: ^1.1.0
-  lints: ^4.0.0
+  lints: ^5.0.0
   test: ^1.24.0

@@ -62,7 +62,6 @@ class StaticSite {
   }
 
   void call() {
-    final htmlRenderer = HtmlRenderer();
     final outDir = Directory(outputDir)..createSync(recursive: true);
 
     // 0) Bring in static assets first so generated pages can overwrite if needed.
@@ -72,7 +71,7 @@ class StaticSite {
     for (final (path, html, _) in _pages) {
       final filePath = (path == "/") ? "${outDir.path}/index.html" : "${outDir.path}$path/index.html";
       Directory(filePath.substring(0, filePath.lastIndexOf('/'))).createSync(recursive: true);
-      File(filePath).writeAsStringSync(htmlRenderer([html]));
+      File(filePath).writeAsStringSync(html.toHtml());
     }
 
     // 2) Write sitemap.xml
@@ -80,7 +79,7 @@ class StaticSite {
 
     // 3) Write 404.html if set
     if (_notFound != null) {
-      File("${outDir.path}/404.html").writeAsStringSync(htmlRenderer([_notFound!]));
+      File("${outDir.path}/404.html").writeAsStringSync(_notFound!.toHtml());
     }
   }
 

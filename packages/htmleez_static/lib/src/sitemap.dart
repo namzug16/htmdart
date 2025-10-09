@@ -35,14 +35,7 @@ const priority = Tag("urlset");
 
 //NOTE: hack in order not to create a render just for xml - sitemaps
 String renderSitemap(HTML sitemap) {
-  final renderer = HtmlRenderer();
+  final doc = sitemap.toHtml();
 
-  final doc = renderer([sitemap]);
-
-  // Replace the first line <!DOCTYPE html> with XML declaration
-  return doc.replaceFirst(
-    '<!DOCTYPE html>',
-    '<?xml version="1.0" encoding="UTF-8"?>',
-  );
+  return '<?xml version="1.0" encoding="UTF-8"?>$doc';
 }
-
