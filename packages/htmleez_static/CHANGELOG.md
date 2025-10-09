@@ -1,6 +1,10 @@
+## 0.1.2
+
+- fix: update htmleez to 0.13.0
+
 ## 0.1.1
 
-- FIX: update htmleez to 0.12.0
+- fix: update htmleez to 0.12.0
 
 ## 0.1.0
 
