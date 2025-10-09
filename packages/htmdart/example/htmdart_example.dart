@@ -1,4 +1,4 @@
-import "dart:async";
+import "dart:io";
 
 import "package:htmdart/htmdart.dart";
 import "package:netto/netto.dart";
@@ -12,7 +12,7 @@ Future<void> main() async {
     ..post("/increase_counter", increaseCounterHandler)
     ..post("/decrease_counter", decreaseCounterHandler);
 
-  await app.serve("localhost", 8080);
+  await app.serve(InternetAddress.anyIPv4, 8080);
 }
 
 void homePageHandler(Ctx ctx) {
