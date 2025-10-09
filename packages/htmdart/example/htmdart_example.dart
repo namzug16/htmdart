@@ -3,12 +3,10 @@ import "dart:async";
 import "package:htmdart/htmdart.dart";
 import "package:netto/netto.dart";
 
-String _renderHtml(List<HTML> components) => HtmlRenderer()(components);
-
 Future<void> main() async {
   final app = Netto()
     ..notFoundHandler = (Ctx ctx) {
-      ctx.response.html(_renderHtml(["404".h1()]));
+      ctx.response.html("404".h1().toHtml());
     }
     ..get("/", homePageHandler)
     ..post("/increase_counter", increaseCounterHandler)
@@ -19,36 +17,34 @@ Future<void> main() async {
 
 void homePageHandler(Ctx ctx) {
   return ctx.response.html(
-    _renderHtml([
-      html([
-        link([$href("https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"), $rel("stylesheet"), $type("text/css")]),
-        script([$src("https://unpkg.com/htmx.org@2.0.4")]),
-        script([$src("https://cdn.tailwindcss.com")]),
-        body([
-          $class("h-screen place-content-center"),
-          div([
-            $class("flex flex-col gap-6 items-center"),
-            counter(0),
-            counterActions,
-          ]),
-          h1([
-            $class("text-xs text-center mt-8"),
-            "Powered by HTMDART".t,
-          ]),
+    html([
+      link([$href("https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"), $rel("stylesheet"), $type("text/css")]),
+      script([$src("https://unpkg.com/htmx.org@2.0.4")]),
+      script([$src("https://cdn.tailwindcss.com")]),
+      body([
+        $class("h-screen place-content-center"),
+        div([
+          $class("flex flex-col gap-6 items-center"),
+          counter(0),
+          counterActions,
+        ]),
+        h1([
+          $class("text-xs text-center mt-8"),
+          "Powered by HTMDART".t,
         ]),
       ]),
-    ]),
+    ]).toHtml(),
   );
 }
 
 Future<void> increaseCounterHandler(Ctx ctx) async {
   final c = (await ctx.request.body.formValue("count")) ?? "0";
-  return ctx.response.html(_renderHtml([counter(int.parse(c) + 1).add($hx.swapOob.yes)]));
+  return ctx.response.html(counter(int.parse(c) + 1).add($hx.swapOob.yes).toHtml());
 }
 
 Future<void> decreaseCounterHandler(Ctx ctx) async {
   final c = (await ctx.request.body.formValue("count")) ?? "0";
-  return ctx.response.html(_renderHtml([counter(int.parse(c) - 1).add($hx.swapOob.yes)]));
+  return ctx.response.html(counter(int.parse(c) - 1).add($hx.swapOob.yes).toHtml());
 }
 
 HTML counter(int count) => h1([$id("counter"), $class("text-9xl font-bold"), count.toString().t]);
