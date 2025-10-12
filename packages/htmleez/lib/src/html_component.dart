@@ -23,17 +23,18 @@ abstract class HtmlComponent {
   static String escapeString(String string) => const HtmlEscape().convert(string);
 
   HtmlComponent add(HtmlComponent c) {
-    if (this is TagComponent) {
-      switch (c) {
-        case AttributeComponent():
-          (this as TagComponent).attributes.add(c);
-        default:
-          (this as TagComponent).content.add(c);
-      }
-    } else {
-      throw Exception("Cannot add child to a non Tag component. Component of type ${c.runtimeType}");
+    if (this is! TagComponent) {
+      throw UnsupportedError(
+        "Cannot add child to a non-Tag parent of type ${runtimeType}",
+      );
     }
-
+    final t = this as TagComponent;
+    switch (c) {
+      case AttributeComponent():
+        t.attributes.add(c);
+      default:
+        t.content.add(c);
+    }
     return this;
   }
 
