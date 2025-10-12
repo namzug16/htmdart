@@ -20,7 +20,6 @@ final class RawAttribute {
   HtmlComponent call([String? content]) {
     return RawAttributeComponent(name, content);
   }
-  }
 }
 
 final class EscapedAttributeComponent extends AttributeComponent {
