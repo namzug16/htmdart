@@ -18,7 +18,8 @@ final class RawAttribute {
   final String name;
 
   HtmlComponent call([String? content]) {
-    return EscapedAttributeComponent(name, content);
+    return RawAttributeComponent(name, content);
+  }
   }
 }
 
