@@ -25,7 +25,7 @@ abstract class HtmlComponent {
   HtmlComponent add(HtmlComponent c) {
     if (this is! TagComponent) {
       throw UnsupportedError(
-        "Cannot add child to a non-Tag parent of type ${runtimeType}",
+        "Cannot add child to a non-Tag parent of type $runtimeType",
       );
     }
     final t = this as TagComponent;
