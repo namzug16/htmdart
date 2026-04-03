@@ -34,6 +34,7 @@ const img = Tag("img", true); // renders a void tag <img />
 /// Attributes always start with a "$" in order to differentiate them from Tags
 const $id = Attribute("id");
 const $onclick = RawAttribute("onclick"); // `RawAttribute` does not escape the value
+$("aria-label")("Close"); // creates an Attribute by name on the fly
 ```
 
 - **Text & Raw**: 

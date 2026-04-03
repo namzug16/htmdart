@@ -1,3 +1,7 @@
+## 0.8.1
+
+- fix: update htmleez to 0.14.0
+
 ## 0.8.0
 
 Allow htmdart to be used with any Dart web framework

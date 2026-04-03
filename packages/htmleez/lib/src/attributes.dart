@@ -4,6 +4,11 @@
 import "package:htmleez/src/attribute.dart";
 import "package:htmleez/src/html_component.dart";
 
+/// Creates an [Attribute] with the given [name].
+///
+/// Shorthand helper for `Attribute(name)`.
+Attribute $(String name) => Attribute(name);
+
 /// List of types the server accepts, typically a file type.
 const $accept = Attribute("accept");
 

@@ -1,3 +1,7 @@
+## 0.14.0
+
+- feat: add `$()` helper to create attributes by name
+
 ## 0.13.0
 
 - refactor: rename `MarkupComponent` to `HtmlComponent`

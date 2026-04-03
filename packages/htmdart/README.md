@@ -119,6 +119,7 @@ button([
 
 Htmdart builds on top of [htmleez](https://pub.dev/packages/htmleez) a declarative, composable HTML builder for Dart.
 With htmleez, every HTML component is a Dart callable class, attributes and other tags are passed as arguments, and text nodes use the `.t` helper.
+For custom or less common attributes, use `$()` with the raw attribute name.
 
 ```dart
 final doc = html([
@@ -129,6 +130,7 @@ final doc = html([
     h1(["Hello".t]),
     button([
       $hx.get("/ping"),
+      $("aria-label")("Send ping"),
       "Ping".t,
     ]),
   ]),
