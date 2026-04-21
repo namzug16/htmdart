@@ -17,21 +17,38 @@ extension HtmlComponentsToHtml on List<HtmlComponent> {
   String toHtml() => _componentsToHtml(this);
 }
 
-String _componentsToHtml(List<HtmlComponent> content, [StringBuffer? sb]) {
-  sb ??= StringBuffer();
+String _componentsToHtml(List<HtmlComponent> content) {
+  final sb = StringBuffer();
 
   for (final e in content) {
     switch (e) {
       case TagComponent():
         _tagToHtml(e, sb);
       case FragmentComponent():
-        _componentsToHtml(e.content, sb);
+        _fragmentToHtml(e, sb);
       default:
         throw Exception("Cannot render Component of type ${e.runtimeType} directly on a HTML document");
     }
   }
 
   return sb.toString();
+}
+
+void _fragmentToHtml(FragmentComponent fragment, StringBuffer sb) {
+  for (final e in fragment.content) {
+    switch (e) {
+      case TagComponent():
+        _tagToHtml(e, sb);
+      case FragmentComponent():
+        _fragmentToHtml(e, sb);
+      case Text():
+        sb.write(HtmlComponent.escapeString(e.text));
+      case Raw():
+        sb.write(e.content);
+      default:
+        throw Exception("Cannot render Component of type ${e.runtimeType} as child of Fragment");
+    }
+  }
 }
 
 void _tagToHtml(TagComponent tag, StringBuffer sb) {
@@ -60,10 +77,14 @@ void _tagToHtml(TagComponent tag, StringBuffer sb) {
       switch (e) {
         case TagComponent():
           _tagToHtml(e, sb);
+        case FragmentComponent():
+          _fragmentToHtml(e, sb);
         case Text():
           sb.write(HtmlComponent.escapeString(e.text));
         case Raw():
           sb.write(e.content);
+        default:
+          throw Exception("Cannot render Component of type ${e.runtimeType} as child of <${tag.name}>");
       }
     }
 
