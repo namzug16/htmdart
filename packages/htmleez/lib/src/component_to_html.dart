@@ -1,4 +1,5 @@
 import "package:htmleez/src/attribute.dart";
+import "package:htmleez/src/fragment_component.dart";
 import "package:htmleez/src/html_component.dart";
 import "package:htmleez/src/raw.dart";
 import "package:htmleez/src/tag.dart";
@@ -8,17 +9,23 @@ extension HtmlComponentToHtml on HtmlComponent {
   String toHtml() => _componentsToHtml([this]);
 }
 
+extension FragmentToHtml on FragmentComponent {
+  String toHtml() => _componentsToHtml(content);
+}
+
 extension HtmlComponentsToHtml on List<HtmlComponent> {
   String toHtml() => _componentsToHtml(this);
 }
 
-String _componentsToHtml(List<HtmlComponent> content) {
-  final sb = StringBuffer();
+String _componentsToHtml(List<HtmlComponent> content, [StringBuffer? sb]) {
+  sb ??= StringBuffer();
 
   for (final e in content) {
     switch (e) {
       case TagComponent():
         _tagToHtml(e, sb);
+      case FragmentComponent():
+        _componentsToHtml(e.content, sb);
       default:
         throw Exception("Cannot render Component of type ${e.runtimeType} directly on a HTML document");
     }

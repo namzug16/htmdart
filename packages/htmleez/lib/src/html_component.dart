@@ -4,6 +4,7 @@
 import "dart:convert";
 
 import "package:htmleez/src/attribute.dart";
+import "package:htmleez/src/fragment_component.dart";
 import "package:htmleez/src/tag.dart";
 
 /// Unified alias for all HTML components exposed by the library.
@@ -44,4 +45,6 @@ abstract class HtmlComponent {
     }
     return this;
   }
+
+  static HtmlComponent fragment(List<HtmlComponent> content) => FragmentComponent(content);
 }
