@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   netto: ^0.1.0
-  htmdart: ^0.8.0
+  htmdart: ^0.8.2
   supabase: ^2.6.1
   dart_mappable: ^4.3.0
   sqlite3: ^2.7.2

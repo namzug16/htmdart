@@ -1,3 +1,7 @@
+## 0.8.2
+
+- fix: update htmleez to 0.15.0
+
 ## 0.8.1
 
 - fix: update htmleez to 0.14.0

@@ -1,3 +1,8 @@
+## 0.15.0
+
+- feat: add `FragmentComponent` support for composable fragment trees
+- test: add fragment rendering coverage for nested and tag-child fragment scenarios
+
 ## 0.14.0
 
 - feat: add `$()` helper to create attributes by name

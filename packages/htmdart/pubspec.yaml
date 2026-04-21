@@ -1,6 +1,6 @@
 name: htmdart
 description: Build fast, hypermedia-driven web apps with Dart + HTMX
-version: 0.8.1
+version: 0.8.2
 repository: https://github.com/namzug16/htmdart
 resolution: workspace
 
@@ -8,7 +8,7 @@ environment:
   sdk: ^3.8.0
 
 dependencies:
-  htmleez: ^0.14.0
+  htmleez: ^0.15.0
 
 dev_dependencies:
   test: ^1.24.0
