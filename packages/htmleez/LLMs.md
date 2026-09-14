@@ -8,76 +8,73 @@ Htmleez is a pure Dart library for programmatically building HTML. It provides a
 import "package:htmleez/htmleez.dart";
 
 // Create a simple button
-final button = btn([$type("button"), $class("btn"), "Click me".t]);
+final el = button([$("type")("button"), $("class")("btn"), "Click me".t]);
 
 // Render to HTML string
-print(button.toHtml()); // <button class="btn">Click me</button>
+print(el.toHtml()); // <button type="button" class="btn">Click me</button>
 ```
 
 ## Core Concepts
 
 ### Tags (Elements)
 
-Tags are callable classes that create HTML elements. Pass children as positional arguments.
+Tags are callable classes that create HTML elements. Pass attributes and children in one list.
 
 ```dart
-div([child1, child2])           // <div>...</div>
-span(["text".t])                // <span>text</span>
-a([$href("/"), "Link".t])       // <a href="/">Link</a>
-img([$src("img.png"), $alt("img")]) // <img src="img.png" alt="img"/>
+div([child1, child2])                         // <div>...</div>
+span(["text".t])                              // <span>text</span>
+a([$("href")("/"), "Link".t])                // <a href="/">Link</a>
+img([$("src")("img.png"), $("alt")("img")]) // <img src="img.png" alt="img"/>
 ```
 
-**Void tags** (self-closing) accept a second `true` parameter:
+**Void tags** (self-closing) are predefined with `isVoid = true`:
 ```dart
-img([$src("x.png")])  // <img src="x.png"/>
-br()                  // <br/>
+img([$("src")("x.png")])  // <img src="x.png"/>
+br([])                     // <br/>
 ```
 
 All available tags: `html`, `head`, `body`, `div`, `span`, `p`, `a`, `button`, `form`, `input`, `label`, `select`, `textarea`, `table`, `tr`, `td`, `th`, `ul`, `ol`, `li`, `h1`-`h6`, `script`, `style`, `meta`, `link`, `img`, `iframe`, `video`, `audio`, `svg`, and 60+ more.
 
 ### Attributes
 
-Attributes start with `$` to differentiate them from tags. Pass as positional arguments to tags.
+Create attributes by name with `$("name")`. Attribute values are HTML-escaped by default. Pass attributes in the same list as tag children.
 
 ```dart
-div([$class("container"), $id("main"), $style("color:red")])
+div([$("class")("container"), $("id")("main"), $("style")("color:red")])
 ```
 
-**Creating custom attributes:**
+**Flag attributes:**
 ```dart
-$("aria-label")("Close")  // aria-label="Close"
-$data_("user-id")("123")  // data-user-id="123"
+input([$("required")(), $("disabled")()])  // <input required disabled/>
 ```
 
-**Common attributes:**
-- `$class`, `$id`, `$style`, `$title`, `$lang`
-- `$href`, `$src`, `$alt`, `$width`, `$height`
-- `$type`, `$name`, `$value`, `$placeholder`
-- `$disabled`, `$readonly`, `$required`, `$checked`
-- `$onclick`, `$onchange`, `$oninput`, `$onsubmit` (see Events below)
+**Common attributes by name:**
+- `$("class")`, `$("id")`, `$("style")`, `$("title")`, `$("lang")`
+- `$("href")`, `$("src")`, `$("alt")`, `$("width")`, `$("height")`
+- `$("type")`, `$("name")`, `$("value")`, `$("placeholder")`
+- `$("disabled")`, `$("readonly")`, `$("required")`, `$("checked")`
+- `$("aria-label")`, `$("aria-expanded")`, `$("data-user-id")`
 
 ### Events
 
-Event handlers use `RawAttribute` (values are not escaped):
+Event handlers should use `raw$("event-name")` because raw attributes are not escaped. Only use raw attributes with static trusted content, never user input.
 
 ```dart
 button([
-  $onclick("console.log('clicked')"),
+  raw$("onclick")("console.log('clicked')"),
   "Click".t,
 ])
 ```
 
-Common events: `$onclick`, `$ondblclick`, `$onmouseover`, `$onkeydown`, `$onfocus`, `$onblur`, `$oninput`, `$onchange`, `$onsubmit`, `$onload`, `$onscroll`
+Common events by name: `onclick`, `ondblclick`, `onmouseover`, `onkeydown`, `onfocus`, `onblur`, `oninput`, `onchange`, `onsubmit`, `onload`, `onscroll`.
 
 ### Aria Attributes
 
-Use the `$aria` namespace:
+ARIA attributes are regular attributes:
 
 ```dart
-div([$aria.label("Navigation"), $aria.expanded("true")])
+div([$("aria-label")("Navigation"), $("aria-expanded")("true")])
 ```
-
-Available: `$aria.label`, `$aria.labelledby`, `$aria.describedby`, `$aria.hidden`, `$aria.disabled`, `$aria.expanded`, `$aria.checked`, `$aria.selected`, `$aria.pressed`, `$aria.current`, `$aria.live`, `$aria.atomic`, `$aria.busy`, and 30+ more.
 
 ### Text and Escaping
 
@@ -93,16 +90,14 @@ For raw (unescaped) content:
 Raw("<script>alert(1)</script>")
 ```
 
-### Text Extensions (Markup Helpers)
+### Text Extension
 
-String extensions for quick element creation:
+Use `.t` to create escaped text content from strings:
 
 ```dart
-"Title".h1()                    // <h1>Title</h1>
-"Title".h1("text-center")       // <h1 class="text-center">Title</h1>
-"Paragraph".p()                 // <p>Paragraph</p>
-"Paragraph".p("muted")          // <p class="muted">Paragraph</p>
-"Label".span("text-muted")      // <span class="text-muted">Label</span>
+h1(["Title".t])
+p([$("class")("muted"), "Paragraph".t])
+span([$("class")("text-muted"), "Label".t])
 ```
 
 ### Fragments
@@ -138,7 +133,7 @@ typedef HTML = HtmlComponent;
 Render any component to an HTML string:
 
 ```dart
-div([span(["text"])]).toHtml()
+div([span(["text".t])]).toHtml()
 ```
 
 ### `.add()` and `.addAll()`
@@ -168,9 +163,7 @@ lib/
     ├── tag.dart          # Tag and TagComponent classes
     ├── tags.dart         # All HTML tag constants (60+)
     ├── attribute.dart    # Attribute and RawAttribute classes
-    ├── attributes.dart   # All attribute constants
-    ├── events.dart       # Event handler attributes
-    ├── aria_attributes.dart  # ARIA attributes
+    ├── attributes.dart   # Attribute helper functions: $(), raw$(), $classes()
     ├── text.dart         # Text class and String extensions
     ├── raw.dart          # Raw content for unescaped insertion
     ├── html_component.dart   # Base HtmlComponent class and HTML typedef
@@ -183,9 +176,9 @@ lib/
 ### Form
 ```dart
 form([
-  label([$for("email"), "Email".t]),
-  input([$type("email"), $id("email"), $name("email"), $required]),
-  button([$type("submit"), "Submit".t]),
+  label([$("for")("email"), "Email".t]),
+  input([$("type")("email"), $("id")("email"), $("name")("email"), $("required")()]),
+  button([$("type")("submit"), "Submit".t]),
 ])
 ```
 
@@ -210,7 +203,7 @@ table([
 
 ## Notes
 
-- All tags and attributes are `const` for optimal performance
+- All built-in tags are `const` for optimal performance
 - Tags that are Dart keywords are renamed (e.g., `varTag` for `<var>`, `mainTag` for `<main>`)
 - Void elements (self-closing) have `isVoid = true`: `area`, `br`, `col`, `embed`, `hr`, `img`, `input`, `link`, `meta`, `source`, `track`, `wbr`
 - `script` and `style` tags use `Raw()` for content to avoid escaping CSS/JS

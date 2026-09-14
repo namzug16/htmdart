@@ -1,3 +1,10 @@
+## 0.16.0
+
+- feat!: simplify attributes by removing exported attribute, event, and ARIA constants
+- feat!: remove string markup helpers like `.h1()`, `.p()`, and `.span()` in favor of explicit tags
+- feat: use `$("name")` for escaped attributes and `raw$("name")` for raw attributes
+- docs: update examples to the simplified attribute API
+
 ## 0.15.0
 
 - feat: add `FragmentComponent` support for composable fragment trees
