@@ -12,22 +12,22 @@ void main() {
 
   final document = html([
     head([
-      meta([$charset("UTF-8")]),
+      meta([$("charset")("UTF-8")]),
       title(["Htmleez Demo".t]),
-      link([$rel("stylesheet"), $href("https://cdn.jsdelivr.net/npm/daisyui/dist/full.css")]),
+      link([$("rel")("stylesheet"), $("href")("https://cdn.jsdelivr.net/npm/daisyui/dist/full.css")]),
     ]),
     body([
-      $id("main_body"),
+      $("id")("main_body"),
       header([
-        "Welcome to Htmleez Demo".h1(),
+        h1(["Welcome to Htmleez Demo".t]),
         nav([
           ul([
             for (final link in links)
               li([
                 a([
-                  if (link.active) $class("btn btn-active"),
-                  if (!link.active) $class("btn"),
-                  $href(link.url),
+                  if (link.active) $("class")("btn btn-active"),
+                  if (!link.active) $("class")("btn"),
+                  $("href")(link.url),
                   link.label.t,
                 ]),
               ]),
@@ -36,11 +36,11 @@ void main() {
       ]),
       mainTag([
         section([
-          "About This Demo".h2(),
-          "This document is generated using Htmleez. It demonstrates dynamic navigation, a full HTML structure including head, body, header, main content, and footer, as well as inline scripting.".p(),
+          h2(["About This Demo".t]),
+          p(["This document is generated using Htmleez. It demonstrates dynamic navigation, a full HTML structure including head, body, header, main content, and footer, as well as inline scripting.".t]),
         ]),
       ]),
-      footer(["© 2025 Htmleez Demo. All rights reserved.".p()]),
+      footer([p(["© 2025 Htmleez Demo. All rights reserved.".t])]),
       script([const Raw("console.log('Htmleez document loaded successfully');")]),
     ]),
   ]);
