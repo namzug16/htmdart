@@ -33,7 +33,7 @@ img([$("src")("x.png")])  // <img src="x.png"/>
 br([])                     // <br/>
 ```
 
-All available HTML tag constants match HTML element names 1:1, except `main` is `mainTag` and `var` is `varTag` because both are Dart keywords.
+All W3C Webref HTML elements are available as tag constants. Names match HTML elements 1:1, except `main` is `mainTag` and `var` is `varTag` because both are Dart keywords.
 
 Examples: `html`, `head`, `body`, `div`, `span`, `p`, `a`, `button`, `form`, `input`, `label`, `select`, `selectedcontent`, `textarea`, `table`, `tr`, `td`, `th`, `ul`, `ol`, `li`, `h1`-`h6`, `script`, `style`, `meta`, `link`, `img`, `iframe`, `video`, `audio`, `svg`, and 60+ more.
 
