@@ -345,6 +345,9 @@ const progress = Tag("progress");
 /// Represents a control that provides a menu of options.
 const select = Tag("select");
 
+/// Mirrors content from an <option> element into a customizable <select> button.
+const selectedcontent = Tag("selectedcontent", true);
+
 /// Represents a multi-line plain-text editing control.
 const textarea = Tag("textarea");
 
