@@ -1,3 +1,8 @@
+## 0.8.3
+
+- Mark package as discontinued.
+- Recommend using `package:htmleez` directly.
+
 ## 0.8.2
 
 - fix: update htmleez to 0.15.0
