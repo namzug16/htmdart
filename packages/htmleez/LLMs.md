@@ -33,7 +33,9 @@ img([$("src")("x.png")])  // <img src="x.png"/>
 br([])                     // <br/>
 ```
 
-All available tags: `html`, `head`, `body`, `div`, `span`, `p`, `a`, `button`, `form`, `input`, `label`, `select`, `textarea`, `table`, `tr`, `td`, `th`, `ul`, `ol`, `li`, `h1`-`h6`, `script`, `style`, `meta`, `link`, `img`, `iframe`, `video`, `audio`, `svg`, and 60+ more.
+All available HTML tag constants match HTML element names 1:1, except `main` is `mainTag` and `var` is `varTag` because both are Dart keywords.
+
+Examples: `html`, `head`, `body`, `div`, `span`, `p`, `a`, `button`, `form`, `input`, `label`, `select`, `selectedcontent`, `textarea`, `table`, `tr`, `td`, `th`, `ul`, `ol`, `li`, `h1`-`h6`, `script`, `style`, `meta`, `link`, `img`, `iframe`, `video`, `audio`, `svg`, and 60+ more.
 
 ### Attributes
 
@@ -204,6 +206,6 @@ table([
 ## Notes
 
 - All built-in tags are `const` for optimal performance
-- Tags that are Dart keywords are renamed (e.g., `varTag` for `<var>`, `mainTag` for `<main>`)
+- Tags that are Dart keywords are renamed: `varTag` for `<var>` and `mainTag` for `<main>`
 - Void elements (self-closing) have `isVoid = true`: `area`, `br`, `col`, `embed`, `hr`, `img`, `input`, `link`, `meta`, `source`, `track`, `wbr`
 - `script` and `style` tags use `Raw()` for content to avoid escaping CSS/JS
