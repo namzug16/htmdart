@@ -4,6 +4,7 @@
 - feat!: remove string markup helpers like `.h1()`, `.p()`, and `.span()` in favor of explicit tags
 - feat: use `$("name")` for escaped attributes and `raw$("name")` for raw attributes
 - feat: add `selectedcontent` and verify all W3C Webref HTML elements are available as tag constants
+- docs: bundle the `htmleez-html` Agent Skill with the package
 - docs: update examples to the simplified attribute API
 
 ## 0.15.0
