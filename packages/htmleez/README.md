@@ -47,6 +47,6 @@ $classes(["btn", "btn-primary"]); // class="btn btn-primary"
 - **API**: 
   - `<HTML>.add()` to append children after creation.
 
-- **Tag names**: exported tag constants match HTML element names 1:1, except `main` is `mainTag` and `var` is `varTag` because both are Dart keywords.
+- **Tag names**: all W3C Webref HTML elements are available as tag constants. Names match HTML elements 1:1, except `main` is `mainTag` and `var` is `varTag` because both are Dart keywords.
 
 For the full list of tags and extensions, see the [API Reference](https://pub.dev/documentation/htmleez/latest/).
