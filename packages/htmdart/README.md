@@ -1,6 +1,11 @@
 ![htmdart](https://raw.githubusercontent.com/namzug16/htmdart/master/assets/htmdart.png)
 
+> [!IMPORTANT]
+> This package is discontinued. Use [`package:htmleez`](https://pub.dev/packages/htmleez) directly instead.
+
 Build fast, hypermedia-driven web apps with Dart + HTMX
+
+`htmdart` is no longer needed as a separate package. The useful HTML composition APIs live in [`htmleez`](https://pub.dev/packages/htmleez), and you can use them directly in Dart server-rendered apps.
 
 ## Index
 
